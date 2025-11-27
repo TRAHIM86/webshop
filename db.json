@@ -1,0 +1,7 @@
+{
+  "products": [
+    { "id": 1, "name": "Ball", "price": 100, "category": "sport" },
+    { "id": 2, "name": "Boots", "price": 200, "category": "sport" },
+    { "id": 3, "name": "T-shirt", "price": 50, "category": "sport" }
+  ]
+}
