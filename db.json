@@ -1,7 +1,12 @@
 {
   "products": [
     { "id": 1, "name": "Football ball", "price": 100, "category": "football" },
-    { "id": 2, "name": "Boots", "price": 200, "category": "football" },
+    {
+      "id": 2,
+      "name": "Football boots",
+      "price": 200,
+      "category": "football"
+    },
     {
       "id": 3,
       "name": "Football t-shirt",
@@ -27,6 +32,7 @@
       "category": "running"
     },
     { "id": 7, "name": "Running t-shirt", "price": 45, "category": "running" },
-    { "id": 8, "name": "Running jacket", "price": 75, "category": "running" }
+    { "id": 8, "name": "Running jacket", "price": 75, "category": "running" },
+    { "id": 9, "name": "Swiming hat", "price": 75, "category": "swiming" }
   ]
 }

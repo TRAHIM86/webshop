@@ -1,0 +1,11 @@
+.productList {
+  display: flex;
+  border: 1px salmon solid;
+  width: 80%;
+  flex-wrap: wrap;
+}
+
+.productItem {
+  border: 1px seagreen solid;
+  width: 25%;
+}
