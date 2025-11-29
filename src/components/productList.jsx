@@ -24,9 +24,12 @@ export const ProductList = () => {
         {products &&
           products.map((product) => {
             return (
-              <div key={product.id} className={styles.productItem}>
-                <div>{product.name}</div>
+              <div className={styles.productItem} key={product.id}>
+                <div className={styles.productName}>{product.name}</div>
                 <ProductImg productName={product.name} />
+                <div
+                  className={styles.productPrice}
+                >{`${product.price} $`}</div>
               </div>
             );
           })}

@@ -1,11 +1,25 @@
 .productList {
   display: flex;
-  border: 1px salmon solid;
+  border: 3px salmon solid;
   width: 80%;
   flex-wrap: wrap;
 }
 
 .productItem {
-  border: 1px seagreen solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 2px black solid;
   width: 25%;
+  height: 7em;
+}
+
+.productName {
+  border: 2px red dotted;
+  height: 3em;
+}
+
+.productPrice {
+  border: 2px blue dotted;
+  text-align: right;
 }
