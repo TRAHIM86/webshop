@@ -1,7 +1,32 @@
 {
   "products": [
-    { "id": 1, "name": "Ball", "price": 100, "category": "sport" },
-    { "id": 2, "name": "Boots", "price": 200, "category": "sport" },
-    { "id": 3, "name": "T-shirt", "price": 50, "category": "sport" }
+    { "id": 1, "name": "Football ball", "price": 100, "category": "football" },
+    { "id": 2, "name": "Boots", "price": 200, "category": "football" },
+    {
+      "id": 3,
+      "name": "Football t-shirt",
+      "price": 50,
+      "category": "football"
+    },
+    {
+      "id": 4,
+      "name": "Basketball t-shirt",
+      "price": 40,
+      "category": "basketball"
+    },
+    {
+      "id": 5,
+      "name": "Basketball shorts",
+      "price": 35,
+      "category": "basketball"
+    },
+    {
+      "id": 6,
+      "name": "Running sneakers",
+      "price": 150,
+      "category": "running"
+    },
+    { "id": 7, "name": "Running t-shirt", "price": 45, "category": "running" },
+    { "id": 8, "name": "Running jacket", "price": 75, "category": "running" }
   ]
 }
