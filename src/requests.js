@@ -5,7 +5,9 @@ import axios from "axios";
 //  params._order = sortOrder при передаче запроса
 // поэтому здесь заколхозил
 export default class Requests {
-  static async getAllProduct(sortBy, sortOrder) {
+  static async getAllProduct(sortBy, sortOrder, filterStr = "") {
+    console.log("filterStr ", filterStr);
+
     try {
       const response = await axios.get("http://localhost:3002/products");
       let products = response.data;
@@ -20,7 +22,9 @@ export default class Requests {
         });
       }
 
-      return products;
+      return products.filter((product) =>
+        product.name.toLowerCase().includes(filterStr.toLowerCase())
+      );
     } catch (err) {
       console.log(err);
     }
