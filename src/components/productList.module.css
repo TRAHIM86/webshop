@@ -1,7 +1,8 @@
 .productList {
   display: flex;
+  justify-content: start;
   border: 3px salmon solid;
-  width: 80%;
+  max-width: 80%;
   flex-wrap: wrap;
 }
 
@@ -10,8 +11,7 @@
   flex-direction: column;
   justify-content: space-between;
   border: 2px black solid;
-  width: 25%;
-  height: 7em;
+  width: 5em;
 }
 
 .productName {
