@@ -3,22 +3,32 @@ import { ProductList } from "../components/productList";
 import Requests from "../requests";
 import { ProductMenu } from "../components/productMenu";
 
-export const Shop = () => {
-  const [products, setProducts] = useState([]);
+import { useQuery } from "@tanstack/react-query";
 
+async function fetchProducts(method, order, str) {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
+  return await Requests.getAllProduct(method, order, str);
+}
+
+export const Shop = () => {
+  // состояния: сортировка (имя, цена), порядок (возр, убыв), поиск (строка для фильтра)
   const [sortMethod, setSortMethod] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
   const [searchStr, setSearchStr] = useState("");
-  //const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchProducts(method, order, str) {
-      const allProducts = await Requests.getAllProduct(method, order, str);
-      setProducts(allProducts);
-    }
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["products", sortMethod, sortOrder, searchStr],
 
-    fetchProducts(sortMethod, sortOrder, searchStr);
-  }, [sortMethod, sortOrder, searchStr]);
+    queryFn: () => fetchProducts(sortMethod, sortOrder, searchStr),
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error</div>;
 
   return (
     <div>
