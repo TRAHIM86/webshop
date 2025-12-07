@@ -29,4 +29,15 @@ export default class Requests {
       console.log(err);
     }
   }
+
+  static async getProductById(id) {
+    const response = await axios.get("http://localhost:3002/products");
+    let products = response.data;
+
+    let currentProduct = products.find((product) => product.id === id);
+
+    console.log("currentProduct ", currentProduct);
+
+    return currentProduct;
+  }
 }
