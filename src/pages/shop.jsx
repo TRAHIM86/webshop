@@ -4,6 +4,7 @@ import Requests from "../requests";
 import { ProductMenu } from "../components/productMenu";
 
 import { useQuery } from "@tanstack/react-query";
+import { InputSearch } from "../components/inputSearch";
 
 async function fetchProducts(method, order, str) {
   await new Promise((resolve) => setTimeout(resolve, 500));
@@ -31,12 +32,7 @@ export const Shop = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        value={searchStr}
-        placeholder="Search..."
-        onChange={(e) => setSearchStr(e.target.value)}
-      />
+      <InputSearch searchStr={searchStr} setSearchStr={setSearchStr} />
 
       <ProductMenu
         sortMethod={sortMethod}

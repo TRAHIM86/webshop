@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
-export const InputSearch = () => {
-  const [searchStr, setSearchStr] = useState("");
-
+export const InputSearch = ({ searchStr, setSearchStr }) => {
   return (
     <input
       type="text"
