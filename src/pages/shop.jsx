@@ -6,16 +6,18 @@ import { ProductMenu } from "../components/productMenu";
 import { useQuery } from "@tanstack/react-query";
 import { InputSearch } from "../components/inputSearch";
 
-async function fetchProducts(method, order, str) {
+async function fetchProducts(method, order, quantity, num, str) {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  return await Requests.getAllProduct(method, order, str);
+  return await Requests.getAllProduct(method, order, quantity, num, str);
 }
 
 export const Shop = () => {
   // состояния: сортировка (имя, цена), порядок (возр, убыв), поиск (строка для фильтра)
   const [sortMethod, setSortMethod] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [quantityProducts, setQuantityProducts] = useState(8);
+  const [numberPage, setNumberPage] = useState(1);
   const [searchStr, setSearchStr] = useState("");
 
   const {
@@ -23,9 +25,23 @@ export const Shop = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["products", sortMethod, sortOrder, searchStr],
+    queryKey: [
+      "products",
+      sortMethod,
+      sortOrder,
+      quantityProducts,
+      numberPage,
+      searchStr,
+    ],
 
-    queryFn: () => fetchProducts(sortMethod, sortOrder, searchStr),
+    queryFn: () =>
+      fetchProducts(
+        sortMethod,
+        sortOrder,
+        quantityProducts,
+        numberPage,
+        searchStr
+      ),
   });
 
   if (isError) return <div>Error</div>;
@@ -38,6 +54,8 @@ export const Shop = () => {
         sortMethod={sortMethod}
         setSortMethod={setSortMethod}
         setSortOrder={setSortOrder}
+        quantityProducts={quantityProducts}
+        setQuantityProducts={setQuantityProducts}
       />
 
       {isLoading ? (

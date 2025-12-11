@@ -1,19 +1,27 @@
 import axios from "axios";
+import { data } from "react-router-dom";
 
 // запрос на сортировку по убыванию/возрастанию кривой
 // т.к. почему не работает метод сортировки
 //  params._order = sortOrder при передаче запроса
 // поэтому здесь заколхозил
 export default class Requests {
-  static async getAllProduct(sortBy, sortOrder, filterStr = "") {
-    console.log("filterStr ", filterStr);
-
+  static async getAllProduct(
+    sortBy,
+    sortOrder,
+    quantityProducts,
+    numPage,
+    filterStr = ""
+  ) {
     try {
       const response = await axios.get("http://localhost:3002/products");
-      let products = response.data;
+
+      let filteredProducts = response.data.filter((product) =>
+        product.name.toLowerCase().includes(filterStr.toLowerCase())
+      );
 
       if (sortBy && sortOrder) {
-        products = products.sort((a, b) => {
+        filteredProducts = filteredProducts.sort((a, b) => {
           if (sortOrder === "asc") {
             return a[sortBy] > b[sortBy] ? 1 : -1;
           } else {
@@ -22,9 +30,14 @@ export default class Requests {
         });
       }
 
-      return products.filter((product) =>
-        product.name.toLowerCase().includes(filterStr.toLowerCase())
+      const start = (numPage - 1) * quantityProducts;
+
+      console.log(
+        "filteredProducts ",
+        filteredProducts.slice(start, start + quantityProducts)
       );
+
+      return filteredProducts.slice(start, start + quantityProducts);
     } catch (err) {
       console.log(err);
     }
