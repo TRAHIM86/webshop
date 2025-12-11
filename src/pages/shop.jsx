@@ -27,7 +27,6 @@ export const Shop = () => {
     queryFn: () => fetchProducts(sortMethod, sortOrder, searchStr),
   });
 
-  if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
 
   return (
@@ -44,7 +43,14 @@ export const Shop = () => {
         setSortMethod={setSortMethod}
         setSortOrder={setSortOrder}
       />
-      <ProductList products={products} />
+
+      {isLoading ? (
+        <div>Loading products...</div>
+      ) : isError ? (
+        <div>Error...</div>
+      ) : (
+        <ProductList products={products} />
+      )}
     </div>
   );
 };
