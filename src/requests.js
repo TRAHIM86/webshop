@@ -22,11 +22,6 @@ export default class Requests {
         pageNumbers.push(i);
       }
 
-      console.log({
-        total: filteredProducts.length,
-        pageNumbers: pageNumbers,
-      });
-
       return {
         total: filteredProducts.length,
         pageNumbers: pageNumbers,

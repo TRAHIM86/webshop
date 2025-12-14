@@ -1,10 +1,10 @@
 import react from "react";
-
 import { InputSearch } from "../components/inputSearch";
 
 export const ProductMenu = ({
   searchStr,
   setSearchStr,
+  setCurrentPage,
   sortMethod,
   setSortMethod,
   setSortOrder,
@@ -14,7 +14,11 @@ export const ProductMenu = ({
   return (
     <div>
       <h1>WEBSHOP</h1>
-      <InputSearch searchStr={searchStr} setSearchStr={setSearchStr} />
+      <InputSearch
+        searchStr={searchStr}
+        setSearchStr={setSearchStr}
+        setCurrentPage={setCurrentPage}
+      />
       Sort by :
       <select
         value={sortMethod}
@@ -28,9 +32,12 @@ export const ProductMenu = ({
       Show by :
       <select
         value={quantityProducts}
-        onChange={(e) => setQuantityProducts(e.target.value)}
+        onChange={(e) => {
+          setQuantityProducts(e.target.value);
+          setCurrentPage(1);
+        }}
       >
-        <option value="8">8</option>
+        <option value="6">6</option>
         <option value="12">12</option>
       </select>
     </div>

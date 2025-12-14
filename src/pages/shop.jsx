@@ -4,6 +4,7 @@ import Requests from "../requests";
 import { ProductMenu } from "../components/productMenu";
 
 import { useQuery } from "@tanstack/react-query";
+import { Pagination } from "../components/pagination/pagination";
 
 async function fetchSelectedProducts(method, order, quantity, numPage, str) {
   await new Promise((resolve) => setTimeout(resolve, 500));
@@ -16,7 +17,6 @@ async function fetchSelectedProducts(method, order, quantity, numPage, str) {
     str
   );
 }
-
 async function fetchAllProducts(str, quantity) {
   const allProducts = await Requests.getAllProducts(str, quantity);
   return allProducts;
@@ -26,8 +26,7 @@ export const Shop = () => {
   // состояния: сортировка (имя, цена), порядок (возр, убыв), поиск (строка для фильтра)
   const [sortMethod, setSortMethod] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
-  const [quantityProducts, setQuantityProducts] = useState(8);
-  const [pages, setPages] = useState([]);
+  const [quantityProducts, setQuantityProducts] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchStr, setSearchStr] = useState("");
 
@@ -74,6 +73,7 @@ export const Shop = () => {
       <ProductMenu
         searchStr={searchStr}
         setSearchStr={setSearchStr}
+        setCurrentPage={setCurrentPage}
         sortMethod={sortMethod}
         setSortMethod={setSortMethod}
         setSortOrder={setSortOrder}
@@ -83,11 +83,11 @@ export const Shop = () => {
 
       <div>All products: {allProducts?.total || 0}</div>
 
-      <div>
-        {allProducts
-          ? allProducts.pageNumbers.map((num) => <div key={num}>{num}</div>)
-          : "0"}
-      </div>
+      <Pagination
+        allProducts={allProducts}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
 
       {isLoading ? (
         <div>Loading products...</div>

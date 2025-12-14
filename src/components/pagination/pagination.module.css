@@ -1,0 +1,26 @@
+.pagination {
+  border: 1px saddlebrown solid;
+  display: flex;
+  flex-direction: row;
+}
+
+.numPage {
+  cursor: pointer;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  padding: 0.2em;
+  transition: all 0.3s ease;
+}
+
+.numPage:hover {
+  background-color: gray;
+}
+
+.active {
+  background-color: gainsboro;
+}
