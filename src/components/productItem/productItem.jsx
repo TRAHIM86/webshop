@@ -1,6 +1,6 @@
 import react, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ProductImg } from "../productImg";
+import { ProductImg } from "../productImg/productImg";
 import styles from "./productItem.module.css";
 
 export const ProductItem = ({ product }) => {

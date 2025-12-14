@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { ProductImg } from "./productImg";
+import { ProductImg } from "../productImg/productImg";
 import styles from "./productList.module.css";
-import { ProductItem } from "./productItem/productItem";
+import { ProductItem } from "../productItem/productItem";
 
 export const ProductList = ({ products }) => {
   return (

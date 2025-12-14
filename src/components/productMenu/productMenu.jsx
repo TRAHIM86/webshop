@@ -1,6 +1,6 @@
 import react from "react";
-import { InputSearch } from "../components/inputSearch";
-import { Select } from "./select/select";
+import { InputSearch } from "../inputSearch/inputSearch";
+import { Select } from "../select/select";
 
 export const ProductMenu = ({
   searchStr,

@@ -1,7 +1,7 @@
 import react, { useEffect, useState } from "react";
-import { ProductList } from "../components/productList";
+import { ProductList } from "../components/productlist/productList";
 import Requests from "../requests";
-import { ProductMenu } from "../components/productMenu";
+import { ProductMenu } from "../components/productMenu/productMenu";
 
 import { useQuery } from "@tanstack/react-query";
 import { Pagination } from "../components/pagination/pagination";

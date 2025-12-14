@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Requests from "../requests";
-import { ProductImg } from "../components/productImg";
+import { ProductImg } from "../components/productImg/productImg";
 import { ProductItem } from "../components/productItem/productItem";
 
 export const ProductPage = () => {
