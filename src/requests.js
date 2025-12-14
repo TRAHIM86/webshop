@@ -4,15 +4,33 @@ import { data } from "react-router-dom";
 export default class Requests {
   // получить все продукты (только по фильтру)
   // для отражения количества страниц
-  static async getAllProducts(filterStr = "") {
+  static async getAllProducts(filterStr = "", quantity) {
     try {
       const products = await axios.get("http://localhost:3002/products");
 
       let filteredProducts = products.data.filter((product) =>
         product.name.toLowerCase().includes(filterStr.toLowerCase())
       );
-      console.log("All: ", products.data.length);
-      return filteredProducts;
+
+      const total = filteredProducts.length;
+      const pages = Math.ceil(total / quantity);
+
+      // создать массив номеро в страниц
+      const pageNumbers = [];
+
+      for (let i = 1; i <= pages; i++) {
+        pageNumbers.push(i);
+      }
+
+      console.log({
+        total: filteredProducts.length,
+        pageNumbers: pageNumbers,
+      });
+
+      return {
+        total: filteredProducts.length,
+        pageNumbers: pageNumbers,
+      };
     } catch (err) {
       console.log(err);
     }

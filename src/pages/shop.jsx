@@ -17,9 +17,8 @@ async function fetchSelectedProducts(method, order, quantity, numPage, str) {
   );
 }
 
-async function fetchAllProducts(str) {
-  const allProducts = await Requests.getAllProducts(str);
-  console.log("allProducts ", allProducts);
+async function fetchAllProducts(str, quantity) {
+  const allProducts = await Requests.getAllProducts(str, quantity);
   return allProducts;
 }
 
@@ -38,9 +37,9 @@ export const Shop = () => {
     isLoading: isLoadingAllProducts,
     isError: isErrorAllProducts,
   } = useQuery({
-    queryKey: ["allProducts", searchStr],
+    queryKey: ["allProducts", searchStr, quantityProducts],
 
-    queryFn: () => fetchAllProducts(searchStr),
+    queryFn: () => fetchAllProducts(searchStr, quantityProducts),
   });
 
   // целевые продукты для страницы
@@ -82,7 +81,13 @@ export const Shop = () => {
         setQuantityProducts={setQuantityProducts}
       />
 
-      <div>All products: {allProducts?.length || 0}</div>
+      <div>All products: {allProducts?.total || 0}</div>
+
+      <div>
+        {allProducts
+          ? allProducts.pageNumbers.map((num) => <div key={num}>{num}</div>)
+          : "0"}
+      </div>
 
       {isLoading ? (
         <div>Loading products...</div>
