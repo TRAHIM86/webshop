@@ -1,6 +1,10 @@
 import react from "react";
 
+import { InputSearch } from "../components/inputSearch";
+
 export const ProductMenu = ({
+  searchStr,
+  setSearchStr,
   sortMethod,
   setSortMethod,
   setSortOrder,
@@ -10,6 +14,7 @@ export const ProductMenu = ({
   return (
     <div>
       <h1>WEBSHOP</h1>
+      <InputSearch searchStr={searchStr} setSearchStr={setSearchStr} />
       Sort by :
       <select
         value={sortMethod}

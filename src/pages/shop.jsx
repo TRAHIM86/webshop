@@ -4,12 +4,23 @@ import Requests from "../requests";
 import { ProductMenu } from "../components/productMenu";
 
 import { useQuery } from "@tanstack/react-query";
-import { InputSearch } from "../components/inputSearch";
 
-async function fetchProducts(method, order, quantity, num, str) {
+async function fetchSelectedProducts(method, order, quantity, numPage, str) {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  return await Requests.getAllProduct(method, order, quantity, num, str);
+  return await Requests.getSelectedProducts(
+    method,
+    order,
+    quantity,
+    numPage,
+    str
+  );
+}
+
+async function fetchAllProducts(str) {
+  const allProducts = await Requests.getAllProducts(str);
+  console.log("allProducts ", allProducts);
+  return allProducts;
 }
 
 export const Shop = () => {
@@ -17,9 +28,22 @@ export const Shop = () => {
   const [sortMethod, setSortMethod] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
   const [quantityProducts, setQuantityProducts] = useState(8);
-  const [numberPage, setNumberPage] = useState(1);
+  const [pages, setPages] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchStr, setSearchStr] = useState("");
 
+  //всего продуктов
+  const {
+    data: allProducts,
+    isLoading: isLoadingAllProducts,
+    isError: isErrorAllProducts,
+  } = useQuery({
+    queryKey: ["allProducts", searchStr],
+
+    queryFn: () => fetchAllProducts(searchStr),
+  });
+
+  // целевые продукты для страницы
   const {
     data: products,
     isLoading,
@@ -30,16 +54,16 @@ export const Shop = () => {
       sortMethod,
       sortOrder,
       quantityProducts,
-      numberPage,
+      currentPage,
       searchStr,
     ],
 
     queryFn: () =>
-      fetchProducts(
+      fetchSelectedProducts(
         sortMethod,
         sortOrder,
         quantityProducts,
-        numberPage,
+        currentPage,
         searchStr
       ),
   });
@@ -48,15 +72,17 @@ export const Shop = () => {
 
   return (
     <div>
-      <InputSearch searchStr={searchStr} setSearchStr={setSearchStr} />
-
       <ProductMenu
+        searchStr={searchStr}
+        setSearchStr={setSearchStr}
         sortMethod={sortMethod}
         setSortMethod={setSortMethod}
         setSortOrder={setSortOrder}
         quantityProducts={quantityProducts}
         setQuantityProducts={setQuantityProducts}
       />
+
+      <div>All products: {allProducts?.length || 0}</div>
 
       {isLoading ? (
         <div>Loading products...</div>
