@@ -14,6 +14,15 @@
   width: 5em;
 }
 
+.arrows {
+  display: flex;
+  justify-content: space-around;
+}
+
+.arrows:hover {
+  cursor: pointer;
+}
+
 .productName {
   border: 2px red dotted;
   height: 3em;

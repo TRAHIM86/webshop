@@ -1,0 +1,13 @@
+.productItem {
+  width: 30%;
+  border: 2px solid orchid;
+}
+
+.arrows {
+  display: flex;
+  justify-content: space-around;
+}
+
+.arrows:hover {
+  cursor: pointer;
+}

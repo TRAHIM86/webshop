@@ -74,8 +74,6 @@ export default class Requests {
 
     let currentProduct = products.find((product) => product.id === id);
 
-    console.log("currentProduct ", currentProduct);
-
     return currentProduct;
   }
 }

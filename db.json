@@ -1,12 +1,7 @@
 {
   "products": [
     { "id": 1, "name": "Football ball", "price": 100, "category": "football" },
-    {
-      "id": 2,
-      "name": "Football boots",
-      "price": 200,
-      "category": "football"
-    },
+    { "id": 2, "name": "Football boots", "price": 200, "category": "football" },
     {
       "id": 3,
       "name": "Football t-shirt",
@@ -33,6 +28,72 @@
     },
     { "id": 7, "name": "Running t-shirt", "price": 45, "category": "running" },
     { "id": 8, "name": "Running jacket", "price": 75, "category": "running" },
-    { "id": 9, "name": "Swiming hat", "price": 75, "category": "swiming" }
+    { "id": 9, "name": "Swimming hat", "price": 75, "category": "swimming" },
+    {
+      "id": 10,
+      "name": "Swimming goggles",
+      "price": 35,
+      "category": "swimming"
+    },
+    {
+      "id": 11,
+      "name": "Swimming trunks",
+      "price": 60,
+      "category": "swimming"
+    },
+    { "id": 12, "name": "Tennis racket", "price": 180, "category": "tennis" },
+    {
+      "id": 13,
+      "name": "Tennis balls (3-pack)",
+      "price": 25,
+      "category": "tennis"
+    },
+    { "id": 14, "name": "Tennis wristband", "price": 15, "category": "tennis" },
+    { "id": 15, "name": "Yoga mat", "price": 40, "category": "yoga" },
+    {
+      "id": 16,
+      "name": "Yoga blocks (2-pack)",
+      "price": 30,
+      "category": "yoga"
+    },
+    { "id": 17, "name": "Yoga strap", "price": 20, "category": "yoga" },
+    {
+      "id": 18,
+      "name": "Football goalkeeper gloves",
+      "price": 80,
+      "category": "football"
+    },
+    {
+      "id": 19,
+      "name": "Football shin guards",
+      "price": 35,
+      "category": "football"
+    },
+    {
+      "id": 20,
+      "name": "Basketball ball",
+      "price": 90,
+      "category": "basketball"
+    },
+    {
+      "id": 21,
+      "name": "Basketball socks",
+      "price": 18,
+      "category": "basketball"
+    },
+    {
+      "id": 22,
+      "name": "Running headphones",
+      "price": 120,
+      "category": "running"
+    },
+    {
+      "id": 23,
+      "name": "Running water bottle",
+      "price": 25,
+      "category": "running"
+    },
+    { "id": 24, "name": "Tennis shorts", "price": 50, "category": "tennis" },
+    { "id": 25, "name": "Swimming towel", "price": 45, "category": "swimming" }
   ]
 }

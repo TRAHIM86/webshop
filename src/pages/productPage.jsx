@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Requests from "../requests";
 import { ProductImg } from "../components/productImg";
+import { ProductItem } from "../components/productItem/productItem";
 
 export const ProductPage = () => {
   const { productId } = useParams();
@@ -16,6 +17,9 @@ export const ProductPage = () => {
     fetchProductById(productId);
   }, [productId]);
 
+  console.log("productId ", productId);
+  console.log("currentProduct ", currentProduct);
+
   if (!currentProduct) {
     return (
       <div>
@@ -25,10 +29,6 @@ export const ProductPage = () => {
   }
 
   return (
-    <div>
-      <div>{currentProduct.name}</div>
-      <ProductImg productName={currentProduct.name} />
-      <div>{`${currentProduct.price} $`}</div>
-    </div>
+    <ProductItem product={currentProduct} key={currentProduct.id}></ProductItem>
   );
 };
