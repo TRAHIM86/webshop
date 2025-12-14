@@ -27,6 +27,12 @@ export const Shop = () => {
   const [sortMethod, setSortMethod] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
   const [quantityProducts, setQuantityProducts] = useState(6);
+
+  function showQuantityProducts(value) {
+    setQuantityProducts(value);
+    setCurrentPage(1);
+  }
+
   const [currentPage, setCurrentPage] = useState(1);
   const [searchStr, setSearchStr] = useState("");
 
@@ -78,7 +84,7 @@ export const Shop = () => {
         setSortMethod={setSortMethod}
         setSortOrder={setSortOrder}
         quantityProducts={quantityProducts}
-        setQuantityProducts={setQuantityProducts}
+        showQuantityProducts={showQuantityProducts}
       />
 
       <div>All products: {allProducts?.total || 0}</div>

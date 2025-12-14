@@ -1,5 +1,6 @@
 import react from "react";
 import { InputSearch } from "../components/inputSearch";
+import { Select } from "./select/select";
 
 export const ProductMenu = ({
   searchStr,
@@ -9,7 +10,7 @@ export const ProductMenu = ({
   setSortMethod,
   setSortOrder,
   quantityProducts,
-  setQuantityProducts,
+  showQuantityProducts,
 }) => {
   return (
     <div>
@@ -20,26 +21,19 @@ export const ProductMenu = ({
         setCurrentPage={setCurrentPage}
       />
       Sort by :
-      <select
+      <Select
         value={sortMethod}
-        onChange={(e) => setSortMethod(e.target.value)}
-      >
-        <option value="name">name</option>
-        <option value="price">price</option>
-      </select>
+        optionList={[{ value: "name" }, { value: "price" }]}
+        funcOnChange={setSortMethod}
+      />
       <button onClick={() => setSortOrder("asc")}>Asc</button>
       <button onClick={() => setSortOrder("desc")}>Des</button>
       Show by :
-      <select
+      <Select
         value={quantityProducts}
-        onChange={(e) => {
-          setQuantityProducts(e.target.value);
-          setCurrentPage(1);
-        }}
-      >
-        <option value="6">6</option>
-        <option value="12">12</option>
-      </select>
+        optionList={[{ value: 6 }, { value: 12 }]}
+        funcOnChange={showQuantityProducts}
+      ></Select>
     </div>
   );
 };
