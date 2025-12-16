@@ -17,7 +17,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Shop />} />
-          <Route path="/:productId" element={<ProductPage />} />
+          <Route path="/products/:productId" element={<ProductPage />} />
           <Route path="/main" element={<Main />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<Navigate to="/" replace />}></Route>

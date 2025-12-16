@@ -45,7 +45,7 @@ export const ProductItem = ({ product }) => {
           <div onClick={nextPhoto}>→</div>
         </div>
 
-        <Link to={`/${product.id}`}>
+        <Link to={`/products/${product.id}`}>
           <div>{product.name}</div>
           <ProductImg productName={product.name} num={currentNum} />
           <div>{`${product.price} $`}</div>

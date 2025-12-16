@@ -95,5 +95,170 @@
     },
     { "id": 24, "name": "Tennis shorts", "price": 50, "category": "tennis" },
     { "id": 25, "name": "Swimming towel", "price": 45, "category": "swimming" }
+  ],
+
+  "reviews": [
+    {
+      "id": 1,
+      "productId": 1,
+      "user": "John",
+      "review": "Excellent ball, perfect for matches. Highly recommend for serious players."
+    },
+    {
+      "id": 2,
+      "productId": 1,
+      "user": "Mike",
+      "review": "Good quality but slightly overpriced compared to other brands."
+    },
+    {
+      "id": 3,
+      "productId": 1,
+      "user": "Alex",
+      "review": "Durable construction but takes some time to break in properly."
+    },
+    {
+      "id": 4,
+      "productId": 2,
+      "user": "Sarah",
+      "review": "Very comfortable boots with excellent grip on wet grass."
+    },
+    {
+      "id": 5,
+      "productId": 2,
+      "user": "Tom",
+      "review": "Sizes run small, recommend ordering one size up from usual."
+    },
+    {
+      "id": 6,
+      "productId": 4,
+      "user": "Chris",
+      "review": "Love this shirt, perfect fit for basketball practice and games."
+    },
+    {
+      "id": 7,
+      "productId": 5,
+      "user": "Emma",
+      "review": "Comfortable shorts with good stretch, perfect for workouts."
+    },
+    {
+      "id": 8,
+      "productId": 6,
+      "user": "David",
+      "review": "Best running shoes I've ever owned. Great cushioning and support."
+    },
+    {
+      "id": 9,
+      "productId": 6,
+      "user": "Lisa",
+      "review": "Great support but shoes feel a bit heavy for long runs."
+    },
+    {
+      "id": 10,
+      "productId": 6,
+      "user": "Mark",
+      "review": "Good for long distance running, comfortable even after 10km."
+    },
+    {
+      "id": 11,
+      "productId": 7,
+      "user": "Anna",
+      "review": "Basic running shirt, does the job but nothing special."
+    },
+    {
+      "id": 12,
+      "productId": 9,
+      "user": "Robert",
+      "review": "Fits too tight, becomes uncomfortable during long swimming sessions."
+    },
+    {
+      "id": 13,
+      "productId": 10,
+      "user": "Olivia",
+      "review": "Good swimming goggles, no fogging issues even after heavy use."
+    },
+    {
+      "id": 14,
+      "productId": 11,
+      "user": "James",
+      "review": "Comfortable trunks that dry quickly after getting out of water."
+    },
+    {
+      "id": 15,
+      "productId": 12,
+      "user": "Sophia",
+      "review": "Excellent racket with great control and power for intermediate players."
+    },
+    {
+      "id": 16,
+      "productId": 12,
+      "user": "Daniel",
+      "review": "Good quality construction but string tension feels too high initially."
+    },
+    {
+      "id": 17,
+      "productId": 13,
+      "user": "Nancy",
+      "review": "Good tennis balls with decent durability for regular practice."
+    },
+    {
+      "id": 18,
+      "productId": 15,
+      "user": "Kevin",
+      "review": "Thick and comfortable yoga mat that provides excellent cushioning."
+    },
+    {
+      "id": 19,
+      "productId": 15,
+      "user": "Rachel",
+      "review": "Perfect for home practice, non-slip surface works really well."
+    },
+    {
+      "id": 20,
+      "productId": 16,
+      "user": "Paul",
+      "review": "Good yoga blocks for beginners, help with proper alignment."
+    },
+    {
+      "id": 21,
+      "productId": 18,
+      "user": "Steve",
+      "review": "Great grip on these gloves, perfect for serious goalkeepers."
+    },
+    {
+      "id": 22,
+      "productId": 19,
+      "user": "Maria",
+      "review": "Good protection with lightweight design, comfortable to wear."
+    },
+    {
+      "id": 23,
+      "productId": 20,
+      "user": "George",
+      "review": "Excellent basketball with consistent bounce and good grip."
+    },
+    {
+      "id": 24,
+      "productId": 22,
+      "user": "Helen",
+      "review": "Good sound quality and stays securely in place during runs."
+    },
+    {
+      "id": 25,
+      "productId": 22,
+      "user": "Brian",
+      "review": "Decent headphones but battery life could be longer for marathon training."
+    },
+    {
+      "id": 26,
+      "productId": 23,
+      "user": "Diana",
+      "review": "Leak-proof bottle that's easy to carry during long distance runs."
+    },
+    {
+      "id": 27,
+      "productId": 25,
+      "user": "Eric",
+      "review": "Super absorbent towel that dries incredibly fast after swimming."
+    }
   ]
 }

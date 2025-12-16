@@ -6,6 +6,7 @@ import { ProductMenu } from "../components/productMenu/productMenu";
 import { useQuery } from "@tanstack/react-query";
 import { Pagination } from "../components/pagination/pagination";
 
+// получить "конкретные продукты"
 async function fetchSelectedProducts(method, order, quantity, numPage, str) {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -17,24 +18,31 @@ async function fetchSelectedProducts(method, order, quantity, numPage, str) {
     str
   );
 }
+
+// все продукты - возвращает количество продуктов
+// по фильтру и количество страниц (для пагинации)
 async function fetchAllProducts(str, quantity) {
   const allProducts = await Requests.getAllProducts(str, quantity);
   return allProducts;
 }
 
 export const Shop = () => {
-  // состояния: сортировка (имя, цена), порядок (возр, убыв), поиск (строка для фильтра)
+  // метод сорт, порядок сорт
   const [sortMethod, setSortMethod] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
-  const [quantityProducts, setQuantityProducts] = useState(6);
 
+  // товаров на странице, текущая страница
+  const [quantityProducts, setQuantityProducts] = useState(6);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // поисковая строка
+  const [searchStr, setSearchStr] = useState("");
+
+  // показать N товаров на странице
   function showQuantityProducts(value) {
     setQuantityProducts(value);
     setCurrentPage(1);
   }
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchStr, setSearchStr] = useState("");
 
   //всего продуктов
   const {

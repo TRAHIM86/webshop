@@ -5,7 +5,12 @@ import { ProductImg } from "../components/productImg/productImg";
 import { ProductItem } from "../components/productItem/productItem";
 
 export const ProductPage = () => {
-  const { productId } = useParams();
+  let { productId } = useParams();
+
+  // приводим к числу (в запросе надо число)
+  productId = Number(productId);
+
+  console.log(typeof productId);
   const [currentProduct, setCurrentProduct] = useState(null);
 
   useEffect(() => {
@@ -16,9 +21,6 @@ export const ProductPage = () => {
 
     fetchProductById(productId);
   }, [productId]);
-
-  console.log("productId ", productId);
-  console.log("currentProduct ", currentProduct);
 
   if (!currentProduct) {
     return (

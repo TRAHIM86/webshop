@@ -6,12 +6,6 @@
   border: 3px solid rgb(33, 141, 11);
 }
 
-.arrows {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
 .mainProductImg {
   width: 5e;
   height: 3em;

@@ -5,30 +5,3 @@
   max-width: 80%;
   flex-wrap: wrap;
 }
-
-.productItem {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 2px black solid;
-  width: 5em;
-}
-
-.arrows {
-  display: flex;
-  justify-content: space-around;
-}
-
-.arrows:hover {
-  cursor: pointer;
-}
-
-.productName {
-  border: 2px red dotted;
-  height: 3em;
-}
-
-.productPrice {
-  border: 2px blue dotted;
-  text-align: right;
-}
