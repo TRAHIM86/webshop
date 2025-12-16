@@ -72,8 +72,6 @@ export default class Requests {
     const response = await axios.get("http://localhost:3002/products");
     let products = response.data;
 
-    console.log("id", id);
-
     let currentProduct = products.find((product) => product.id === id);
 
     return currentProduct;

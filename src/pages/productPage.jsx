@@ -4,33 +4,34 @@ import Requests from "../requests";
 import { ProductImg } from "../components/productImg/productImg";
 import { ProductItem } from "../components/productItem/productItem";
 
+import { useQuery } from "@tanstack/react-query";
+
 export const ProductPage = () => {
   let { productId } = useParams();
 
   // приводим к числу (в запросе надо число)
   productId = Number(productId);
 
-  console.log(typeof productId);
-  const [currentProduct, setCurrentProduct] = useState(null);
+  async function fetchProductById(id) {
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-  useEffect(() => {
-    async function fetchProductById(id) {
-      const findedProduct = await Requests.getProductById(id);
-      setCurrentProduct(findedProduct);
-    }
-
-    fetchProductById(productId);
-  }, [productId]);
-
-  if (!currentProduct) {
-    return (
-      <div>
-        <div>No product</div>
-      </div>
-    );
+    return await Requests.getProductById(id);
   }
 
-  return (
-    <ProductItem product={currentProduct} key={currentProduct.id}></ProductItem>
+  const {
+    data: productById,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["currentProduct", productId],
+    queryFn: () => fetchProductById(productId),
+  });
+
+  return isLoading ? (
+    <div>Loading product...</div>
+  ) : isError ? (
+    <div>Error...</div>
+  ) : (
+    <ProductItem product={productById} key={productById.id}></ProductItem>
   );
 };
