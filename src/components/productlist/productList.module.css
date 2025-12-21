@@ -1,6 +1,6 @@
 .productList {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   border: 3px salmon solid;
   max-width: 80%;
   flex-wrap: wrap;

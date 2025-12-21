@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Requests from "../requests";
 import styles from "./productPage.module.css";
-
 import { useQuery } from "@tanstack/react-query";
 import { ProductImg } from "../components/productImg/productImg";
 
