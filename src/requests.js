@@ -73,7 +73,6 @@ export default class Requests {
     let products = response.data;
 
     let currentProduct = products.find((product) => product.id === id);
-
     return currentProduct;
   }
 }

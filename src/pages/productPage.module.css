@@ -1,0 +1,33 @@
+.productPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.productItem {
+  flex-grow: 1;
+  border: 3px solid salmon;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrows {
+  display: flex;
+  justify-content: space-around;
+  border: 3px solid red;
+  width: 10em;
+}
+
+.arrow {
+  cursor: pointer;
+}
+
+.containerImg {
+  width: 20em;
+  height: 15em;
+  border: 4px solid brown;
+  overflow: hidden;
+}

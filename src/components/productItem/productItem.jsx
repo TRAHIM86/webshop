@@ -41,13 +41,19 @@ export const ProductItem = ({ product }) => {
     <div key={product.id} className={styles.productItem}>
       <div>
         <div className={styles.arrows}>
-          <div onClick={prevPhoto}>←</div>
-          <div onClick={nextPhoto}>→</div>
+          <div className={styles.arrow} onClick={prevPhoto}>
+            ←
+          </div>
+          <div className={styles.arrow} onClick={nextPhoto}>
+            →
+          </div>
         </div>
 
         <Link to={`/products/${product.id}`}>
           <div>{product.name}</div>
-          <ProductImg productName={product.name} num={currentNum} />
+          <div className={styles.containerImg}>
+            <ProductImg productName={product.name} num={currentNum} />
+          </div>
           <div>{`${product.price} $`}</div>
         </Link>
       </div>

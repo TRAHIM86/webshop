@@ -5,12 +5,10 @@ export const ProductImg = ({ productName, num }) => {
   const imgPath = `/imgs/${productName.toLowerCase()}/`;
 
   return (
-    <div className={styles.containerImg}>
-      <img
-        className={styles.mainProductImg}
-        src={`${imgPath}/${num}.jpeg`}
-        alt={productName}
-      />
-    </div>
+    <img
+      className={styles.image}
+      src={`${imgPath}/${num}.jpeg`}
+      alt={productName}
+    />
   );
 };
