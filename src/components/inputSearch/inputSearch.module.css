@@ -1,0 +1,18 @@
+.inputBlock {
+  width: 50%;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+}
+
+.searchField {
+  box-sizing: border-box;
+  flex-grow: 1;
+}
+
+.divClear {
+  flex-shrink: 0;
+  background-color: chartreuse;
+  cursor: pointer;
+}
