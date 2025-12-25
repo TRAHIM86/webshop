@@ -5,9 +5,11 @@ import styles from "./productPage.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { ProductImg } from "../components/productImg/productImg";
 import { Arrow } from "../components/arrow/arrow";
+import { Carousel } from "../components/carousel/carousel";
 
 export const ProductPage = () => {
   let { productId } = useParams();
+  const maxNum = 5;
 
   async function fetchProductById(id) {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -24,7 +26,30 @@ export const ProductPage = () => {
     queryFn: () => fetchProductById(productId),
   });
 
-  const maxNum = 5;
+  // массив номера фотографий
+  const [photos, setPhotos] = useState([]);
+
+  // заполнить номера фотографий (максимум 5)
+  function fillPhotos() {
+    if (!productById) return;
+
+    const arrNums = [];
+
+    for (let i = 1; i <= maxNum; i++) {
+      const img = new Image();
+      img.src = `/imgs/${productById.name}/${i}.jpeg`;
+
+      img.onload = () => {
+        arrNums.push(i);
+        setPhotos([...arrNums]);
+      };
+    }
+  }
+
+  useEffect(() => {
+    fillPhotos();
+  }, [productById]);
+
   const [currentNum, setCurrentNum] = useState(1);
 
   function nextPhoto() {
@@ -78,6 +103,13 @@ export const ProductPage = () => {
         <div>{productById.price}</div>
         <div>{productById.category}</div>
       </div>
+
+      <Carousel
+        product={productById}
+        arrNumsPhoto={photos}
+        currentNum={currentNum}
+        setCurrentNum={setCurrentNum}
+      />
     </div>
   );
 };
