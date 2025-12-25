@@ -4,6 +4,7 @@ import Requests from "../requests";
 import styles from "./productPage.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { ProductImg } from "../components/productImg/productImg";
+import { Arrow } from "../components/arrow/arrow";
 
 export const ProductPage = () => {
   let { productId } = useParams();
@@ -67,12 +68,8 @@ export const ProductPage = () => {
     <div className={styles.productPage}>
       <div className={styles.productItem}>
         <div className={styles.arrows}>
-          <div className={styles.arrow} onClick={prevPhoto}>
-            ←
-          </div>
-          <div className={styles.arrow} onClick={nextPhoto}>
-            →
-          </div>
+          <Arrow funcOnClick={prevPhoto}>←</Arrow>
+          <Arrow funcOnClick={nextPhoto}>→</Arrow>
         </div>
         <div>{productById.name}</div>
         <div className={styles.containerImg}>

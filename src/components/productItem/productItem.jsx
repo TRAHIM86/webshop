@@ -2,25 +2,11 @@ import react, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductImg } from "../productImg/productImg";
 import styles from "./productItem.module.css";
+import { Arrow } from "../arrow/arrow";
 
 export const ProductItem = ({ product }) => {
   const maxNum = 5;
   const [currentNum, setCurrentNum] = useState(1);
-
-  function nextPhoto() {
-    const nextNum = currentNum + 1;
-
-    const isImg = new Image();
-    isImg.src = `/imgs/${product.name}/${nextNum}.jpeg`;
-
-    isImg.onload = () => {
-      setCurrentNum(nextNum);
-    };
-
-    isImg.onerror = () => {
-      setCurrentNum(1);
-    };
-  }
 
   function prevPhoto() {
     function checkNum(num) {
@@ -37,16 +23,27 @@ export const ProductItem = ({ product }) => {
     checkNum(currentNum - 1);
   }
 
+  function nextPhoto() {
+    const nextNum = currentNum + 1;
+
+    const isImg = new Image();
+    isImg.src = `/imgs/${product.name}/${nextNum}.jpeg`;
+
+    isImg.onload = () => {
+      setCurrentNum(nextNum);
+    };
+
+    isImg.onerror = () => {
+      setCurrentNum(1);
+    };
+  }
+
   return (
     <div key={product.id} className={styles.productItem}>
       <div>
         <div className={styles.arrows}>
-          <div className={styles.arrow} onClick={prevPhoto}>
-            ←
-          </div>
-          <div className={styles.arrow} onClick={nextPhoto}>
-            →
-          </div>
+          <Arrow funcOnClick={prevPhoto}>←</Arrow>
+          <Arrow funcOnClick={nextPhoto}>→</Arrow>
         </div>
 
         <Link to={`/products/${product.id}`}>
