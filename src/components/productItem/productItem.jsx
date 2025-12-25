@@ -15,9 +15,13 @@ export const ProductItem = ({ product }) => {
       }
 
       const isImg = new Image();
+
+      // Пробуем оба формата
+      isImg.src = `/imgs/${product.name}/${num}.jpg`;
+
       isImg.onload = () => setCurrentNum(num);
+
       isImg.onerror = () => checkNum(num - 1);
-      isImg.src = `/imgs/${product.name}/${num}.jpeg`;
     }
 
     checkNum(currentNum - 1);
@@ -27,7 +31,7 @@ export const ProductItem = ({ product }) => {
     const nextNum = currentNum + 1;
 
     const isImg = new Image();
-    isImg.src = `/imgs/${product.name}/${nextNum}.jpeg`;
+    isImg.src = `/imgs/${product.name}/${nextNum}.jpg`;
 
     isImg.onload = () => {
       setCurrentNum(nextNum);

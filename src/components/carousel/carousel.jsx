@@ -8,7 +8,7 @@ export const Carousel = ({
   currentNum,
   setCurrentNum,
 }) => {
-  console.log(currentNum);
+  console.log("currentNum ", currentNum);
 
   function changeMainPhoto(numPhohto) {
     setCurrentNum(numPhohto);

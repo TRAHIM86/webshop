@@ -37,7 +37,7 @@ export const ProductPage = () => {
 
     for (let i = 1; i <= maxNum; i++) {
       const img = new Image();
-      img.src = `/imgs/${productById.name}/${i}.jpeg`;
+      img.src = `/imgs/${productById.name}/${i}.jpg`;
 
       img.onload = () => {
         arrNums.push(i);
@@ -58,7 +58,7 @@ export const ProductPage = () => {
     const nextNum = currentNum + 1;
 
     const isImg = new Image();
-    isImg.src = `/imgs/${productById.name}/${nextNum}.jpeg`;
+    isImg.src = `/imgs/${productById.name}/${nextNum}.jpg`;
 
     isImg.onload = () => {
       setCurrentNum(nextNum);
@@ -71,6 +71,8 @@ export const ProductPage = () => {
 
   function prevPhoto() {
     if (!productById) return;
+
+    console.log("PREV", maxNum);
     function checkNum(num) {
       if (num < 1) {
         num = maxNum;
@@ -79,7 +81,7 @@ export const ProductPage = () => {
       const isImg = new Image();
       isImg.onload = () => setCurrentNum(num);
       isImg.onerror = () => checkNum(num - 1);
-      isImg.src = `/imgs/${productById.name}/${num}.jpeg`;
+      isImg.src = `/imgs/${productById.name}/${num}.jpg`;
     }
 
     checkNum(currentNum - 1);

@@ -7,7 +7,7 @@ export const ProductImg = ({ productName, num }) => {
   return (
     <img
       className={styles.image}
-      src={`${imgPath}/${num}.jpeg`}
+      src={`${imgPath}/${num}.jpg`}
       alt={`${productName}${num}`}
     />
   );
