@@ -56,6 +56,7 @@ export const ProductItem = ({ product }) => {
             <ProductImg productName={product.name} num={currentNum} />
           </div>
           <div>{`${product.price} $`}</div>
+          <button>Add</button>
         </Link>
       </div>
     </div>

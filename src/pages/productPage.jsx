@@ -29,7 +29,10 @@ export const ProductPage = () => {
   // массив номера фотографий
   const [photos, setPhotos] = useState([]);
 
-  // заполнить номера фотографий (максимум 5)
+  // заполнить номера фотографий (максимум 5). В
+  // зависимости от количества фото в папке продукта
+  // (1-5) получить массив с номерами.
+
   function fillPhotos() {
     if (!productById) return;
 
@@ -113,7 +116,7 @@ export const ProductPage = () => {
         <div className={styles.containerImg}>
           <ProductImg productName={productById.name} num={currentNum} />
         </div>
-        <div>{productById.price}</div>
+        <div>{`${productById.price} $`}</div>
         <div>{productById.category}</div>
       </div>
 

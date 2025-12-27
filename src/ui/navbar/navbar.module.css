@@ -1,0 +1,18 @@
+.navbar {
+  border: 1px orange solid;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+.Link {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.Link:hover {
+  cursor: pointer;
+  color: orange;
+}
