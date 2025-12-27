@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Requests from "../requests";
 import styles from "./productPage.module.css";
@@ -6,8 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import { ProductImg } from "../components/productImg/productImg";
 import { Arrow } from "../components/arrow/arrow";
 import { Carousel } from "../components/carousel/carousel";
+import { CartContext } from "../App";
+import { Button } from "../components/button/button";
 
 export const ProductPage = () => {
+  const { cart, setCart } = useContext(CartContext);
+
   let { productId } = useParams();
   const maxNum = 5;
 
@@ -101,6 +105,24 @@ export const ProductPage = () => {
     checkNum(currentNum - 1);
   }
 
+  // добавить/удалить товар в корзину. Используем Map
+  // чтобы были только уникальные id товара. Количество
+  // будет регулироваться на странице корзины
+  function addRemoveProductToCart(id) {
+    if (cart.has(id)) {
+      const newCart = new Map(cart);
+      newCart.delete(id);
+      setCart(newCart);
+      console.log("cart ", newCart);
+      return;
+    }
+
+    const newCart = new Map(cart);
+    newCart.set(id, 1);
+    setCart(newCart);
+    console.log("cart ", newCart);
+  }
+
   return isLoading ? (
     <div>Loading product...</div>
   ) : isError ? (
@@ -126,6 +148,10 @@ export const ProductPage = () => {
         currentNum={currentNum}
         setCurrentNum={setCurrentNum}
       />
+
+      <Button func={() => addRemoveProductToCart(productById.id)}>
+        {cart.has(productById.id) ? "Remove" : "Add"}
+      </Button>
     </div>
   );
 };

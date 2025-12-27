@@ -31,3 +31,7 @@
   border: 4px solid brown;
   overflow: hidden;
 }
+
+.button {
+  cursor: pointer;
+}

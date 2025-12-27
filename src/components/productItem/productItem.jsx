@@ -80,10 +80,7 @@ export const ProductItem = ({ product }) => {
           </div>
         </Link>
         <div>{`${product.price} $`}</div>
-        <Button
-          className={styles.buttonAdd}
-          func={() => addRemoveProductToCart(product.id)}
-        >
+        <Button func={() => addRemoveProductToCart(product.id)}>
           {cart.has(product.id) ? "Remove" : "Add"}
         </Button>
       </div>
