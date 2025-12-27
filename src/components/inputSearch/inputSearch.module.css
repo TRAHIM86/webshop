@@ -1,18 +1,21 @@
 .inputBlock {
-  width: 50%;
+  width: 20em;
   position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
 }
 
 .searchField {
+  width: 100%;
+  padding-right: 2em; /* Место под крестик */
   box-sizing: border-box;
-  flex-grow: 1;
 }
 
 .divClear {
-  flex-shrink: 0;
-  background-color: chartreuse;
+  color: black;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1em;
+  height: 1em;
   cursor: pointer;
+  opacity: 0.5;
 }

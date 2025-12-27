@@ -1,9 +1,10 @@
-import react, { useEffect, useState } from "react";
+import react, { useState } from "react";
+import styles from "./shop.module.css";
+import { useQuery } from "@tanstack/react-query";
+
 import { ProductList } from "../components/productlist/productList";
 import Requests from "../requests";
 import { ProductMenu } from "../components/productMenu/productMenu";
-
-import { useQuery } from "@tanstack/react-query";
 import { Pagination } from "../components/pagination/pagination";
 
 // получить "конкретные продукты"
@@ -83,7 +84,7 @@ export const Shop = () => {
   if (isError) return <div>Error</div>;
 
   return (
-    <div>
+    <div className={styles.shop}>
       <ProductMenu
         searchStr={searchStr}
         setSearchStr={setSearchStr}
@@ -93,9 +94,8 @@ export const Shop = () => {
         setSortOrder={setSortOrder}
         quantityProducts={quantityProducts}
         showQuantityProducts={showQuantityProducts}
+        allProducts={allProducts}
       />
-
-      <div>All products: {allProducts?.total || 0}</div>
 
       <Pagination
         allProducts={allProducts}

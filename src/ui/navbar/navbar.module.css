@@ -1,5 +1,4 @@
 .navbar {
-  border: 1px orange solid;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,5 +13,5 @@
 
 .Link:hover {
   cursor: pointer;
-  color: orange;
+  color: rgb(255, 153, 0);
 }

@@ -1,15 +1,10 @@
 .header {
   width: 100%;
   background-color: rgb(102, 99, 99);
-  border: 1px red solid;
   display: flex;
   justify-content: space-between;
   padding-left: 1em;
   padding-right: 1em;
-}
-
-.logoWrapper {
-  border: 1px solid yellow;
 }
 
 .logoWrapper {
@@ -24,6 +19,6 @@
 }
 
 .header h1 {
-  color: orange;
+  color: rgb(255, 153, 0);
   font-size: 0.75em;
 }

@@ -14,7 +14,14 @@ export const InputSearch = ({ searchStr, setSearchStr, setCurrentPage }) => {
           setCurrentPage(1);
         }}
       />
-      <div className={styles.divClear} onClick={() => setSearchStr("")}>
+      <div
+        className={styles.divClear}
+        onClick={() => setSearchStr("")}
+        style={{
+          opacity: searchStr ? 1 : 0,
+          pointerEvents: searchStr ? "auto" : "none",
+        }}
+      >
         {searchStr && "X"}
       </div>
     </div>

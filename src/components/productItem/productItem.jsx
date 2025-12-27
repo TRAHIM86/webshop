@@ -1,10 +1,15 @@
-import react, { useState } from "react";
+import react, { useContext, useState } from "react";
+import styles from "./productItem.module.css";
+import { CartContext } from "../../App";
+
 import { Link } from "react-router-dom";
 import { ProductImg } from "../productImg/productImg";
-import styles from "./productItem.module.css";
 import { Arrow } from "../arrow/arrow";
+import { Button } from "../button/button";
 
 export const ProductItem = ({ product }) => {
+  const { cart, setCart } = useContext(CartContext);
+
   const maxNum = 5;
   const [currentNum, setCurrentNum] = useState(1);
 
@@ -42,6 +47,24 @@ export const ProductItem = ({ product }) => {
     };
   }
 
+  // добавить/удалить товар в корзину. Используем Map
+  // чтобы были только уникальные id товара. Количество
+  // будет регулироваться на странице корзины
+  function addRemoveProductToCart(id) {
+    if (cart.has(id)) {
+      const newCart = new Map(cart);
+      newCart.delete(id);
+      setCart(newCart);
+      console.log("cart ", newCart);
+      return;
+    }
+
+    const newCart = new Map(cart);
+    newCart.set(id, 1);
+    setCart(newCart);
+    console.log("cart ", newCart);
+  }
+
   return (
     <div key={product.id} className={styles.productItem}>
       <div>
@@ -55,9 +78,14 @@ export const ProductItem = ({ product }) => {
           <div className={styles.containerImg}>
             <ProductImg productName={product.name} num={currentNum} />
           </div>
-          <div>{`${product.price} $`}</div>
-          <button>Add</button>
         </Link>
+        <div>{`${product.price} $`}</div>
+        <Button
+          className={styles.buttonAdd}
+          func={() => addRemoveProductToCart(product.id)}
+        >
+          {cart.has(product.id) ? "Remove" : "Add"}
+        </Button>
       </div>
     </div>
   );
