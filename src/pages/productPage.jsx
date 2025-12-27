@@ -35,15 +35,26 @@ export const ProductPage = () => {
 
     const arrNums = [];
 
-    for (let i = 1; i <= maxNum; i++) {
+    function checkImg(num) {
       const img = new Image();
-      img.src = `/imgs/${productById.name}/${i}.jpg`;
+      img.src = `/imgs/${productById.name}/${num}.jpg`;
 
       img.onload = () => {
-        arrNums.push(i);
-        setPhotos([...arrNums]);
+        arrNums.push(num);
+
+        if (num < maxNum) {
+          checkImg(num + 1);
+        } else {
+          setPhotos(arrNums);
+        }
+      };
+
+      img.onerror = () => {
+        setPhotos(arrNums);
       };
     }
+
+    checkImg(1);
   }
 
   useEffect(() => {
