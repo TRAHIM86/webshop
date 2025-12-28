@@ -35,18 +35,34 @@ export const Cart = () => {
     });
   }
 
+  function removeQuantity(productid) {
+    setCart((prev) => {
+      const newCart = new Map(prev);
+
+      if (newCart.get(productid) > 1) {
+        newCart.set(productid, newCart.get(productid) - 1);
+      } else {
+        newCart.delete(productid);
+      }
+
+      return newCart;
+    });
+  }
+
   console.log(cart);
 
   return (
     <div>
-      {cartProducts?.map((product) => (
-        <div key={product.id}>
-          <ProductItem product={product} />
-          <div>{cart.get(product.id)}</div>
-          <Button func={() => addQuantity(product.id)}>+1</Button>
-          <button>-1</button>
-        </div>
-      ))}
+      {cartProducts
+        ?.filter((product) => cart.has(product.id))
+        .map((product) => (
+          <div key={product.id}>
+            <ProductItem product={product} />
+            <div>{cart.get(product.id)}</div>
+            <Button func={() => addQuantity(product.id)}>+1</Button>
+            <Button func={() => removeQuantity(product.id)}>-1</Button>
+          </div>
+        ))}
     </div>
   );
 };
