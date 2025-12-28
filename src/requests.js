@@ -67,12 +67,24 @@ export default class Requests {
     }
   }
 
-  // получить конкретный продук по id
+  // получить конкретный продукт по id
   static async getProductById(id) {
     const response = await axios.get("http://localhost:3002/products");
     let products = response.data;
 
     let currentProduct = products.find((product) => product.id === id);
     return currentProduct;
+  }
+
+  // получить продук для корзины по ids
+  static async getCartProduct(ids) {
+    const response = await axios.get("http://localhost:3002/products");
+    let allProducts = response.data;
+
+    const cartProducts = allProducts.filter((product) =>
+      ids.includes(product.id)
+    );
+
+    return cartProducts;
   }
 }
