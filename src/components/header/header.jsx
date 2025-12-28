@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./header.module.css";
 import { Navbar } from "../../ui/navbar/navbar";
 import { Link } from "react-router-dom";
