@@ -49,20 +49,27 @@ export const Cart = () => {
     });
   }
 
-  console.log(cart);
+  console.log(cartProducts);
 
+  // cartProducts - продукты после запроса при
+  // переходе на страницу. Показать только те, что
+  // есть в cart Map(). Нужно для того, что если при
+  // кликах -1 доходим до нуля, то он удаляется с Map
+  // и соотв не проходит фильтр (не отображ в корзине)
   return (
     <div>
-      {cartProducts
-        ?.filter((product) => cart.has(product.id))
-        .map((product) => (
-          <div key={product.id}>
-            <ProductItem product={product} />
-            <div>{cart.get(product.id)}</div>
-            <Button func={() => addQuantity(product.id)}>+1</Button>
-            <Button func={() => removeQuantity(product.id)}>-1</Button>
-          </div>
-        ))}
+      {cart.size === 0
+        ? "Your shopping cart is empty"
+        : cartProducts
+            ?.filter((product) => cart.has(product.id))
+            .map((product) => (
+              <div key={product.id}>
+                <ProductItem product={product} />
+                <div>{cart.get(product.id)}</div>
+                <Button func={() => addQuantity(product.id)}>+1</Button>
+                <Button func={() => removeQuantity(product.id)}>-1</Button>
+              </div>
+            ))}
     </div>
   );
 };

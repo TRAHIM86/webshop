@@ -62,7 +62,6 @@ export const ProductItem = ({ product }) => {
     const newCart = new Map(cart);
     newCart.set(id, 1);
     setCart(newCart);
-    console.log("cart ", newCart);
   }
 
   return (
