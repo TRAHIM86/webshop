@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styles from "./navbar.module.css";
 import { CartContext } from "../../App";
 
+import { ShoppingCart } from "lucide-react";
+
 export const Navbar = () => {
   const { cart, setCart } = useContext(CartContext);
 
@@ -18,7 +20,10 @@ export const Navbar = () => {
         About
       </Link>
       <Link className={styles.Link} to="/">
-        {cart.size}
+        <div className={styles.cartContainer}>
+          <ShoppingCart className={styles.shoppingCart} />
+          <div className={styles.cartCount}>{cart.size}</div>
+        </div>
       </Link>
     </div>
   );
