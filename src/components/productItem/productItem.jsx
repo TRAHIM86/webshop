@@ -67,17 +67,20 @@ export const ProductItem = ({ product }) => {
   return (
     <div key={product.id} className={styles.productItem}>
       <div>
+        <Link to={`/products/${product.id}`}>
+          <div>{product.name}</div>
+        </Link>
+
         <div className={styles.arrows}>
           <Arrow funcOnClick={prevPhoto}>←</Arrow>
+          <Link className={styles.linkPhoto} to={`/products/${product.id}`}>
+            <div className={styles.containerImg}>
+              <ProductImg productName={product.name} num={currentNum} />
+            </div>
+          </Link>
           <Arrow funcOnClick={nextPhoto}>→</Arrow>
         </div>
 
-        <Link to={`/products/${product.id}`}>
-          <div>{product.name}</div>
-          <div className={styles.containerImg}>
-            <ProductImg productName={product.name} num={currentNum} />
-          </div>
-        </Link>
         <div>{`${product.price.toFixed(2)} $`}</div>
         <Button func={() => addRemoveProductToCart(product.id)}>
           {cart.has(product.id) ? "Remove" : "Add"}

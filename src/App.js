@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import styles from "./app.css";
+import styles from "./app.module.css";
 import { Shop } from "./pages/shop";
 import { Main } from "./pages/main";
 import { About } from "./pages/about";

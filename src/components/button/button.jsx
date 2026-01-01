@@ -1,9 +1,9 @@
 import react from "react";
 import styles from "./button.module.css";
 
-export const Button = ({ children, func }) => {
+export const Button = ({ children, func, className }) => {
   return (
-    <button className={styles.button} onClick={func}>
+    <button className={`${styles.button} ${className || ""}`} onClick={func}>
       {children}
     </button>
   );

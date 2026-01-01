@@ -1,3 +1,16 @@
 .button {
   cursor: pointer;
+  padding: 0.25em;
+  border: none;
+  background-color: rgb(255, 153, 0);
+  color: rgb(102, 99, 99);
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover {
+  background-color: rgb(102, 99, 99);
+  color: rgb(255, 153, 0);
 }

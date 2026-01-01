@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ProductItem } from "../components/productItem/productItem";
 import { Button } from "../components/button/button";
 import styles from "./cart.module.css";
+import { ProductCart } from "../components/productCart/productCart";
 
 export const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
@@ -50,6 +51,23 @@ export const Cart = () => {
     });
   }
 
+  // добавить/удалить товар в корзину. Используем Map
+  // чтобы были только уникальные id товара. Количество
+  // будет регулироваться на странице корзины
+  function addRemoveProductToCart(id) {
+    if (cart.has(id)) {
+      const newCart = new Map(cart);
+      newCart.delete(id);
+      setCart(newCart);
+      console.log("cart ", newCart);
+      return;
+    }
+
+    const newCart = new Map(cart);
+    newCart.set(id, 1);
+    setCart(newCart);
+  }
+
   function removeAllCart() {
     setCart(new Map());
   }
@@ -69,30 +87,53 @@ export const Cart = () => {
   console.log("cart ", cart);
 
   return (
-    <div>
-      {cart.size === 0
-        ? "Your shopping cart is empty"
-        : cartProducts
-            ?.filter((product) => cart.has(product.id))
-            .map((product) => {
-              const quantity = cart.get(product.id);
-              const sum = (quantity * product.price).toFixed(2);
+    <div className={styles.cart}>
+      <div className={styles.cartItems}>
+        {cart.size === 0
+          ? "Your shopping cart is empty"
+          : cartProducts
+              ?.filter((product) => cart.has(product.id))
+              .map((product) => {
+                const quantity = cart.get(product.id);
+                const sum = (quantity * product.price).toFixed(2);
 
-              return (
-                <div key={product.id} className={styles.cartItem}>
-                  <ProductItem product={product} />
-                  <div className={styles.quantity}>
-                    <Button func={() => removeQuantity(product.id)}>-1</Button>
-                    <div>{quantity}</div>
-                    <Button func={() => addQuantity(product.id)}>+1</Button>
-                    <div>{sum} $</div>
+                return (
+                  <div key={product.id} className={styles.cartItem}>
+                    <ProductCart product={product} />
+                    <div className={styles.quantityBlock}>
+                      <Button
+                        className={styles.buttonQuantity}
+                        func={() => removeQuantity(product.id)}
+                      >
+                        -
+                      </Button>
+                      <div className={styles.quantity}>{quantity}</div>
+                      <Button
+                        className={styles.buttonQuantity}
+                        func={() => addQuantity(product.id)}
+                      >
+                        +
+                      </Button>
+                      <div className={styles.sum}>{sum} $</div>
+                      <Button func={() => addRemoveProductToCart(product.id)}>
+                        {cart.has(product.id) ? "Remove" : "Add"}
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-      <Button func={removeAllCart}>Clean cart</Button>
-      <div>Total: {sumTotal.toFixed(2)} $</div>
-      <Button>Order</Button>
+                );
+              })}
+      </div>
+      <div className={styles.orderBlock}>
+        <Button className={styles.buttonClean} func={removeAllCart}>
+          Clean cart
+        </Button>
+        <div className={styles.sumTotal}>
+          <div className={styles.sumTotalBlock}>
+            Total: <strong>{sumTotal.toFixed(2)} $</strong>
+          </div>
+        </div>
+        <Button className={styles.buttonOrder}>ORDER</Button>
+      </div>
     </div>
   );
 };
