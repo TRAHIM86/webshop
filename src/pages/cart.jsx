@@ -50,6 +50,10 @@ export const Cart = () => {
     });
   }
 
+  function removeAllCart() {
+    setCart(new Map());
+  }
+
   // cartProducts - продукты после запроса при
   // переходе на страницу. Показать только те, что
   // есть в cart Map(). Нужно для того, что если при
@@ -61,6 +65,8 @@ export const Cart = () => {
 
     return sum + (product?.price || 0) * qty;
   }, 0);
+
+  console.log("cart ", cart);
 
   return (
     <div>
@@ -84,7 +90,9 @@ export const Cart = () => {
                 </div>
               );
             })}
+      <Button func={removeAllCart}>Clean cart</Button>
       <div>Total: {sumTotal.toFixed(2)} $</div>
+      <Button>Order</Button>
     </div>
   );
 };
