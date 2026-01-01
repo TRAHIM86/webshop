@@ -1,7 +1,17 @@
 {
   "products": [
-    { "id": 1, "name": "Football ball", "price": 100, "category": "football" },
-    { "id": 2, "name": "Football boots", "price": 200, "category": "football" },
+    {
+      "id": 1,
+      "name": "Football ball",
+      "price": 100.0,
+      "category": "football"
+    },
+    {
+      "id": 2,
+      "name": "Football boots",
+      "price": 200.0,
+      "category": "football"
+    },
     {
       "id": 3,
       "name": "Football t-shirt",
@@ -11,13 +21,13 @@
     {
       "id": 4,
       "name": "Basketball t-shirt",
-      "price": 40,
+      "price": 40.0,
       "category": "basketball"
     },
     {
       "id": 5,
       "name": "Basketball shorts",
-      "price": 55,
+      "price": 55.0,
       "category": "basketball"
     },
     {

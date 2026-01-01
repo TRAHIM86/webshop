@@ -4,6 +4,7 @@ import Requests from "../requests";
 import { useQuery } from "@tanstack/react-query";
 import { ProductItem } from "../components/productItem/productItem";
 import { Button } from "../components/button/button";
+import styles from "./cart.module.css";
 
 export const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
@@ -49,27 +50,41 @@ export const Cart = () => {
     });
   }
 
-  console.log(cartProducts);
-
   // cartProducts - продукты после запроса при
   // переходе на страницу. Показать только те, что
   // есть в cart Map(). Нужно для того, что если при
   // кликах -1 доходим до нуля, то он удаляется с Map
   // и соотв не проходит фильтр (не отображ в корзине)
+
+  const sumTotal = [...cart.entries()].reduce((sum, [id, qty]) => {
+    const product = cartProducts?.find((p) => p.id === id);
+
+    return sum + (product?.price || 0) * qty;
+  }, 0);
+
   return (
     <div>
       {cart.size === 0
         ? "Your shopping cart is empty"
         : cartProducts
             ?.filter((product) => cart.has(product.id))
-            .map((product) => (
-              <div key={product.id}>
-                <ProductItem product={product} />
-                <div>{cart.get(product.id)}</div>
-                <Button func={() => addQuantity(product.id)}>+1</Button>
-                <Button func={() => removeQuantity(product.id)}>-1</Button>
-              </div>
-            ))}
+            .map((product) => {
+              const quantity = cart.get(product.id);
+              const sum = (quantity * product.price).toFixed(2);
+
+              return (
+                <div key={product.id} className={styles.cartItem}>
+                  <ProductItem product={product} />
+                  <div className={styles.quantity}>
+                    <Button func={() => removeQuantity(product.id)}>-1</Button>
+                    <div>{quantity}</div>
+                    <Button func={() => addQuantity(product.id)}>+1</Button>
+                    <div>{sum} $</div>
+                  </div>
+                </div>
+              );
+            })}
+      <div>Total: {sumTotal.toFixed(2)} $</div>
     </div>
   );
 };

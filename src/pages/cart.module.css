@@ -1,0 +1,9 @@
+.cartItem {
+  border: 1px solid green;
+  display: flex;
+}
+.quantity {
+  display: flex;
+  align-items: center;
+  border: 1px solid blue;
+}

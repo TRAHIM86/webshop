@@ -78,7 +78,7 @@ export const ProductItem = ({ product }) => {
             <ProductImg productName={product.name} num={currentNum} />
           </div>
         </Link>
-        <div>{`${product.price} $`}</div>
+        <div>{`${product.price.toFixed(2)} $`}</div>
         <Button func={() => addRemoveProductToCart(product.id)}>
           {cart.has(product.id) ? "Remove" : "Add"}
         </Button>
