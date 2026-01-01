@@ -1,11 +1,11 @@
-import react, { useContext } from "react";
+import { useContext } from "react";
 import { CartContext } from "../App";
 import Requests from "../requests";
 import { useQuery } from "@tanstack/react-query";
-import { ProductItem } from "../components/productItem/productItem";
 import { Button } from "../components/button/button";
 import styles from "./cart.module.css";
 import { ProductCart } from "../components/productCart/productCart";
+import { Plus, Minus } from "lucide-react";
 
 export const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
@@ -105,14 +105,14 @@ export const Cart = () => {
                         className={styles.buttonQuantity}
                         func={() => removeQuantity(product.id)}
                       >
-                        -
+                        <Minus />
                       </Button>
                       <div className={styles.quantity}>{quantity}</div>
                       <Button
                         className={styles.buttonQuantity}
                         func={() => addQuantity(product.id)}
                       >
-                        +
+                        <Plus />
                       </Button>
                       <div className={styles.sum}>{sum} $</div>
                       <Button func={() => addRemoveProductToCart(product.id)}>

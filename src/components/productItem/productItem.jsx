@@ -7,6 +7,8 @@ import { ProductImg } from "../productImg/productImg";
 import { Arrow } from "../arrow/arrow";
 import { Button } from "../button/button";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 export const ProductItem = ({ product }) => {
   const { cart, setCart } = useContext(CartContext);
 
@@ -72,13 +74,17 @@ export const ProductItem = ({ product }) => {
         </Link>
 
         <div className={styles.arrows}>
-          <Arrow funcOnClick={prevPhoto}>←</Arrow>
+          <Arrow funcOnClick={prevPhoto}>
+            <ChevronLeft size={16} />
+          </Arrow>
           <Link className={styles.linkPhoto} to={`/products/${product.id}`}>
             <div className={styles.containerImg}>
               <ProductImg productName={product.name} num={currentNum} />
             </div>
           </Link>
-          <Arrow funcOnClick={nextPhoto}>→</Arrow>
+          <Arrow funcOnClick={nextPhoto}>
+            <ChevronRight size={16} />
+          </Arrow>
         </div>
 
         <div>{`${product.price.toFixed(2)} $`}</div>

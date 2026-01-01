@@ -1,15 +1,12 @@
 import react, { useContext, useState } from "react";
 import styles from "./productCart.module.css";
-import { CartContext } from "../../App";
 
 import { Link } from "react-router-dom";
 import { ProductImg } from "../productImg/productImg";
 import { Arrow } from "../arrow/arrow";
-import { Button } from "../button/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const ProductCart = ({ product }) => {
-  const { cart, setCart } = useContext(CartContext);
-
   const maxNum = 5;
   const [currentNum, setCurrentNum] = useState(1);
 
@@ -54,13 +51,17 @@ export const ProductCart = ({ product }) => {
       </Link>
 
       <div className={styles.arrows}>
-        <Arrow funcOnClick={prevPhoto}>←</Arrow>
+        <Arrow funcOnClick={prevPhoto}>
+          <ChevronLeft size={16} />
+        </Arrow>
         <Link className={styles.linkPhoto} to={`/products/${product.id}`}>
           <div className={styles.containerImg}>
             <ProductImg productName={product.name} num={currentNum} />
           </div>
         </Link>
-        <Arrow funcOnClick={nextPhoto}>→</Arrow>
+        <Arrow funcOnClick={nextPhoto}>
+          <ChevronRight size={16} />
+        </Arrow>
       </div>
 
       <div>{`${product.price.toFixed(2)} $`}</div>
