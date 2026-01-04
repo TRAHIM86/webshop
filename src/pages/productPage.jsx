@@ -13,7 +13,6 @@ export const ProductPage = () => {
   const { cart, setCart } = useContext(CartContext);
 
   let { productId } = useParams();
-  const maxNum = 5;
 
   async function fetchProductById(id) {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -37,19 +36,25 @@ export const ProductPage = () => {
   // зависимости от количества фото в папке продукта
   // (1-5) получить массив с номерами.
 
+  // заполнить массив номерами фоток (от 1 до 5)
   function fillPhotos() {
-    if (!productById) return;
+    if (!productById || !productById.name) return;
 
     const arrNums = [];
 
+    // максимальное количество фото для загрузки
+    const MAXNUM = 5;
+
     function checkImg(num) {
       const img = new Image();
-      img.src = `/imgs/${productById.name}/${num}.jpg`;
+      img.src = `${
+        process.env.PUBLIC_URL
+      }/imgs/${productById.name.toLowerCase()}/${num}.jpg`;
 
       img.onload = () => {
         arrNums.push(num);
 
-        if (num < maxNum) {
+        if (num < MAXNUM) {
           checkImg(num + 1);
         } else {
           setPhotos(arrNums);
@@ -68,41 +73,30 @@ export const ProductPage = () => {
     fillPhotos();
   }, [productById]);
 
-  const [currentNum, setCurrentNum] = useState(1);
-
-  function nextPhoto() {
-    if (!productById) return;
-
-    const nextNum = currentNum + 1;
-
-    const isImg = new Image();
-    isImg.src = `/imgs/${productById.name}/${nextNum}.jpg`;
-
-    isImg.onload = () => {
-      setCurrentNum(nextNum);
-    };
-
-    isImg.onerror = () => {
-      setCurrentNum(1);
-    };
-  }
+  const [currentNumPhoto, setCurrentNumPhoto] = useState(1);
 
   function prevPhoto() {
-    if (!productById) return;
+    if (!productById || photos.length === 0) return;
 
-    console.log("PREV", maxNum);
-    function checkNum(num) {
-      if (num < 1) {
-        num = maxNum;
-      }
+    let prevIndex = photos.indexOf(currentNumPhoto) - 1;
 
-      const isImg = new Image();
-      isImg.onload = () => setCurrentNum(num);
-      isImg.onerror = () => checkNum(num - 1);
-      isImg.src = `/imgs/${productById.name}/${num}.jpg`;
+    if (prevIndex < 0) {
+      prevIndex = photos.length - 1;
     }
 
-    checkNum(currentNum - 1);
+    setCurrentNumPhoto(photos[prevIndex]);
+  }
+
+  function nextPhoto() {
+    if (!productById || photos.length === 0) return;
+
+    let nextIndex = photos.indexOf(currentNumPhoto) + 1;
+
+    if (nextIndex >= photos.length) {
+      nextIndex = 0;
+    }
+
+    setCurrentNumPhoto(photos[nextIndex]);
   }
 
   // добавить/удалить товар в корзину. Используем Map
@@ -136,7 +130,7 @@ export const ProductPage = () => {
         </div>
         <div>{productById.name}</div>
         <div className={styles.containerImg}>
-          <ProductImg productName={productById.name} num={currentNum} />
+          <ProductImg productName={productById.name} num={currentNumPhoto} />
         </div>
         <div>{`${productById.price} $`}</div>
         <div>{productById.category}</div>
@@ -145,8 +139,8 @@ export const ProductPage = () => {
       <Carousel
         product={productById}
         arrNumsPhoto={photos}
-        currentNum={currentNum}
-        setCurrentNum={setCurrentNum}
+        currentNum={currentNumPhoto}
+        setCurrentNum={setCurrentNumPhoto}
       />
 
       <Button func={() => addRemoveProductToCart(productById.id)}>

@@ -2,7 +2,9 @@ import React from "react";
 import styles from "./productImg.module.css";
 
 export const ProductImg = ({ productName, num }) => {
-  const imgPath = `/imgs/${productName.toLowerCase()}/`;
+  const imgPath = `${
+    process.env.PUBLIC_URL
+  }/imgs/${productName.toLowerCase()}/`;
 
   return (
     <img

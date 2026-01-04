@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import styles from "./app.module.css";
 import { Shop } from "./pages/shop";
 import { Main } from "./pages/main";
@@ -9,6 +9,8 @@ import { ProductPage } from "./pages/productPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createContext, useState } from "react";
 import { Cart } from "./pages/cart";
+
+//https://trahim86.github.io/webshop
 
 const queryClient = new QueryClient();
 
@@ -21,7 +23,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <CartContext.Provider value={{ cart, setCart }}>
-        <BrowserRouter>
+        <HashRouter>
           <div className={styles.appContainer}>
             <Header />
             <Routes>
@@ -34,7 +36,7 @@ function App() {
             </Routes>
             <Footer />
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </CartContext.Provider>
     </QueryClientProvider>
   );

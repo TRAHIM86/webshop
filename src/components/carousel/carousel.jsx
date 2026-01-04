@@ -1,4 +1,3 @@
-import react from "react";
 import { ProductImg } from "../productImg/productImg";
 import styles from "./carousel.module.css";
 

@@ -1,4 +1,4 @@
-import react, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./productItem.module.css";
 import { CartContext } from "../../App";
 
@@ -24,7 +24,9 @@ export const ProductItem = ({ product }) => {
       const isImg = new Image();
 
       // Пробуем оба формата
-      isImg.src = `/imgs/${product.name}/${num}.jpg`;
+      isImg.src = `${
+        process.env.PUBLIC_URL
+      }/imgs/${product.name.toLowerCase()}/${num}.jpg`;
 
       isImg.onload = () => setCurrentNum(num);
 
@@ -38,7 +40,9 @@ export const ProductItem = ({ product }) => {
     const nextNum = currentNum + 1;
 
     const isImg = new Image();
-    isImg.src = `/imgs/${product.name}/${nextNum}.jpg`;
+    isImg.src = `${
+      process.env.PUBLIC_URL
+    }/imgs/${product.name.toLowerCase()}/${nextNum}.jpg`;
 
     isImg.onload = () => {
       setCurrentNum(nextNum);

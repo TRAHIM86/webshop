@@ -6,7 +6,9 @@ export default class Requests {
   // для отражения количества страниц
   static async getAllProducts(filterStr = "", quantity) {
     try {
-      const products = await axios.get("http://localhost:3002/products");
+      const products = await axios.get(
+        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products"
+      );
 
       let filteredProducts = products.data.filter((product) =>
         product.name.toLowerCase().includes(filterStr.toLowerCase())
@@ -43,7 +45,9 @@ export default class Requests {
     filterStr = ""
   ) {
     try {
-      const response = await axios.get("http://localhost:3002/products");
+      const response = await axios.get(
+        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products"
+      );
 
       let filteredProducts = response.data.filter((product) =>
         product.name.toLowerCase().includes(filterStr.toLowerCase())
@@ -67,18 +71,30 @@ export default class Requests {
     }
   }
 
-  // получить конкретный продукт по id
+  // получить конкретный продукт по id.
+  // Здесь КОСТЫЛЬ, т.к. mocapi при запросе id === 5,
+  // возвращает массив где в id есть '5' (5,15,25...)
   static async getProductById(id) {
-    const response = await axios.get("http://localhost:3002/products");
-    let products = response.data;
+    // Получаем ВСЕ товары один раз
+    const response = await axios.get(
+      "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products"
+    );
 
-    let currentProduct = products.find((product) => product.id === id);
-    return currentProduct;
+    // Ищем точное совпадение
+    const product = response.data.find((p) => p.id == id);
+
+    if (!product) {
+      throw new Error(`Product ${id} not found`);
+    }
+
+    return product;
   }
 
   // получить продук для корзины по ids
   static async getCartProduct(ids) {
-    const response = await axios.get("http://localhost:3002/products");
+    const response = await axios.get(
+      "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products"
+    );
     let allProducts = response.data;
 
     const cartProducts = allProducts.filter((product) =>

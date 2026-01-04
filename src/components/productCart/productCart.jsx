@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const ProductCart = ({ product }) => {
   const maxNum = 5;
-  const [currentNum, setCurrentNum] = useState(1);
+  const [currentNumPhoto, setCurrentNumPhoto] = useState(1);
 
   function prevPhoto() {
     function checkNum(num) {
@@ -19,28 +19,32 @@ export const ProductCart = ({ product }) => {
       const isImg = new Image();
 
       // Пробуем оба формата
-      isImg.src = `/imgs/${product.name}/${num}.jpg`;
+      isImg.src = `${
+        process.env.PUBLIC_URL
+      }/imgs/${product.name.toLowerCase()}/${num}.jpg`;
 
-      isImg.onload = () => setCurrentNum(num);
+      isImg.onload = () => setCurrentNumPhoto(num);
 
       isImg.onerror = () => checkNum(num - 1);
     }
 
-    checkNum(currentNum - 1);
+    checkNum(currentNumPhoto - 1);
   }
 
   function nextPhoto() {
-    const nextNum = currentNum + 1;
+    const nextNum = currentNumPhoto + 1;
 
     const isImg = new Image();
-    isImg.src = `/imgs/${product.name}/${nextNum}.jpg`;
+    isImg.src = `${
+      process.env.PUBLIC_URL
+    }/imgs/${product.name.toLowerCase()}/${nextNum}.jpg`;
 
     isImg.onload = () => {
-      setCurrentNum(nextNum);
+      setCurrentNumPhoto(nextNum);
     };
 
     isImg.onerror = () => {
-      setCurrentNum(1);
+      setCurrentNumPhoto(1);
     };
   }
 
@@ -56,7 +60,7 @@ export const ProductCart = ({ product }) => {
         </Arrow>
         <Link className={styles.linkPhoto} to={`/products/${product.id}`}>
           <div className={styles.containerImg}>
-            <ProductImg productName={product.name} num={currentNum} />
+            <ProductImg productName={product.name} num={currentNumPhoto} />
           </div>
         </Link>
         <Arrow funcOnClick={nextPhoto}>
