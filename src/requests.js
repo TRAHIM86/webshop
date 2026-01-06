@@ -4,7 +4,13 @@ import { data } from "react-router-dom";
 export default class Requests {
   // получить все продукты (только по фильтру)
   // для отражения количества страниц
-  static async getAllProducts(filterStr = "", quantity, minPrice, maxPrice) {
+  static async getAllProducts(
+    filterStr = "",
+    quantity,
+    arrCategories,
+    minPrice,
+    maxPrice
+  ) {
     try {
       const products = await axios.get(
         "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products"
@@ -14,6 +20,7 @@ export default class Requests {
         .filter((product) =>
           product.name.toLowerCase().includes(filterStr.toLowerCase())
         )
+        .filter((product) => arrCategories.includes(product.category))
         .filter(
           (product) => product.price >= minPrice && product.price <= maxPrice
         );
@@ -47,6 +54,7 @@ export default class Requests {
     quantityProducts,
     currentPage,
     filterStr = "",
+    arrCategories,
     minPrice,
     maxPrice
   ) {
@@ -59,6 +67,7 @@ export default class Requests {
         .filter((product) =>
           product.name.toLowerCase().includes(filterStr.toLowerCase())
         )
+        .filter((product) => arrCategories.includes(product.category))
         .filter(
           (product) => product.price >= minPrice && product.price <= maxPrice
         );

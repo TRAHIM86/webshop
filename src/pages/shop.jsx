@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import { useState } from "react";
 import styles from "./shop.module.css";
 import { useQuery } from "@tanstack/react-query";
 
@@ -15,6 +15,7 @@ async function fetchSelectedProducts(
   quantity,
   numPage,
   str,
+  categories,
   minPrice,
   maxPrice
 ) {
@@ -26,6 +27,7 @@ async function fetchSelectedProducts(
     quantity,
     numPage,
     str,
+    categories,
     minPrice,
     maxPrice
   );
@@ -33,8 +35,14 @@ async function fetchSelectedProducts(
 
 // все продукты - возвращает количество продуктов
 // по фильтру и количество страниц (для пагинации)
-async function fetchAllProducts(str, quantity, minP, maxP) {
-  const allProducts = await Requests.getAllProducts(str, quantity, minP, maxP);
+async function fetchAllProducts(str, quantity, arrCategories, minP, maxP) {
+  const allProducts = await Requests.getAllProducts(
+    str,
+    quantity,
+    arrCategories,
+    minP,
+    maxP
+  );
   return allProducts;
 }
 
@@ -50,6 +58,17 @@ export const Shop = () => {
   // поисковая строка
   const [searchStr, setSearchStr] = useState("");
 
+  // массив категорий для фильтра
+  const [categories, setCategories] = useState([
+    "football",
+    "basketball",
+    "running",
+    "swimming",
+    "tennis",
+    "yoga",
+  ]);
+
+  // мин и макс цены для фильтра
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
 
@@ -65,10 +84,23 @@ export const Shop = () => {
     isLoading: isLoadingAllProducts,
     isError: isErrorAllProducts,
   } = useQuery({
-    queryKey: ["allProducts", searchStr, quantityProducts, minPrice, maxPrice],
+    queryKey: [
+      "allProducts",
+      searchStr,
+      quantityProducts,
+      categories,
+      minPrice,
+      maxPrice,
+    ],
 
     queryFn: () =>
-      fetchAllProducts(searchStr, quantityProducts, minPrice, maxPrice),
+      fetchAllProducts(
+        searchStr,
+        quantityProducts,
+        categories,
+        minPrice,
+        maxPrice
+      ),
   });
 
   // целевые продукты для страницы
@@ -84,6 +116,7 @@ export const Shop = () => {
       quantityProducts,
       currentPage,
       searchStr,
+      categories,
       minPrice,
       maxPrice,
     ],
@@ -95,6 +128,7 @@ export const Shop = () => {
         quantityProducts,
         currentPage,
         searchStr,
+        categories,
         minPrice,
         maxPrice
       ),
@@ -124,6 +158,8 @@ export const Shop = () => {
 
       <div className={styles.mainShop}>
         <SideBar
+          categories={categories}
+          setCategories={setCategories}
           minPrice={minPrice}
           setMinPrice={setMinPrice}
           maxPrice={maxPrice}
