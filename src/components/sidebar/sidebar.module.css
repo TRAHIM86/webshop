@@ -1,0 +1,18 @@
+.sidebar {
+  border: 1px solid salmon;
+  width: clamp(200px, 30%, 300px);
+}
+
+.filterCategory {
+  display: flex;
+  flex-direction: column;
+}
+
+.priceInputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.priceInput {
+  width: 4em;
+}

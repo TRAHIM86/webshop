@@ -6,6 +6,7 @@ import { ProductList } from "../components/productlist/productList";
 import Requests from "../requests";
 import { ProductMenu } from "../components/productMenu/productMenu";
 import { Pagination } from "../components/pagination/pagination";
+import { SideBar } from "../components/sidebar/sidebar";
 
 // получить "конкретные продукты"
 async function fetchSelectedProducts(method, order, quantity, numPage, str) {
@@ -103,13 +104,16 @@ export const Shop = () => {
         setCurrentPage={setCurrentPage}
       />
 
-      {isLoading ? (
-        <div>Loading products...</div>
-      ) : isError ? (
-        <div>Error...</div>
-      ) : (
-        <ProductList products={products} />
-      )}
+      <div className={styles.mainShop}>
+        <SideBar />
+        {isLoading ? (
+          <div>Loading products...</div>
+        ) : isError ? (
+          <div>Error...</div>
+        ) : (
+          <ProductList products={products} />
+        )}
+      </div>
     </div>
   );
 };
