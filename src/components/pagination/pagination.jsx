@@ -16,7 +16,7 @@ export const Pagination = ({ allProducts, currentPage, setCurrentPage }) => {
               {num}
             </div>
           ))
-        : "0"}
+        : ""}
     </div>
   );
 };

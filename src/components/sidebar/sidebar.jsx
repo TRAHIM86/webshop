@@ -2,19 +2,12 @@ import { useState } from "react";
 import styles from "./sidebar.module.css";
 import { Button } from "../button/button";
 
-export const SideBar = () => {
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000);
-
-  console.log(minPrice, maxPrice);
-
-  function setValueMin(val) {
-    setMinPrice(val);
-  }
-
-  function setValueMax(val) {
-    setMaxPrice(val);
-  }
+export const SideBar = ({ minPrice, setMinPrice, maxPrice, setMaxPrice }) => {
+  // времененые значения minPrice и maxPrice, т.к.
+  // при нажатии на "Filter" устанавливаются постоянные
+  // и они улетают автоматом в запрос через react query
+  const [tempMin, setTempMin] = useState(minPrice);
+  const [tempMax, setTempMax] = useState(maxPrice);
 
   return (
     <div className={styles.sidebar}>
@@ -36,17 +29,24 @@ export const SideBar = () => {
           <input
             className={styles.priceInput}
             type="number"
-            value={minPrice}
-            onChange={(e) => setValueMin(e.target.value)}
+            value={tempMin}
+            onChange={(e) => setTempMin(e.target.value)}
           />
           <input
             className={styles.priceInput}
             type="number"
-            value={maxPrice}
-            onChange={(e) => setValueMax(e.target.value)}
+            value={tempMax}
+            onChange={(e) => setTempMax(e.target.value)}
           />
         </div>
-        <Button func={() => console.log("FILTER")}>Filter</Button>
+        <Button
+          func={() => {
+            setMinPrice(tempMin);
+            setMaxPrice(tempMax);
+          }}
+        >
+          Filter
+        </Button>
       </div>
     </div>
   );

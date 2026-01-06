@@ -9,7 +9,15 @@ import { Pagination } from "../components/pagination/pagination";
 import { SideBar } from "../components/sidebar/sidebar";
 
 // получить "конкретные продукты"
-async function fetchSelectedProducts(method, order, quantity, numPage, str) {
+async function fetchSelectedProducts(
+  method,
+  order,
+  quantity,
+  numPage,
+  str,
+  minPrice,
+  maxPrice
+) {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   return await Requests.getSelectedProducts(
@@ -17,14 +25,16 @@ async function fetchSelectedProducts(method, order, quantity, numPage, str) {
     order,
     quantity,
     numPage,
-    str
+    str,
+    minPrice,
+    maxPrice
   );
 }
 
 // все продукты - возвращает количество продуктов
 // по фильтру и количество страниц (для пагинации)
-async function fetchAllProducts(str, quantity) {
-  const allProducts = await Requests.getAllProducts(str, quantity);
+async function fetchAllProducts(str, quantity, minP, maxP) {
+  const allProducts = await Requests.getAllProducts(str, quantity, minP, maxP);
   return allProducts;
 }
 
@@ -40,6 +50,9 @@ export const Shop = () => {
   // поисковая строка
   const [searchStr, setSearchStr] = useState("");
 
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
+
   // показать N товаров на странице
   function showQuantityProducts(value) {
     setQuantityProducts(value);
@@ -52,9 +65,10 @@ export const Shop = () => {
     isLoading: isLoadingAllProducts,
     isError: isErrorAllProducts,
   } = useQuery({
-    queryKey: ["allProducts", searchStr, quantityProducts],
+    queryKey: ["allProducts", searchStr, quantityProducts, minPrice, maxPrice],
 
-    queryFn: () => fetchAllProducts(searchStr, quantityProducts),
+    queryFn: () =>
+      fetchAllProducts(searchStr, quantityProducts, minPrice, maxPrice),
   });
 
   // целевые продукты для страницы
@@ -70,6 +84,8 @@ export const Shop = () => {
       quantityProducts,
       currentPage,
       searchStr,
+      minPrice,
+      maxPrice,
     ],
 
     queryFn: () =>
@@ -78,7 +94,9 @@ export const Shop = () => {
         sortOrder,
         quantityProducts,
         currentPage,
-        searchStr
+        searchStr,
+        minPrice,
+        maxPrice
       ),
   });
 
@@ -105,7 +123,12 @@ export const Shop = () => {
       />
 
       <div className={styles.mainShop}>
-        <SideBar />
+        <SideBar
+          minPrice={minPrice}
+          setMinPrice={setMinPrice}
+          maxPrice={maxPrice}
+          setMaxPrice={setMaxPrice}
+        />
         {isLoading ? (
           <div>Loading products...</div>
         ) : isError ? (
