@@ -166,9 +166,9 @@ export const Shop = () => {
           setMaxPrice={setMaxPrice}
         />
         {isLoading ? (
-          <div>Loading products...</div>
+          <div className={styles.loading}>Loading products...</div>
         ) : isError ? (
-          <div>Error...</div>
+          <div className={styles.error}>Error...</div>
         ) : (
           <ProductList products={products} />
         )}

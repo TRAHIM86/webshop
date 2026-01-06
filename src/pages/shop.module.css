@@ -10,4 +10,11 @@
 
 .mainShop {
   display: flex;
+  width: 100%;
+}
+
+.loading,
+.error {
+  width: 70%;
+  border: 2px solid skyblue;
 }

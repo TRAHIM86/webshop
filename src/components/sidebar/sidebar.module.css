@@ -1,6 +1,6 @@
 .sidebar {
   border: 1px solid salmon;
-  width: clamp(200px, 30%, 300px);
+  width: clamp(100px, 30%, 300px);
 }
 
 .filterCategory {
