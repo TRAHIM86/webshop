@@ -44,7 +44,7 @@ export const Navbar = () => {
         <Link
           className={styles.Link}
           onClick={() => console.log(activeUser)}
-          to="/about"
+          to="/login"
         >
           Login
         </Link>

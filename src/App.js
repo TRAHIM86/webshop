@@ -9,6 +9,8 @@ import { ProductPage } from "./pages/productPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createContext, useState } from "react";
 import { Cart } from "./pages/cart";
+import { LogIn } from "lucide-react";
+import { Login } from "./pages/login";
 
 //https://trahim86.github.io/webshop
 
@@ -22,7 +24,7 @@ export const UserContext = createContext();
 
 function App() {
   const [cart, setCart] = useState(new Map());
-  const [activeUser, setActiveUser] = useState("TR");
+  const [activeUser, setActiveUser] = useState(null);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -36,6 +38,7 @@ function App() {
                 <Route path="/products/:productId" element={<ProductPage />} />
                 <Route path="/main" element={<Main />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="*" element={<Navigate to="/" replace />}></Route>
               </Routes>
