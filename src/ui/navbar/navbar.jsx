@@ -1,12 +1,15 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styles from "./navbar.module.css";
-import { CartContext } from "../../App";
+import { CartContext, UserContext } from "../../App";
 
 import { ShoppingCart } from "lucide-react";
 
 export const Navbar = () => {
-  // товары в корзине
+  // актиный юзер (глобальный контекст)
+  const { activeUser, setActiveUser } = useContext(UserContext);
+
+  // товары в корзине (глобальный контест)
   const { cart, setCart } = useContext(CartContext);
 
   // сумма всех товаров
@@ -29,6 +32,23 @@ export const Navbar = () => {
           <div className={styles.cartCount}>{total}</div>
         </div>
       </Link>
+      {activeUser ? (
+        <Link
+          className={styles.Link}
+          onClick={() => console.log(activeUser)}
+          to="/about"
+        >
+          Logout
+        </Link>
+      ) : (
+        <Link
+          className={styles.Link}
+          onClick={() => console.log(activeUser)}
+          to="/about"
+        >
+          Login
+        </Link>
+      )}
     </div>
   );
 };

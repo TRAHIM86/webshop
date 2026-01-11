@@ -36,8 +36,6 @@ export const SideBar = ({
     });
   }
 
-  console.log("categories ", categories);
-
   return (
     <div className={styles.sidebar}>
       <h3>Filtres</h3>

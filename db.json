@@ -270,5 +270,7 @@
       "user": "Eric",
       "review": "Super absorbent towel that dries incredibly fast after swimming."
     }
-  ]
+  ],
+
+  "users": [{ "id": 1, "name": "Qwe", "password": "123" }]
 }

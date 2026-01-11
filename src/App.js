@@ -17,27 +17,33 @@ const queryClient = new QueryClient();
 // корзина покупок
 export const CartContext = createContext();
 
+// активный юзер
+export const UserContext = createContext();
+
 function App() {
   const [cart, setCart] = useState(new Map());
+  const [activeUser, setActiveUser] = useState("TR");
 
   return (
     <QueryClientProvider client={queryClient}>
-      <CartContext.Provider value={{ cart, setCart }}>
-        <HashRouter>
-          <div className={styles.appContainer}>
-            <Header />
-            <Routes>
-              <Route path="/" element={<Shop />} />
-              <Route path="/products/:productId" element={<ProductPage />} />
-              <Route path="/main" element={<Main />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="*" element={<Navigate to="/" replace />}></Route>
-            </Routes>
-            <Footer />
-          </div>
-        </HashRouter>
-      </CartContext.Provider>
+      <UserContext.Provider value={{ activeUser, setActiveUser }}>
+        <CartContext.Provider value={{ cart, setCart }}>
+          <HashRouter>
+            <div className={styles.appContainer}>
+              <Header />
+              <Routes>
+                <Route path="/" element={<Shop />} />
+                <Route path="/products/:productId" element={<ProductPage />} />
+                <Route path="/main" element={<Main />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="*" element={<Navigate to="/" replace />}></Route>
+              </Routes>
+              <Footer />
+            </div>
+          </HashRouter>
+        </CartContext.Provider>
+      </UserContext.Provider>
     </QueryClientProvider>
   );
 }
