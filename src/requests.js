@@ -124,6 +124,8 @@ export default class Requests {
   }
 
   // ЗАПРОСЫ ПО ЛОГИНАМ/РЕГИСТРАЦИЯМ
+
+  // проверить есть ли юзер по логину и паролю
   static async checkLoginedUser(login, password) {
     console.log("login: ", login, "password", password);
     try {

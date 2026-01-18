@@ -2,3 +2,11 @@
   display: flex;
   flex-direction: column;
 }
+
+.registerLink {
+  transition: all 0.3s ease;
+}
+
+.registerLink:hover {
+  color: rgb(255, 153, 0);
+}
