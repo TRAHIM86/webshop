@@ -7,7 +7,7 @@ import { Header } from "./components/header/header";
 import { Footer } from "./components/footer/footer";
 import { ProductPage } from "./pages/productPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Cart } from "./pages/cart";
 import { Login } from "./pages/login";
 
@@ -24,7 +24,10 @@ export const UserContext = createContext();
 
 function App() {
   const [cart, setCart] = useState(new Map());
-  const [activeUser, setActiveUser] = useState(null);
+  const [activeUser, setActiveUser] = useState(() => {
+    const userData = localStorage.getItem("userWebshop");
+    return userData ? JSON.parse(userData) : null;
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
