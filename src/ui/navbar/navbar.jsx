@@ -12,6 +12,11 @@ export const Navbar = () => {
   // товары в корзине (глобальный контест)
   const { cart, setCart } = useContext(CartContext);
 
+  async function logout() {
+    localStorage.removeItem("userWebshop");
+    setActiveUser(null);
+  }
+
   // сумма всех товаров
   const total = [...cart.values()].reduce((sum, quantity) => sum + quantity, 0);
 
@@ -33,19 +38,11 @@ export const Navbar = () => {
         </div>
       </Link>
       {activeUser ? (
-        <Link
-          className={styles.Link}
-          onClick={() => console.log(activeUser)}
-          to="/about"
-        >
+        <Link className={styles.Link} to="/login" onClick={logout}>
           Logout
         </Link>
       ) : (
-        <Link
-          className={styles.Link}
-          onClick={() => console.log(activeUser)}
-          to="/login"
-        >
+        <Link className={styles.Link} to="/login">
           Login
         </Link>
       )}

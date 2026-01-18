@@ -122,4 +122,22 @@ export default class Requests {
 
     return cartProducts;
   }
+
+  // ЗАПРОСЫ ПО ЛОГИНАМ/РЕГИСТРАЦИЯМ
+  static async checkLoginedUser(login, password) {
+    console.log("login: ", login, "password", password);
+    try {
+      const response = await axios.get(
+        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/users"
+      );
+
+      const isUserExists = response.data.find(
+        (user) => user.login === login && user.password === password
+      );
+
+      return isUserExists;
+    } catch (err) {
+      console.log("err");
+    }
+  }
 }
