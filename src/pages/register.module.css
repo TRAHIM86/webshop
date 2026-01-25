@@ -5,3 +5,9 @@
 .Loginlink:hover {
   color: rgb(255, 153, 0);
 }
+
+.btnRegister:disabled {
+  cursor: default;
+  opacity: 0.5;
+  pointer-events: none;
+}

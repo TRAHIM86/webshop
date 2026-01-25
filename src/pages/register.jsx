@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "../components/button/button";
 import styles from "./register.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Requests from "../requests";
 
 export const Register = () => {
@@ -34,7 +34,6 @@ export const Register = () => {
       console.log("Логин и/или email уже заняты! :", isUserUse);
       return;
     } else {
-      console.log("FREE: ", isUserUse);
       await Requests.addNewUser(user);
       cleanUser();
     }
@@ -82,6 +81,20 @@ export const Register = () => {
       user.password,
     ),
   });
+
+  useEffect(() => {
+    setIsValid({
+      login: validateLogin(user.login),
+      email: validateEmail(user.email),
+      password: validatePassword(user.password),
+      confirmPassword: validateConfirmPassword(
+        user.confirmPassword,
+        user.password,
+      ),
+    });
+  }, [user]);
+
+  console.log(isValid);
 
   // валидация login
   function validateLogin(login) {
@@ -154,7 +167,17 @@ export const Register = () => {
             ></input>
           </div>
 
-          <Button type="submit" func={() => addNewUser(user)}>
+          <Button
+            type="submit"
+            className={styles.btnRegister}
+            func={() => addNewUser(user)}
+            disabled={
+              !isValid.login ||
+              !isValid.email ||
+              !isValid.password ||
+              !isValid.confirmPassword
+            }
+          >
             REGISTER
           </Button>
           <div>
