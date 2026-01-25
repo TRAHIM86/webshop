@@ -7,8 +7,14 @@ export const UserData = () => {
 
   return (
     <div>
-      <div>{activeUser.login}</div>
-      <div>{activeUser.email}</div>
+      {activeUser ? (
+        <>
+          <div>{activeUser.login}</div>
+          <div>{activeUser.email}</div>
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
