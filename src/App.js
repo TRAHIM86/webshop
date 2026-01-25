@@ -7,7 +7,7 @@ import { Header } from "./components/header/header";
 import { Footer } from "./components/footer/footer";
 import { ProductPage } from "./pages/productPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { Cart } from "./pages/cart";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";

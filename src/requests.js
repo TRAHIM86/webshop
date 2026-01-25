@@ -9,20 +9,20 @@ export default class Requests {
     quantity,
     arrCategories,
     minPrice,
-    maxPrice
+    maxPrice,
   ) {
     try {
       const products = await axios.get(
-        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products"
+        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products",
       );
 
       let filteredProducts = products.data
         .filter((product) =>
-          product.name.toLowerCase().includes(filterStr.toLowerCase())
+          product.name.toLowerCase().includes(filterStr.toLowerCase()),
         )
         .filter((product) => arrCategories.includes(product.category))
         .filter(
-          (product) => product.price >= minPrice && product.price <= maxPrice
+          (product) => product.price >= minPrice && product.price <= maxPrice,
         );
 
       const total = filteredProducts.length;
@@ -56,20 +56,20 @@ export default class Requests {
     filterStr = "",
     arrCategories,
     minPrice,
-    maxPrice
+    maxPrice,
   ) {
     try {
       const response = await axios.get(
-        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products"
+        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products",
       );
 
       let filteredProducts = response.data
         .filter((product) =>
-          product.name.toLowerCase().includes(filterStr.toLowerCase())
+          product.name.toLowerCase().includes(filterStr.toLowerCase()),
         )
         .filter((product) => arrCategories.includes(product.category))
         .filter(
-          (product) => product.price >= minPrice && product.price <= maxPrice
+          (product) => product.price >= minPrice && product.price <= maxPrice,
         );
 
       if (sortBy && sortOrder) {
@@ -96,7 +96,7 @@ export default class Requests {
   static async getProductById(id) {
     // Получаем ВСЕ товары один раз
     const response = await axios.get(
-      "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products"
+      "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products",
     );
 
     // Ищем точное совпадение
@@ -112,34 +112,72 @@ export default class Requests {
   // получить продук для корзины по ids
   static async getCartProduct(ids) {
     const response = await axios.get(
-      "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products"
+      "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products",
     );
     let allProducts = response.data;
 
     const cartProducts = allProducts.filter((product) =>
-      ids.includes(product.id)
+      ids.includes(product.id),
     );
 
     return cartProducts;
   }
 
-  // ЗАПРОСЫ ПО ЛОГИНАМ/РЕГИСТРАЦИЯМ
+  /*********ЗАПРОСЫ ПО ЛОГИНАМ/РЕГИСТРАЦИЯМ*******/
 
   // проверить есть ли юзер по логину и паролю
   static async checkLoginedUser(login, password) {
     console.log("login: ", login, "password", password);
     try {
       const response = await axios.get(
-        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/users"
+        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/users",
       );
 
       const isUserExists = response.data.find(
-        (user) => user.login === login && user.password === password
+        (user) => user.login === login && user.password === password,
       );
 
       return isUserExists;
     } catch (err) {
-      console.log("err");
+      console.log("err: ", err);
+    }
+  }
+
+  // свободно ли имя/email на сервере
+  static async checkRegistredUser(newLogin, newEmail) {
+    try {
+      const response = await axios.get(
+        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/users",
+      );
+
+      const isLoginUsed = response.data.some((user) => {
+        return user.login.toLowerCase() === newLogin.toLowerCase();
+      });
+
+      const isEmailUsed = response.data.some((user) => {
+        return user.email.toLowerCase() === newEmail.toLowerCase();
+      });
+
+      return {
+        loginUser: isLoginUsed,
+        emailUser: isEmailUsed,
+      };
+    } catch (err) {
+      console.log("err: ", err);
+    }
+  }
+
+  static async addNewUser(newUser) {
+    try {
+      const response = await axios.post(
+        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/users",
+        newUser,
+      );
+
+      console.log("New user registered");
+      return response.data;
+    } catch (err) {
+      console.log("err :", err);
     }
   }
 }
