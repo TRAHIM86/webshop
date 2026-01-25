@@ -169,9 +169,11 @@ export default class Requests {
 
   static async addNewUser(newUser) {
     try {
+      const { confirmPassword, ...userToSend } = newUser;
+
       const response = await axios.post(
         "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/users",
-        newUser,
+        userToSend,
       );
 
       console.log("New user registered");

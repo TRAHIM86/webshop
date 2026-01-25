@@ -13,7 +13,7 @@ export const Register = () => {
   const { setActiveUser } = useContext(UserContext);
 
   // состояние нового юзера
-  const [user, setUser] = useState({
+  const [newUser, setNewUser] = useState({
     login: "",
     email: "",
     password: "",
@@ -22,7 +22,7 @@ export const Register = () => {
 
   // очистить юзера
   function cleanUser() {
-    setUser({
+    setNewUser({
       login: "",
       email: "",
       password: "",
@@ -34,15 +34,15 @@ export const Register = () => {
   const registerMutation = useMutation({
     mutationFn: async () => {
       const isUserUsed = await Requests.checkRegistredUser(
-        user.login,
-        user.email,
+        newUser.login,
+        newUser.email,
       );
 
       if (isUserUsed.loginUser || isUserUsed.emailUser) {
         console.log("Логин и/или email уже заняты! :", isUserUsed);
         return null;
       } else {
-        const userData = await Requests.addNewUser(user);
+        const userData = await Requests.addNewUser(newUser);
         return userData;
       }
     },
@@ -64,7 +64,7 @@ export const Register = () => {
 
   // обновление состояния (при вводе данных в поля)
   function updateUser(field, value) {
-    setUser((prevUser) => ({
+    setNewUser((prevUser) => ({
       ...prevUser,
       [field]: value,
     }));
@@ -81,13 +81,16 @@ export const Register = () => {
       setIsValid((prev) => ({
         ...prev,
         password: validatePassword(value),
-        confirmPassword: validateConfirmPassword(user.confirmPassword, value),
+        confirmPassword: validateConfirmPassword(
+          newUser.confirmPassword,
+          value,
+        ),
       }));
     }
     if (field === "confirmPassword") {
       setIsValid((prev) => ({
         ...prev,
-        confirmPassword: validateConfirmPassword(value, user.password),
+        confirmPassword: validateConfirmPassword(value, newUser.password),
       }));
     }
   }
@@ -96,26 +99,26 @@ export const Register = () => {
 
   // состояние "все поля валидны"
   const [isValid, setIsValid] = useState({
-    login: validateLogin(user.login),
-    email: validateEmail(user.email),
-    password: validatePassword(user.password),
+    login: validateLogin(newUser.login),
+    email: validateEmail(newUser.email),
+    password: validatePassword(newUser.password),
     confirmPassword: validateConfirmPassword(
-      user.confirmPassword,
-      user.password,
+      newUser.confirmPassword,
+      newUser.password,
     ),
   });
 
   useEffect(() => {
     setIsValid({
-      login: validateLogin(user.login),
-      email: validateEmail(user.email),
-      password: validatePassword(user.password),
+      login: validateLogin(newUser.login),
+      email: validateEmail(newUser.email),
+      password: validatePassword(newUser.password),
       confirmPassword: validateConfirmPassword(
-        user.confirmPassword,
-        user.password,
+        newUser.confirmPassword,
+        newUser.password,
       ),
     });
-  }, [user]);
+  }, [newUser]);
 
   // валидация login
   function validateLogin(login) {
@@ -150,7 +153,7 @@ export const Register = () => {
             <p>Login</p>
             <input
               type="text"
-              value={user.login}
+              value={newUser.login}
               placeholder="3-10 letters and/or numbers"
               onChange={(e) => updateUser("login", e.target.value)}
               autoComplete="userLogin"
@@ -160,7 +163,7 @@ export const Register = () => {
             <p>Email</p>
             <input
               type="email"
-              value={user.email}
+              value={newUser.email}
               onChange={(e) => updateUser("email", e.target.value)}
               placeholder="Your email"
               autoComplete="email"
@@ -170,7 +173,7 @@ export const Register = () => {
             <p>Password</p>{" "}
             <input
               type="password"
-              value={user.password}
+              value={newUser.password}
               placeholder="3-10 letters and/or numbers"
               onChange={(e) => updateUser("password", e.target.value)}
               style={{ width: "100%" }}
@@ -181,7 +184,7 @@ export const Register = () => {
             <p>Confirm password</p>
             <input
               type="password"
-              value={user.confirmPassword}
+              value={newUser.confirmPassword}
               placeholder="Confirm password"
               onChange={(e) => updateUser("confirmPassword", e.target.value)}
               autoComplete="new-password"
