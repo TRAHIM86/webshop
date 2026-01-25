@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./navbar.module.css";
 import { CartContext, UserContext } from "../../App";
 
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, CircleUser } from "lucide-react";
 
 export const Navbar = () => {
   // актиный юзер (глобальный контекст)
@@ -37,6 +37,13 @@ export const Navbar = () => {
           <div className={styles.cartCount}>{total}</div>
         </div>
       </Link>
+      {activeUser ? (
+        <Link className={styles.Link} to="/userData">
+          <CircleUser></CircleUser>
+        </Link>
+      ) : (
+        ""
+      )}
       {activeUser ? (
         <Link className={styles.Link} to="/login" onClick={logout}>
           Logout

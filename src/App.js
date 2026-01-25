@@ -11,6 +11,7 @@ import { createContext, useState } from "react";
 import { Cart } from "./pages/cart";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
+import { UserData } from "./pages/userData";
 
 //https://trahim86.github.io/webshop
 //https://mockapi.io/projects/695a65a3950475ada466a029
@@ -42,9 +43,11 @@ function App() {
                 <Route path="/products/:productId" element={<ProductPage />} />
                 <Route path="/main" element={<Main />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/userData" element={<UserData />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/cart" element={<Cart />} />
+
                 <Route path="*" element={<Navigate to="/" replace />}></Route>
               </Routes>
               <Footer />
