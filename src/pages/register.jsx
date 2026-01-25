@@ -1,10 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../components/button/button";
 import styles from "./register.module.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Requests from "../requests";
+import { useMutation } from "@tanstack/react-query";
+import { UserContext } from "../App";
 
 export const Register = () => {
+  const navigate = useNavigate();
+
+  // актиный юзер (глобальный контекст)
+  const { setActiveUser } = useContext(UserContext);
+
   // состояние нового юзера
   const [user, setUser] = useState({
     login: "",
@@ -23,20 +30,36 @@ export const Register = () => {
     });
   }
 
-  // зарегить нового юзера (с проверкой)
-  async function addNewUser(newUser) {
-    const isUserUse = await Requests.checkRegistredUser(
-      newUser.login,
-      newUser.email,
-    );
+  // мутация для регистрации
+  const registerMutation = useMutation({
+    mutationFn: async () => {
+      const isUserUsed = await Requests.checkRegistredUser(
+        user.login,
+        user.email,
+      );
 
-    if (isUserUse.loginUser || isUserUse.emailUser) {
-      console.log("Логин и/или email уже заняты! :", isUserUse);
-      return;
-    } else {
-      await Requests.addNewUser(user);
-      cleanUser();
-    }
+      if (isUserUsed.loginUser || isUserUsed.emailUser) {
+        console.log("Логин и/или email уже заняты! :", isUserUsed);
+        return null;
+      } else {
+        const userData = await Requests.addNewUser(user);
+        return userData;
+      }
+    },
+
+    onSuccess: (userData) => {
+      if (userData) {
+        localStorage.setItem("userWebshop", JSON.stringify(userData));
+        setActiveUser(userData);
+        cleanUser();
+        navigate("/main");
+      }
+    },
+  });
+
+  // зарегить нового юзера (с проверкой)
+  async function addNewUserToServer() {
+    registerMutation.mutate();
   }
 
   // обновление состояния (при вводе данных в поля)
@@ -93,8 +116,6 @@ export const Register = () => {
       ),
     });
   }, [user]);
-
-  console.log(isValid);
 
   // валидация login
   function validateLogin(login) {
@@ -170,7 +191,7 @@ export const Register = () => {
           <Button
             type="submit"
             className={styles.btnRegister}
-            func={() => addNewUser(user)}
+            func={() => addNewUserToServer()}
             disabled={
               !isValid.login ||
               !isValid.email ||
