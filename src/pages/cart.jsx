@@ -84,8 +84,6 @@ export const Cart = () => {
     return sum + (product?.price || 0) * qty;
   }, 0);
 
-  console.log("cart ", cart);
-
   return (
     <div className={styles.cart}>
       <div className={styles.cartItems}>

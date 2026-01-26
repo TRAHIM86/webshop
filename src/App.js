@@ -15,6 +15,7 @@ import { UserData } from "./pages/userData";
 
 //https://trahim86.github.io/webshop
 //https://mockapi.io/projects/695a65a3950475ada466a029
+//https://supabase.com/dashboard/project/ctzsuzkqrtysykhrzcgp/auth/policies
 
 const queryClient = new QueryClient();
 

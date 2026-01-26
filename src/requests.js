@@ -1,6 +1,14 @@
 import axios from "axios";
 import { data } from "react-router-dom";
 
+// SUPABASE КОНСТАНТЫ
+const SUPABASE_URL = "https://ctzsuzkqrtysykhrzcgp.supabase.co";
+const SUPABASE_KEY = "sb_publishable_cN-nMMkT8cYc0g7BuND6TA_QRzaRlzz";
+const SUPABASE_HEADERS = {
+  apikey: SUPABASE_KEY,
+  Authorization: `Bearer ${SUPABASE_KEY}`,
+};
+
 export default class Requests {
   // получить все продукты (только по фильтру)
   // для отражения количества страниц
@@ -12,9 +20,9 @@ export default class Requests {
     maxPrice,
   ) {
     try {
-      const products = await axios.get(
-        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products",
-      );
+      const products = await axios.get(`${SUPABASE_URL}/rest/v1/products`, {
+        headers: SUPABASE_HEADERS,
+      });
 
       let filteredProducts = products.data
         .filter((product) =>
@@ -59,9 +67,9 @@ export default class Requests {
     maxPrice,
   ) {
     try {
-      const response = await axios.get(
-        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products",
-      );
+      const response = await axios.get(`${SUPABASE_URL}/rest/v1/products`, {
+        headers: SUPABASE_HEADERS,
+      });
 
       let filteredProducts = response.data
         .filter((product) =>
@@ -96,24 +104,22 @@ export default class Requests {
   static async getProductById(id) {
     // Получаем ВСЕ товары один раз
     const response = await axios.get(
-      "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products",
+      `${SUPABASE_URL}/rest/v1/products?id=eq.${id}`,
+      { headers: SUPABASE_HEADERS },
     );
 
-    // Ищем точное совпадение
-    const product = response.data.find((p) => p.id == id);
-
-    if (!product) {
+    if (!response.data || response.data.length === 0) {
       throw new Error(`Product ${id} not found`);
     }
 
-    return product;
+    return response.data[0];
   }
 
   // получить продук для корзины по ids
   static async getCartProduct(ids) {
-    const response = await axios.get(
-      "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/products",
-    );
+    const response = await axios.get(`${SUPABASE_URL}/rest/v1/products`, {
+      headers: SUPABASE_HEADERS,
+    });
     let allProducts = response.data;
 
     const cartProducts = allProducts.filter((product) =>
@@ -129,9 +135,9 @@ export default class Requests {
   static async checkLoginedUser(login, password) {
     console.log("login: ", login, "password", password);
     try {
-      const response = await axios.get(
-        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/users",
-      );
+      const response = await axios.get(`${SUPABASE_URL}/rest/v1/users`, {
+        headers: SUPABASE_HEADERS,
+      });
 
       const isUserExists = response.data.find(
         (user) => user.login === login && user.password === password,
@@ -146,9 +152,9 @@ export default class Requests {
   // свободно ли имя/email на сервере
   static async checkRegistredUser(newLogin, newEmail) {
     try {
-      const response = await axios.get(
-        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/users",
-      );
+      const response = await axios.get(`${SUPABASE_URL}/rest/v1/users`, {
+        headers: SUPABASE_HEADERS,
+      });
 
       const isLoginUsed = response.data.some((user) => {
         return user.login.toLowerCase() === newLogin.toLowerCase();
@@ -172,8 +178,15 @@ export default class Requests {
       const { confirmPassword, ...userToSend } = newUser;
 
       const response = await axios.post(
-        "https://695a65a3950475ada466a028.mockapi.io/webshop-tr/users",
+        `${SUPABASE_URL}/rest/v1/users`,
         userToSend,
+        {
+          headers: {
+            ...SUPABASE_HEADERS,
+            "Content-Type": "application/json",
+            Prefer: "return=representation",
+          },
+        },
       );
 
       console.log("New user registered");
