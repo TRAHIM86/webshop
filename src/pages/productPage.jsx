@@ -104,31 +104,21 @@ export const ProductPage = () => {
   // добавить/удалить товар в корзину. Используем Map
   // чтобы были только уникальные id товара. Количество
   // будет регулироваться на странице корзины
-  function removeProductToCart(productId) {
-    //console.log("CART :", cart, "ProdID :", productId);
-    if (cart.has(productId)) {
-      setCart((prev) => {
-        const newCart = new Map(prev);
-        console.log("Before :", newCart);
+  function toggleProductInCart(productId) {
+    setCart((prev) => {
+      const newCart = new Map(prev);
 
+      if (newCart.has(productId)) {
         newCart.delete(productId);
-        console.log("After :", newCart);
-
-        Requests.putCartByUserId(activeUser.id, newCart);
-
-        console.log("cart after remove", newCart);
-        return newCart;
-      });
-    } else {
-      setCart((prev) => {
-        const newCart = new Map(prev);
+        console.log("Удалил товар", productId);
+      } else {
         newCart.set(productId, 1);
-        Requests.putCartByUserId(activeUser.id, newCart);
-        console.log("cart after add", cart);
+        console.log("Добавил товар", productId);
+      }
 
-        return newCart;
-      });
-    }
+      Requests.putCartByUserId(activeUser.id, newCart);
+      return newCart;
+    });
   }
 
   return isLoading ? (
@@ -157,7 +147,7 @@ export const ProductPage = () => {
         setCurrentNum={setCurrentNumPhoto}
       />
 
-      <Button func={() => removeProductToCart(productById.id)}>
+      <Button func={() => toggleProductInCart(productById.id)}>
         {cart.has(productById.id) ? "Remove" : "Add"}
       </Button>
     </div>

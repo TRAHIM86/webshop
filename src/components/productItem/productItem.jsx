@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import styles from "./productItem.module.css";
-import { CartContext } from "../../App";
+import { CartContext, UserContext } from "../../App";
 
 import { Link } from "react-router-dom";
 import { ProductImg } from "../productImg/productImg";
@@ -8,8 +8,11 @@ import { Arrow } from "../arrow/arrow";
 import { Button } from "../button/button";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Requests from "../../requests";
 
 export const ProductItem = ({ product }) => {
+  // актиный юзер (глобальный контекст)
+  const { activeUser, setActiveUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
 
   const maxNum = 5;
@@ -56,18 +59,19 @@ export const ProductItem = ({ product }) => {
   // добавить/удалить товар в корзину. Используем Map
   // чтобы были только уникальные id товара. Количество
   // будет регулироваться на странице корзины
-  function addRemoveProductToCart(id) {
-    if (cart.has(id)) {
-      const newCart = new Map(cart);
-      newCart.delete(id);
-      setCart(newCart);
-      console.log("cart ", newCart);
-      return;
-    }
+  function toggleProductInCart(productId) {
+    setCart((prev) => {
+      const newCart = new Map(prev);
 
-    const newCart = new Map(cart);
-    newCart.set(id, 1);
-    setCart(newCart);
+      if (newCart.has(productId)) {
+        newCart.delete(productId);
+      } else {
+        newCart.set(productId, 1);
+      }
+
+      Requests.putCartByUserId(activeUser.id, newCart);
+      return newCart;
+    });
   }
 
   return (
@@ -92,7 +96,7 @@ export const ProductItem = ({ product }) => {
         </div>
 
         <div>{`${product.price.toFixed(2)} $`}</div>
-        <Button func={() => addRemoveProductToCart(product.id)}>
+        <Button func={() => toggleProductInCart(product.id)}>
           {cart.has(product.id) ? "Remove" : "Add"}
         </Button>
       </div>
