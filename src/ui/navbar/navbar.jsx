@@ -15,6 +15,7 @@ export const Navbar = () => {
   async function logout() {
     localStorage.removeItem("userWebshop");
     setActiveUser(null);
+    setCart(new Map());
   }
 
   // сумма всех товаров

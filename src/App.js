@@ -7,11 +7,12 @@ import { Header } from "./components/header/header";
 import { Footer } from "./components/footer/footer";
 import { ProductPage } from "./pages/productPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Cart } from "./pages/cart";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { UserData } from "./pages/userData";
+import Requests from "./requests";
 
 //https://trahim86.github.io/webshop
 //https://mockapi.io/projects/695a65a3950475ada466a029
@@ -20,17 +21,46 @@ import { UserData } from "./pages/userData";
 const queryClient = new QueryClient();
 
 // корзина покупок
-export const CartContext = createContext();
+export const CartContext = createContext({
+  // дефолтное значение
+  cart: new Map(),
+  setCart: () => {},
+});
 
 // активный юзер
 export const UserContext = createContext();
 
 function App() {
-  const [cart, setCart] = useState(new Map());
   const [activeUser, setActiveUser] = useState(() => {
     const userData = localStorage.getItem("userWebshop");
     return userData ? JSON.parse(userData) : null;
   });
+
+  const [cart, setCart] = useState(new Map());
+
+  async function loadCart(userId) {
+    const cartData = await Requests.getCartByUserId(userId);
+
+    if (cartData && cartData.items) {
+      const cartMap = new Map();
+      cartData.items.forEach((item) => {
+        cartMap.set(item.productId, item.quantity);
+      });
+      setCart(cartMap);
+    } else {
+      setCart(new Map());
+    }
+
+    console.log("CART 1: ", cartData);
+  }
+
+  useEffect(() => {
+    if (activeUser) {
+      loadCart(activeUser.id);
+    } else {
+      setCart(new Map());
+    }
+  }, [activeUser]);
 
   return (
     <QueryClientProvider client={queryClient}>

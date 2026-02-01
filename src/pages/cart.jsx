@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CartContext } from "../App";
+import { CartContext, UserContext } from "../App";
 import Requests from "../requests";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "../components/button/button";
@@ -8,6 +8,8 @@ import { ProductCart } from "../components/productCart/productCart";
 import { Plus, Minus } from "lucide-react";
 
 export const Cart = () => {
+  // актиный юзер (глобальный контекст)
+  const { activeUser, setActiveUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
   const cartKeys = [...cart.keys()];
 
@@ -28,13 +30,16 @@ export const Cart = () => {
     queryFn: () => fetchCartProduct(cartKeys),
   });
 
-  function addQuantity(productId) {
+  async function addQuantity(productId) {
     setCart((prev) => {
       const newCart = new Map(prev);
       newCart.set(productId, newCart.get(productId) + 1);
 
+      console.log("Add: ", newCart);
       return newCart;
     });
+
+    const putCart = await Requests.putCartByUserId(activeUser.id, cart);
   }
 
   function removeQuantity(productid) {
@@ -46,7 +51,7 @@ export const Cart = () => {
       } else {
         newCart.delete(productid);
       }
-
+      console.log("Remove: ", newCart);
       return newCart;
     });
   }

@@ -115,7 +115,7 @@ export default class Requests {
     return response.data[0];
   }
 
-  // получить продук для корзины по ids
+  // получить продукт для корзины по ids
   static async getCartProduct(ids) {
     const response = await axios.get(`${SUPABASE_URL}/rest/v1/products`, {
       headers: SUPABASE_HEADERS,
@@ -127,6 +127,56 @@ export default class Requests {
     );
 
     return cartProducts;
+  }
+
+  // запрос к корзине юзера по id
+  static async getCartByUserId(userId) {
+    if (!userId) {
+      console.log("No userId provided");
+      return [];
+    }
+
+    try {
+      const response = await axios.get(
+        `${SUPABASE_URL}/rest/v1/carts?user_id=eq.${userId}`,
+        { headers: SUPABASE_HEADERS },
+      );
+      return response.data.length > 0 ? response.data[0] : null;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+
+  // изменить корзину активного юзера
+  static async putCartByUserId(userId, cartMap) {
+    try {
+      // преобразовать в массив для SUPABASE
+      const cartArray = [];
+      cartMap.forEach((quantity, productId) => {
+        cartArray.push({ productId, quantity });
+      });
+
+      const response = await axios.patch(
+        `${SUPABASE_URL}/rest/v1/carts?user_id=eq.${userId}`,
+        {
+          // ← PATCH: только то, что меняем
+          items: cartArray,
+        },
+        {
+          headers: {
+            ...SUPABASE_HEADERS,
+            "Content-Type": "application/json",
+            Prefer: "return=representation",
+          },
+        },
+      );
+      console.log(`New cart for user ${userId} :`, response.data[0]);
+      return response.data[0];
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   }
 
   /*********ЗАПРОСЫ ПО ЛОГИНАМ/РЕГИСТРАЦИЯМ*******/
@@ -190,7 +240,7 @@ export default class Requests {
       );
 
       console.log("New user registered");
-      return response.data;
+      return response.data[0];
     } catch (err) {
       console.log("err :", err);
     }
