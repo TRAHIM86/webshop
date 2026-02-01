@@ -1,7 +1,7 @@
 import axios from "axios";
 import { data } from "react-router-dom";
 
-// SUPABASE КОНСТАНТЫ
+// SUPABASE КОНСТАНТЫ*
 const SUPABASE_URL = "https://ctzsuzkqrtysykhrzcgp.supabase.co";
 const SUPABASE_KEY = "sb_publishable_cN-nMMkT8cYc0g7BuND6TA_QRzaRlzz";
 const SUPABASE_HEADERS = {
