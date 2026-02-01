@@ -30,28 +30,32 @@ export const Cart = () => {
     queryFn: () => fetchCartProduct(cartKeys),
   });
 
+  // добавить количество товара по productId
   async function addQuantity(productId) {
     setCart((prev) => {
       const newCart = new Map(prev);
       newCart.set(productId, newCart.get(productId) + 1);
 
+      Requests.putCartByUserId(activeUser.id, newCart);
+
       console.log("Add: ", newCart);
       return newCart;
     });
-
-    const putCart = await Requests.putCartByUserId(activeUser.id, cart);
   }
 
-  function removeQuantity(productid) {
+  // удалить количество товара по productId
+  function removeQuantity(productId) {
     setCart((prev) => {
       const newCart = new Map(prev);
 
-      if (newCart.get(productid) > 1) {
-        newCart.set(productid, newCart.get(productid) - 1);
+      if (newCart.get(productId) > 1) {
+        newCart.set(productId, newCart.get(productId) - 1);
       } else {
-        newCart.delete(productid);
+        newCart.delete(productId);
       }
       console.log("Remove: ", newCart);
+
+      Requests.putCartByUserId(activeUser.id, newCart);
       return newCart;
     });
   }

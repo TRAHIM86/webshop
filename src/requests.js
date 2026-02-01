@@ -157,22 +157,46 @@ export default class Requests {
         cartArray.push({ productId, quantity });
       });
 
-      const response = await axios.patch(
+      // получить корзину юзера
+      const getResponse = await axios.get(
         `${SUPABASE_URL}/rest/v1/carts?user_id=eq.${userId}`,
-        {
-          // ← PATCH: только то, что меняем
-          items: cartArray,
-        },
-        {
-          headers: {
-            ...SUPABASE_HEADERS,
-            "Content-Type": "application/json",
-            Prefer: "return=representation",
-          },
-        },
+        { headers: SUPABASE_HEADERS },
       );
-      console.log(`New cart for user ${userId} :`, response.data[0]);
-      return response.data[0];
+
+      // если корзина есть изменить данные
+      // если ее нету - создать и добавить данные
+      if (getResponse.data.length > 0) {
+        const response = await axios.patch(
+          `${SUPABASE_URL}/rest/v1/carts?user_id=eq.${userId}`,
+          {
+            // ← PATCH: только то, что меняем
+            items: cartArray,
+          },
+          {
+            headers: {
+              ...SUPABASE_HEADERS,
+              "Content-Type": "application/json",
+              Prefer: "return=representation",
+            },
+          },
+        );
+        console.log(`Changed cart for user ${userId} :`, response.data[0]);
+        return response.data[0];
+      } else {
+        const postResponse = await axios.post(
+          `${SUPABASE_URL}/rest/v1/carts`,
+          { user_id: userId, items: cartArray },
+          {
+            headers: {
+              ...SUPABASE_HEADERS,
+              "Content-Type": "application/json",
+              Prefer: "return=representation",
+            },
+          },
+        );
+
+        console.log(`Added cart for user ${userId} :`, postResponse.data[0]);
+      }
     } catch (err) {
       console.log(err);
       return null;
