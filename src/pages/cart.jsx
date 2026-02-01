@@ -63,18 +63,18 @@ export const Cart = () => {
   // добавить/удалить товар в корзину. Используем Map
   // чтобы были только уникальные id товара. Количество
   // будет регулироваться на странице корзины
-  function addRemoveProductToCart(id) {
-    if (cart.has(id)) {
-      const newCart = new Map(cart);
-      newCart.delete(id);
-      setCart(newCart);
-      console.log("cart ", newCart);
-      return;
-    }
+  function addRemoveProductToCart(productId) {
+    setCart((prev) => {
+      const newCart = new Map(prev);
 
-    const newCart = new Map(cart);
-    newCart.set(id, 1);
-    setCart(newCart);
+      if (cart.has(productId)) {
+        newCart.delete(productId);
+      } else {
+        newCart.set(productId, 1);
+      }
+
+      return newCart;
+    });
   }
 
   function removeAllCart() {
