@@ -13,6 +13,8 @@ export const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
   const cartKeys = [...cart.keys()];
 
+  console.log("cartKeys :", cartKeys);
+
   async function fetchCartProduct(ids) {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -25,7 +27,7 @@ export const Cart = () => {
     isLoading: isLoadingCartProducts,
     isError: isErrorCartProducts,
   } = useQuery({
-    queryKey: ["cartProducts", cart],
+    queryKey: ["cartProducts", cartKeys],
 
     queryFn: () => fetchCartProduct(cartKeys),
   });

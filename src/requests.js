@@ -115,7 +115,7 @@ export default class Requests {
     return response.data[0];
   }
 
-  // получить продукт для корзины по ids
+  // получить продукты для корзины по ids
   static async getCartProduct(ids) {
     const response = await axios.get(`${SUPABASE_URL}/rest/v1/products`, {
       headers: SUPABASE_HEADERS,

@@ -50,8 +50,6 @@ function App() {
     } else {
       setCart(new Map());
     }
-
-    console.log("CART 1: ", cartData);
   }
 
   useEffect(() => {
