@@ -6,10 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import { ProductImg } from "../components/productImg/productImg";
 import { Arrow } from "../components/arrow/arrow";
 import { Carousel } from "../components/carousel/carousel";
-import { CartContext } from "../App";
+import { CartContext, UserContext } from "../App";
 import { Button } from "../components/button/button";
 
 export const ProductPage = () => {
+  // актиный юзер (глобальный контекст)
+  const { activeUser, setActiveUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
 
   let { productId } = useParams();
@@ -102,19 +104,31 @@ export const ProductPage = () => {
   // добавить/удалить товар в корзину. Используем Map
   // чтобы были только уникальные id товара. Количество
   // будет регулироваться на странице корзины
-  function addRemoveProductToCart(id) {
-    if (cart.has(id)) {
-      const newCart = new Map(cart);
-      newCart.delete(id);
-      setCart(newCart);
-      console.log("cart ", newCart);
-      return;
-    }
+  function removeProductToCart(productId) {
+    //console.log("CART :", cart, "ProdID :", productId);
+    if (cart.has(productId)) {
+      setCart((prev) => {
+        const newCart = new Map(prev);
+        console.log("Before :", newCart);
 
-    const newCart = new Map(cart);
-    newCart.set(id, 1);
-    setCart(newCart);
-    console.log("cart ", newCart);
+        newCart.delete(productId);
+        console.log("After :", newCart);
+
+        Requests.putCartByUserId(activeUser.id, newCart);
+
+        console.log("cart after remove", newCart);
+        return newCart;
+      });
+    } else {
+      setCart((prev) => {
+        const newCart = new Map(prev);
+        newCart.set(productId, 1);
+        Requests.putCartByUserId(activeUser.id, newCart);
+        console.log("cart after add", cart);
+
+        return newCart;
+      });
+    }
   }
 
   return isLoading ? (
@@ -143,7 +157,7 @@ export const ProductPage = () => {
         setCurrentNum={setCurrentNumPhoto}
       />
 
-      <Button func={() => addRemoveProductToCart(productById.id)}>
+      <Button func={() => removeProductToCart(productById.id)}>
         {cart.has(productById.id) ? "Remove" : "Add"}
       </Button>
     </div>

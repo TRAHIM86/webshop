@@ -180,7 +180,7 @@ export default class Requests {
             },
           },
         );
-        console.log(`Changed cart for user ${userId} :`, response.data[0]);
+
         return response.data[0];
       } else {
         const postResponse = await axios.post(

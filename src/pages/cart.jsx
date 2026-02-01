@@ -13,8 +13,6 @@ export const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
   const cartKeys = [...cart.keys()];
 
-  console.log("cartKeys :", cartKeys);
-
   async function fetchCartProduct(ids) {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
