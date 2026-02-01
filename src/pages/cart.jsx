@@ -63,22 +63,21 @@ export const Cart = () => {
   // добавить/удалить товар в корзину. Используем Map
   // чтобы были только уникальные id товара. Количество
   // будет регулироваться на странице корзины
-  function addRemoveProductToCart(productId) {
+  function removeProductToCart(productId) {
     setCart((prev) => {
       const newCart = new Map(prev);
-
-      if (cart.has(productId)) {
-        newCart.delete(productId);
-      } else {
-        newCart.set(productId, 1);
-      }
-
+      newCart.delete(productId);
+      Requests.putCartByUserId(activeUser.id, newCart);
       return newCart;
     });
   }
 
   function removeAllCart() {
-    setCart(new Map());
+    setCart((prev) => {
+      const emptyCart = new Map();
+      Requests.putCartByUserId(activeUser.id, emptyCart);
+      return emptyCart;
+    });
   }
 
   // cartProducts - продукты после запроса при
@@ -122,8 +121,8 @@ export const Cart = () => {
                         <Plus />
                       </Button>
                       <div className={styles.sum}>{sum} $</div>
-                      <Button func={() => addRemoveProductToCart(product.id)}>
-                        {cart.has(product.id) ? "Remove" : "Add"}
+                      <Button func={() => removeProductToCart(product.id)}>
+                        Remove
                       </Button>
                     </div>
                   </div>

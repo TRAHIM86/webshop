@@ -35,7 +35,7 @@ export const Navbar = () => {
       <Link className={styles.Link} to="/cart">
         <div className={styles.cartContainer}>
           <ShoppingCart className={styles.shoppingCart} />
-          <div className={styles.cartCount}>{total}</div>
+          {total > 0 ? <div className={styles.cartCount}>{total}</div> : ""}
         </div>
       </Link>
       {activeUser ? (
