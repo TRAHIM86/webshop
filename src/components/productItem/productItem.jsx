@@ -60,6 +60,27 @@ export const ProductItem = ({ product }) => {
   // чтобы были только уникальные id товара. Количество
   // будет регулироваться на странице корзины
   function toggleProductInCart(productId) {
+    if (!activeUser) {
+      setCart((prev) => {
+        const newCart = new Map(prev);
+
+        if (newCart.has(productId)) {
+          newCart.delete(productId);
+        } else {
+          newCart.set(productId, 1);
+        }
+
+        console.log("newCart :", newCart);
+
+        const cartData = Object.fromEntries(newCart);
+        localStorage.setItem("cartWebshop", JSON.stringify(cartData));
+
+        return newCart;
+      });
+
+      return;
+    }
+
     setCart((prev) => {
       const newCart = new Map(prev);
 

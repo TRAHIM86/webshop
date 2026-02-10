@@ -53,7 +53,6 @@ export const Cart = () => {
       } else {
         newCart.delete(productId);
       }
-      console.log("Remove: ", newCart);
 
       Requests.putCartByUserId(activeUser.id, newCart);
       return newCart;

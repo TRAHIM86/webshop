@@ -16,7 +16,7 @@ import Requests from "./requests";
 
 //https://trahim86.github.io/webshop
 //https://mockapi.io/projects/695a65a3950475ada466a029
-//https://supabase.com/dashboard/project/ctzsuzkqrtysykhrzcgp/auth/policies
+//https://supabase.com/dashboard/project/ctzsuzkqrtysykhrzcgp
 
 const queryClient = new QueryClient();
 
@@ -39,16 +39,34 @@ function App() {
   const [cart, setCart] = useState(new Map());
 
   async function loadCart(userId) {
-    const cartData = await Requests.getCartByUserId(userId);
+    if (userId) {
+      const cartData = await Requests.getCartByUserId(userId);
 
-    if (cartData && cartData.items) {
-      const cartMap = new Map();
-      cartData.items.forEach((item) => {
-        cartMap.set(item.productId, item.quantity);
-      });
-      setCart(cartMap);
+      if (cartData && cartData.items) {
+        const cartMap = new Map();
+        cartData.items.forEach((item) => {
+          cartMap.set(item.productId, item.quantity);
+        });
+        setCart(cartMap);
+      } else {
+        setCart(new Map());
+      }
     } else {
-      setCart(new Map());
+      try {
+        const savedCart = localStorage.getItem("cartWebshop");
+        if (savedCart) {
+          const cartData = JSON.parse(savedCart);
+          const cartMap = new Map(Object.entries(cartData));
+          setCart(cartMap);
+          console.log("savedCart :", cartMap);
+        } else {
+          setCart(new Map());
+          console.log("newCart :", cart);
+        }
+      } catch (err) {
+        console.log("Err :", err);
+        setCart(new Map());
+      }
     }
   }
 
@@ -56,7 +74,7 @@ function App() {
     if (activeUser) {
       loadCart(activeUser.id);
     } else {
-      setCart(new Map());
+      loadCart(null);
     }
   }, [activeUser]);
 
