@@ -93,7 +93,10 @@ export const Cart = () => {
     setCart((prev) => {
       const newCart = new Map(prev);
       newCart.delete(productId);
-      Requests.putCartByUserId(activeUser.id, newCart);
+
+      if (activeUser) {
+        Requests.putCartByUserId(activeUser.id, newCart);
+      }
       return newCart;
     });
   }
@@ -101,7 +104,10 @@ export const Cart = () => {
   function removeAllCart() {
     setCart((prev) => {
       const newCart = new Map();
-      Requests.putCartByUserId(activeUser.id, newCart);
+
+      if (activeUser) {
+        Requests.putCartByUserId(activeUser.id, newCart);
+      }
       return newCart;
     });
   }
