@@ -38,30 +38,59 @@ function App() {
 
   const [cart, setCart] = useState(new Map());
 
+  // если нет логина, то получить корзину из локалСтори
+  // или если нет в ЛС, то new Map(). Т.е. можно
+  // добавлять товар без логина. При логине товар
+  // добавится к товару Юзера.
   async function loadCart(userId) {
     if (userId) {
+      const localCartData = localStorage.getItem("cartWebshop");
+
+      const localCart = localCartData ? JSON.parse(localCartData) : {};
+
       const cartData = await Requests.getCartByUserId(userId);
 
-      if (cartData && cartData.items) {
-        const cartMap = new Map();
+      const mergedCart = new Map();
+
+      // добавить в cart все с сервера по юзеру
+      if (cartData?.items) {
         cartData.items.forEach((item) => {
-          cartMap.set(item.productId, item.quantity);
+          mergedCart.set(item.productId, item.quantity);
         });
-        setCart(cartMap);
-      } else {
-        setCart(new Map());
       }
+
+      // объеденить с ЛС cart
+      Object.entries(localCart).forEach(([localProductId, localQuantity]) => {
+        const numProductId = Number(localProductId);
+        const existingQuantity = mergedCart.get(numProductId) || 0;
+        mergedCart.set(numProductId, existingQuantity + localQuantity);
+      });
+
+      // обновисть состояние корзины
+      setCart(mergedCart);
+
+      // обновить корзину на сервере
+      Requests.putCartByUserId(activeUser.id, mergedCart);
+
+      // очистить локалСтори
+      localStorage.removeItem("cartWebshop");
     } else {
       try {
         const savedCart = localStorage.getItem("cartWebshop");
         if (savedCart) {
           const cartData = JSON.parse(savedCart);
-          const cartMap = new Map(Object.entries(cartData));
+          const cartMap = new Map(
+            Object.entries(cartData).map(([key, value]) => [
+              Number(key),
+              value,
+            ]),
+          );
+
+          console.log(cartMap);
+
           setCart(cartMap);
-          console.log("savedCart :", cartMap);
         } else {
           setCart(new Map());
-          console.log("newCart :", cart);
         }
       } catch (err) {
         console.log("Err :", err);

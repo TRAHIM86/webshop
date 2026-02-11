@@ -11,7 +11,11 @@ export const Cart = () => {
   // актиный юзер (глобальный контекст)
   const { activeUser, setActiveUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
-  const cartKeys = [...cart.keys()];
+
+  //console.log("cart :", cart);
+
+  // получить ключи ID товаров в  числах!
+  const cartKeys = [...cart.keys().map((id) => Number(id))];
 
   async function fetchCartProduct(ids) {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -25,9 +29,14 @@ export const Cart = () => {
     isLoading: isLoadingCartProducts,
     isError: isErrorCartProducts,
   } = useQuery({
-    queryKey: ["cartProducts", cartKeys],
+    queryKey: ["cartProducts"],
 
-    queryFn: () => fetchCartProduct(cartKeys),
+    queryFn: () => {
+      const keys = [...cart.keys().map((id) => Number(id))];
+      return fetchCartProduct(keys);
+    },
+    enabled: cart.size > 0,
+    keepPreviousData: true,
   });
 
   // добавить количество товара по productId
@@ -36,9 +45,16 @@ export const Cart = () => {
       const newCart = new Map(prev);
       newCart.set(productId, newCart.get(productId) + 1);
 
-      Requests.putCartByUserId(activeUser.id, newCart);
+      const cartData = Object.fromEntries(newCart);
 
-      console.log("Add: ", newCart);
+      localStorage.setItem("cartWebshop", JSON.stringify(cartData));
+
+      if (activeUser) {
+        Requests.putCartByUserId(activeUser.id, newCart);
+      }
+
+      // console.log("Add: ", newCart);
+
       return newCart;
     });
   }
@@ -50,11 +66,22 @@ export const Cart = () => {
 
       if (newCart.get(productId) > 1) {
         newCart.set(productId, newCart.get(productId) - 1);
+
+        const cartData = Object.fromEntries(newCart);
+
+        localStorage.setItem("cartWebshop", JSON.stringify(cartData));
       } else {
         newCart.delete(productId);
+
+        const cartData = Object.fromEntries(newCart);
+
+        localStorage.setItem("cartWebshop", JSON.stringify(cartData));
       }
 
-      Requests.putCartByUserId(activeUser.id, newCart);
+      if (activeUser) {
+        Requests.putCartByUserId(activeUser.id, newCart);
+      }
+
       return newCart;
     });
   }
@@ -73,9 +100,9 @@ export const Cart = () => {
 
   function removeAllCart() {
     setCart((prev) => {
-      const emptyCart = new Map();
-      Requests.putCartByUserId(activeUser.id, emptyCart);
-      return emptyCart;
+      const newCart = new Map();
+      Requests.putCartByUserId(activeUser.id, newCart);
+      return newCart;
     });
   }
 
@@ -94,39 +121,41 @@ export const Cart = () => {
   return (
     <div className={styles.cart}>
       <div className={styles.cartItems}>
-        {cart.size === 0
-          ? "Your shopping cart is empty"
-          : cartProducts
-              ?.filter((product) => cart.has(product.id))
-              .map((product) => {
-                const quantity = cart.get(product.id);
-                const sum = (quantity * product.price).toFixed(2);
+        {cartProducts
+          ?.filter((product) => cart.has(product.id))
+          .map((product) => {
+            const quantity = cart.get(product.id);
+            const sum = (quantity * product.price).toFixed(2);
 
-                return (
-                  <div key={product.id} className={styles.cartItem}>
-                    <ProductCart product={product} />
-                    <div className={styles.quantityBlock}>
-                      <Button
-                        className={styles.buttonQuantity}
-                        func={() => removeQuantity(product.id)}
-                      >
-                        <Minus />
-                      </Button>
-                      <div className={styles.quantity}>{quantity}</div>
-                      <Button
-                        className={styles.buttonQuantity}
-                        func={() => addQuantity(product.id)}
-                      >
-                        <Plus />
-                      </Button>
-                      <div className={styles.sum}>{sum} $</div>
-                      <Button func={() => removeProductToCart(product.id)}>
-                        Remove
-                      </Button>
-                    </div>
-                  </div>
-                );
-              })}
+            return (
+              <div key={product.id} className={styles.cartItem}>
+                <ProductCart product={product} />
+                <div className={styles.quantityBlock}>
+                  <Button
+                    className={styles.buttonQuantity}
+                    func={() => removeQuantity(product.id)}
+                  >
+                    <Minus />
+                  </Button>
+                  <div className={styles.quantity}>{quantity}</div>
+                  <Button
+                    className={styles.buttonQuantity}
+                    func={() => addQuantity(product.id)}
+                  >
+                    <Plus />
+                  </Button>
+                  <div className={styles.sum}>{sum} $</div>
+                  <Button func={() => removeProductToCart(product.id)}>
+                    Remove
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+
+        {cart.size === 0 && (
+          <div className={styles.emptyCart}>Your shopping cart is empty</div>
+        )}
       </div>
       <div className={styles.orderBlock}>
         <Button className={styles.buttonClean} func={removeAllCart}>
