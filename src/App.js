@@ -14,6 +14,7 @@ import { Register } from "./pages/register";
 import { UserData } from "./pages/userData";
 import Requests from "./requests";
 import { getLocalCart, removeLocalCart } from "./utils/cartStorage";
+import { mergeCarts } from "./utils/cartUtils";
 
 //https://trahim86.github.io/webshop
 //https://mockapi.io/projects/695a65a3950475ada466a029
@@ -47,25 +48,13 @@ function App() {
     if (userId) {
       const localCart = getLocalCart();
 
-      const userCart = await Requests.getCartByUserId(userId);
+      const userCartData = await Requests.getCartByUserId(userId);
 
-      const mergedCart = new Map();
+      const userCart = new Map(
+        userCartData?.items?.map((item) => [item.productId, item.quantity]),
+      );
 
-      // добавить в mergedCart все с сервера по юзеру
-      if (userCart?.items) {
-        userCart.items.forEach((item) => {
-          mergedCart.set(item.productId, item.quantity);
-        });
-      }
-
-      // объеденить с ЛС cart, т.к. Map, то сначала
-      // значение, потом ключ. Проверяем есть ли ключ
-      // в mergedCart, если не то значение = 0. Сетим
-      // в Map товары и добавляем количество
-      localCart.forEach((localQuantity, localProductId) => {
-        const existingQuantity = mergedCart.get(localProductId) || 0;
-        mergedCart.set(localProductId, existingQuantity + localQuantity);
-      });
+      const mergedCart = mergeCarts(userCart, localCart);
 
       // обновисть состояние корзины
       setCart(mergedCart);
