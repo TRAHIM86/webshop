@@ -13,6 +13,7 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { UserData } from "./pages/userData";
 import Requests from "./requests";
+import { getLocalCart, removeLocalCart } from "./utils/cartStorage";
 
 //https://trahim86.github.io/webshop
 //https://mockapi.io/projects/695a65a3950475ada466a029
@@ -44,26 +45,26 @@ function App() {
   // добавится к товару Юзера.
   async function loadCart(userId) {
     if (userId) {
-      const localCartData = localStorage.getItem("cartWebshop");
+      const localCart = getLocalCart();
 
-      const localCart = localCartData ? JSON.parse(localCartData) : {};
-
-      const cartData = await Requests.getCartByUserId(userId);
+      const userCart = await Requests.getCartByUserId(userId);
 
       const mergedCart = new Map();
 
-      // добавить в cart все с сервера по юзеру
-      if (cartData?.items) {
-        cartData.items.forEach((item) => {
+      // добавить в mergedCart все с сервера по юзеру
+      if (userCart?.items) {
+        userCart.items.forEach((item) => {
           mergedCart.set(item.productId, item.quantity);
         });
       }
 
-      // объеденить с ЛС cart
-      Object.entries(localCart).forEach(([localProductId, localQuantity]) => {
-        const numProductId = Number(localProductId);
-        const existingQuantity = mergedCart.get(numProductId) || 0;
-        mergedCart.set(numProductId, existingQuantity + localQuantity);
+      // объеденить с ЛС cart, т.к. Map, то сначала
+      // значение, потом ключ. Проверяем есть ли ключ
+      // в mergedCart, если не то значение = 0. Сетим
+      // в Map товары и добавляем количество
+      localCart.forEach((localQuantity, localProductId) => {
+        const existingQuantity = mergedCart.get(localProductId) || 0;
+        mergedCart.set(localProductId, existingQuantity + localQuantity);
       });
 
       // обновисть состояние корзины
@@ -73,22 +74,15 @@ function App() {
       Requests.putCartByUserId(activeUser.id, mergedCart);
 
       // очистить локалСтори
-      localStorage.removeItem("cartWebshop");
+      removeLocalCart();
+
+      // если нет активного юзера, просто сетим
+      // в cart наш localCart
     } else {
       try {
-        const savedCart = localStorage.getItem("cartWebshop");
-        if (savedCart) {
-          const cartData = JSON.parse(savedCart);
-          const cartMap = new Map(
-            Object.entries(cartData).map(([key, value]) => [
-              Number(key),
-              value,
-            ]),
-          );
-
-          console.log(cartMap);
-
-          setCart(cartMap);
+        const localCart = getLocalCart();
+        if (localCart) {
+          setCart(localCart);
         } else {
           setCart(new Map());
         }
