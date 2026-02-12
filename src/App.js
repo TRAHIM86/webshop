@@ -41,9 +41,9 @@ function App() {
   const [cart, setCart] = useState(new Map());
 
   // если нет логина, то получить корзину из локалСтори
-  // или если нет в ЛС, то new Map(). Т.е. можно
-  // добавлять товар без логина. При логине товар
-  // добавится к товару Юзера.
+  // При логине товар добавится к товару Юзера. Чекнет
+  // есть ли id товара и сложит товары двух корзин
+  // если нету то добавит в Map
   async function loadCart(userId) {
     if (userId) {
       const localCart = getLocalCart();
@@ -68,17 +68,8 @@ function App() {
       // если нет активного юзера, просто сетим
       // в cart наш localCart
     } else {
-      try {
-        const localCart = getLocalCart();
-        if (localCart) {
-          setCart(localCart);
-        } else {
-          setCart(new Map());
-        }
-      } catch (err) {
-        console.log("Err :", err);
-        setCart(new Map());
-      }
+      const localCart = getLocalCart();
+      setCart(localCart);
     }
   }
 

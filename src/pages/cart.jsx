@@ -47,8 +47,6 @@ export const Cart = () => {
 
       const cartData = Object.fromEntries(newCart);
 
-      localStorage.setItem("cartWebshop", JSON.stringify(cartData));
-
       if (activeUser) {
         Requests.putCartByUserId(activeUser.id, newCart);
       }
@@ -68,14 +66,10 @@ export const Cart = () => {
         newCart.set(productId, newCart.get(productId) - 1);
 
         const cartData = Object.fromEntries(newCart);
-
-        localStorage.setItem("cartWebshop", JSON.stringify(cartData));
       } else {
         newCart.delete(productId);
 
         const cartData = Object.fromEntries(newCart);
-
-        localStorage.setItem("cartWebshop", JSON.stringify(cartData));
       }
 
       if (activeUser) {
