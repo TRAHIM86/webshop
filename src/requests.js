@@ -133,7 +133,7 @@ export default class Requests {
   static async getCartByUserId(userId) {
     if (!userId) {
       console.log("No userId provided");
-      return [];
+      return new Map();
     }
 
     try {
@@ -141,7 +141,15 @@ export default class Requests {
         `${SUPABASE_URL}/rest/v1/carts?user_id=eq.${userId}`,
         { headers: SUPABASE_HEADERS },
       );
-      return response.data.length > 0 ? response.data[0] : null;
+
+      if (response.data.length > 0) {
+        const cartData = response.data[0];
+        return new Map(
+          cartData.items.map((item) => [item.productId, item.quantity]),
+        );
+      } else {
+        return new Map();
+      }
     } catch (err) {
       console.log(err);
       return null;

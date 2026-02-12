@@ -48,11 +48,7 @@ function App() {
     if (userId) {
       const localCart = getLocalCart();
 
-      const userCartData = await Requests.getCartByUserId(userId);
-
-      const userCart = new Map(
-        userCartData?.items?.map((item) => [item.productId, item.quantity]),
-      );
+      const userCart = await Requests.getCartByUserId(userId);
 
       const mergedCart = mergeCarts(userCart, localCart);
 
