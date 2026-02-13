@@ -7,6 +7,7 @@ import Requests from "../requests";
 import { ProductMenu } from "../components/productMenu/productMenu";
 import { Pagination } from "../components/pagination/pagination";
 import { SideBar } from "../components/sidebar/sidebar";
+import { Spinner } from "../components/spinner/spinner";
 
 // получить "конкретные продукты"
 async function fetchSelectedProducts(
@@ -17,7 +18,7 @@ async function fetchSelectedProducts(
   str,
   categories,
   minPrice,
-  maxPrice
+  maxPrice,
 ) {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -29,7 +30,7 @@ async function fetchSelectedProducts(
     str,
     categories,
     minPrice,
-    maxPrice
+    maxPrice,
   );
 }
 
@@ -41,7 +42,7 @@ async function fetchAllProducts(str, quantity, arrCategories, minP, maxP) {
     quantity,
     arrCategories,
     minP,
-    maxP
+    maxP,
   );
   return allProducts;
 }
@@ -99,15 +100,15 @@ export const Shop = () => {
         quantityProducts,
         categories,
         minPrice,
-        maxPrice
+        maxPrice,
       ),
   });
 
   // целевые продукты для страницы
   const {
     data: products,
-    isLoading,
-    isError,
+    isLoading: isLoadingPageProducts,
+    isError: isErrorPageProducts,
   } = useQuery({
     queryKey: [
       "products",
@@ -130,11 +131,9 @@ export const Shop = () => {
         searchStr,
         categories,
         minPrice,
-        maxPrice
+        maxPrice,
       ),
   });
-
-  if (isError) return <div>Error</div>;
 
   return (
     <div className={styles.shop}>
@@ -165,9 +164,12 @@ export const Shop = () => {
           maxPrice={maxPrice}
           setMaxPrice={setMaxPrice}
         />
-        {isLoading ? (
-          <div className={styles.loading}>Loading products...</div>
-        ) : isError ? (
+        {isLoadingPageProducts ? (
+          <div>
+            <Spinner />
+            <p>Loading...</p>
+          </div>
+        ) : isErrorPageProducts ? (
           <div className={styles.error}>Error...</div>
         ) : (
           <ProductList products={products} />
