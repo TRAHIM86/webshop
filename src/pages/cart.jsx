@@ -1,21 +1,20 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext, UserContext } from "../App";
 import Requests from "../requests";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "../components/button/button";
 import styles from "./cart.module.css";
 import { ProductCart } from "../components/productCart/productCart";
+import { SumProduct } from "../components/sumProduct/sumProduct";
 import { Plus, Minus } from "lucide-react";
+import { PROMOCODES } from "../constants/promoCode";
 
 export const Cart = () => {
   // актиный юзер (глобальный контекст)
   const { activeUser, setActiveUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
-
-  //console.log("cart :", cart);
-
-  // получить ключи ID товаров в  числах!
-  const cartKeys = [...cart.keys().map((id) => Number(id))];
+  const [promoCode, setPromoCode] = useState("");
+  const [appliedPromoCode, setAppliedPromoCode] = useState(null);
 
   async function fetchCartProduct(ids) {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -39,13 +38,13 @@ export const Cart = () => {
     keepPreviousData: true,
   });
 
+  console.log("cartProducts :", cartProducts);
+
   // добавить количество товара по productId
   async function addQuantity(productId) {
     setCart((prev) => {
       const newCart = new Map(prev);
       newCart.set(productId, newCart.get(productId) + 1);
-
-      const cartData = Object.fromEntries(newCart);
 
       if (activeUser) {
         Requests.putCartByUserId(activeUser.id, newCart);
@@ -64,12 +63,8 @@ export const Cart = () => {
 
       if (newCart.get(productId) > 1) {
         newCart.set(productId, newCart.get(productId) - 1);
-
-        const cartData = Object.fromEntries(newCart);
       } else {
         newCart.delete(productId);
-
-        const cartData = Object.fromEntries(newCart);
       }
 
       if (activeUser) {
@@ -106,16 +101,32 @@ export const Cart = () => {
     });
   }
 
+  function applyPromoCode(code) {
+    console.log("PROMO :", code);
+
+    // получить объект промокода по коду
+    const promoCodeObj = PROMOCODES.find((item) => item.code === code);
+    setAppliedPromoCode(promoCodeObj);
+
+    console.log(promoCodeObj);
+  }
+
   // cartProducts - продукты после запроса при
   // переходе на страницу. Показать только те, что
   // есть в cart Map(). Нужно для того, что если при
   // кликах -1 доходим до нуля, то он удаляется с Map
   // и соотв не проходит фильтр (не отображ в корзине)
 
-  const sumTotal = [...cart.entries()].reduce((sum, [id, qty]) => {
+  const sumTotal = [...cart.entries()].reduce((total, [id, qty]) => {
     const product = cartProducts?.find((p) => p.id === id);
 
-    return sum + (product?.price || 0) * qty;
+    const oldSum = (product?.price || 0) * qty;
+
+    const discountedSum = appliedPromoCode
+      ? oldSum * (1 - appliedPromoCode.discount / 100)
+      : oldSum;
+
+    return total + discountedSum;
   }, 0);
 
   return (
@@ -144,7 +155,8 @@ export const Cart = () => {
                   >
                     <Plus />
                   </Button>
-                  <div className={styles.sum}>{sum} $</div>
+
+                  <SumProduct sum={sum} appliedPromoCode={appliedPromoCode} />
                   <Button func={() => removeProductToCart(product.id)}>
                     Remove
                   </Button>
@@ -161,6 +173,24 @@ export const Cart = () => {
         <Button className={styles.buttonClean} func={removeAllCart}>
           Clean cart
         </Button>
+        <div className={styles.promoCodeBlock}>
+          <input
+            className={styles.promoCodeInput}
+            type="text"
+            value={promoCode}
+            placeholder="Promocode"
+            onChange={(e) => {
+              setPromoCode(e.target.value);
+            }}
+          />
+          <Button
+            className={styles.buttonClean}
+            func={() => applyPromoCode(promoCode)}
+          >
+            Apply
+          </Button>
+        </div>
+
         <div className={styles.sumTotal}>
           <div className={styles.sumTotalBlock}>
             Total: <strong>{sumTotal.toFixed(2)} $</strong>
