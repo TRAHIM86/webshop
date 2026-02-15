@@ -9,7 +9,7 @@ export const SumProduct = ({ sum, appliedPromoCode }) => {
     <div className={styles.sum}>
       {appliedPromoCode ? (
         <div>
-          <div className={styles.oldpRice}>{sum + " $"}</div>
+          <div className={styles.oldpPrice}>{sum + " $"}</div>
           <div>{discountedSum + " $"}</div>
         </div>
       ) : (

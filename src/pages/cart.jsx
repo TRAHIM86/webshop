@@ -11,7 +11,7 @@ import { PROMOCODES } from "../constants/promoCode";
 
 export const Cart = () => {
   // актиный юзер (глобальный контекст)
-  const { activeUser, setActiveUser } = useContext(UserContext);
+  const { activeUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromoCode, setAppliedPromoCode] = useState(null);
@@ -109,6 +109,7 @@ export const Cart = () => {
     setAppliedPromoCode(promoCodeObj);
 
     console.log(promoCodeObj);
+    setPromoCode("");
   }
 
   // cartProducts - продукты после запроса при
@@ -122,11 +123,11 @@ export const Cart = () => {
 
     const oldSum = (product?.price || 0) * qty;
 
-    const discountedSum = appliedPromoCode
+    const disSum = appliedPromoCode
       ? oldSum * (1 - appliedPromoCode.discount / 100)
       : oldSum;
 
-    return total + discountedSum;
+    return total + disSum;
   }, 0);
 
   return (
@@ -183,12 +184,20 @@ export const Cart = () => {
               setPromoCode(e.target.value);
             }}
           />
-          <Button
-            className={styles.buttonClean}
-            func={() => applyPromoCode(promoCode)}
-          >
-            Apply
-          </Button>
+          <div className={styles.buttonsPromoCode}>
+            <Button
+              className={styles.buttonClean}
+              func={() => applyPromoCode(promoCode)}
+            >
+              Apply
+            </Button>
+            <Button
+              className={styles.buttonClean}
+              func={() => applyPromoCode("")}
+            >
+              Remove
+            </Button>
+          </div>
         </div>
 
         <div className={styles.sumTotal}>
