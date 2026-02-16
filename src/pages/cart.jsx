@@ -108,12 +108,17 @@ export const Cart = () => {
 
     // получить объект промокода по коду
     const promoCodeObj = PROMOCODES.find((item) => item.code === code);
+    console.log("promoCodeObj :", promoCodeObj);
 
     if (!promoCodeObj) {
-      toast.error("Promocode not found!", { className: styles.errorPromoCode });
+      toast.error("Promocode not found!", {
+        className: styles.errorPromoCode,
+        duration: 2000,
+      });
     } else {
       toast.success("Promocode applied!", {
         className: styles.successPromoCode,
+        duration: 2000,
       });
     }
 
@@ -121,6 +126,15 @@ export const Cart = () => {
 
     console.log(promoCodeObj);
     setPromoCode("");
+  }
+
+  function removePromoCode() {
+    setPromoCode("");
+    setAppliedPromoCode(null);
+    toast.success("Promocode removed!", {
+      className: styles.successPromoCode,
+      duration: 2000,
+    });
   }
 
   // cartProducts - продукты после запроса при
@@ -211,10 +225,7 @@ export const Cart = () => {
             >
               Apply
             </Button>
-            <Button
-              className={styles.buttonClean}
-              func={() => applyPromoCode("")}
-            >
+            <Button className={styles.buttonClean} func={removePromoCode}>
               Remove
             </Button>
           </div>
