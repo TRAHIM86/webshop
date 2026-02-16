@@ -124,9 +124,14 @@ export const Cart = () => {
 
     const oldSum = (product?.price || 0) * qty;
 
-    const disSum = appliedPromoCode
-      ? oldSum * (1 - appliedPromoCode.discount / 100)
-      : oldSum;
+    const isPromoCategory =
+      appliedPromoCode?.categoryes === product?.category ||
+      appliedPromoCode?.categoryes === "all";
+
+    const disSum =
+      appliedPromoCode && isPromoCategory
+        ? oldSum * (1 - appliedPromoCode.discount / 100)
+        : oldSum;
 
     return total + disSum;
   }, 0);
@@ -158,7 +163,11 @@ export const Cart = () => {
                     <Plus />
                   </Button>
 
-                  <SumProduct sum={sum} appliedPromoCode={appliedPromoCode} />
+                  <SumProduct
+                    product={product}
+                    sum={sum}
+                    appliedPromoCode={appliedPromoCode}
+                  />
                   <Button func={() => removeProductToCart(product.id)}>
                     Remove
                   </Button>
