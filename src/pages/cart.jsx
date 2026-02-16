@@ -8,6 +8,7 @@ import { ProductCart } from "../components/productCart/productCart";
 import { SumProduct } from "../components/sumProduct/sumProduct";
 import { Plus, Minus } from "lucide-react";
 import { PROMOCODES } from "../constants/promoCode";
+import toast, { Toaster } from "react-hot-toast";
 
 export const Cart = () => {
   // актиный юзер (глобальный контекст)
@@ -107,6 +108,15 @@ export const Cart = () => {
 
     // получить объект промокода по коду
     const promoCodeObj = PROMOCODES.find((item) => item.code === code);
+
+    if (!promoCodeObj) {
+      toast.error("Promocode not found!", { className: styles.errorPromoCode });
+    } else {
+      toast.success("Promocode applied!", {
+        className: styles.successPromoCode,
+      });
+    }
+
     setAppliedPromoCode(promoCodeObj);
 
     console.log(promoCodeObj);
@@ -217,6 +227,7 @@ export const Cart = () => {
         </div>
         <Button className={styles.buttonOrder}>ORDER</Button>
       </div>
+      <Toaster position="bottom-right" />
     </div>
   );
 };

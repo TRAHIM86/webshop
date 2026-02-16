@@ -86,3 +86,15 @@
   flex-direction: column;
   align-items: center;
 }
+
+.errorPromoCode {
+  background: #ff4444;
+  color: white;
+  border-radius: 8px;
+}
+
+.successPromoCode {
+  background: #47d64c;
+  color: white;
+  border-radius: 8px;
+}
