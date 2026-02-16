@@ -10,7 +10,23 @@ const SUPABASE_HEADERS = {
 };
 
 export default class Requests {
-  // получить все продукты (только по фильтру)
+  // получить КОЛИЧЕСТВО продуктов
+  static async getQuantityProducts() {
+    try {
+      const quantityProducts = await axios.get(
+        `${SUPABASE_URL}/rest/v1/products`,
+        {
+          headers: SUPABASE_HEADERS,
+        },
+      );
+      console.log(quantityProducts.data.length);
+      return quantityProducts.data.length;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // получить все продукты - НОМЕРА (только по ФИЛЬТРАМ)
   // для отражения количества страниц
   static async getAllProducts(
     filterStr = "",

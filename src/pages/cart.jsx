@@ -38,8 +38,6 @@ export const Cart = () => {
     keepPreviousData: true,
   });
 
-  console.log("cartProducts :", cartProducts);
-
   // добавить количество товара по productId
   async function addQuantity(productId) {
     setCart((prev) => {
@@ -49,8 +47,6 @@ export const Cart = () => {
       if (activeUser) {
         Requests.putCartByUserId(activeUser.id, newCart);
       }
-
-      // console.log("Add: ", newCart);
 
       return newCart;
     });
@@ -103,13 +99,10 @@ export const Cart = () => {
 
   // функция проверки промокода
   function applyPromoCode(code) {
-    console.log("PROMO :", code);
-
     // получить объект промокода по коду
     const promoCodeObj = PROMOCODES.find((item) => item.code === code);
     setAppliedPromoCode(promoCodeObj);
 
-    console.log(promoCodeObj);
     setPromoCode("");
   }
 

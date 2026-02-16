@@ -7,7 +7,7 @@ import { Header } from "./components/header/header";
 import { Footer } from "./components/footer/footer";
 import { ProductPage } from "./pages/productPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { Cart } from "./pages/cart";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
@@ -38,7 +38,15 @@ function App() {
     return userData ? JSON.parse(userData) : null;
   });
 
+  // корзина
   const [cart, setCart] = useState(new Map());
+
+  // акционный товар (рандолм при каждом входе на сайт)
+  const [promoProduct, setPromoProduct] = useState(null);
+
+  //
+  const initPromoProduct = useRef(false);
+  //console.log(promoProduct, initPromoProduct);
 
   // если нет логина, то получить корзину из локалСтори
   // При логине товар добавится к товару Юзера. Чекнет
@@ -77,6 +85,20 @@ function App() {
     }
   }, [activeUser]);
 
+  useEffect(() => {
+    async function getPromoProduct() {
+      if (!initPromoProduct.current) {
+        const quantityProduct = await Requests.getQuantityProducts();
+        const randomProduct = Math.floor(Math.random() * quantityProduct);
+        console.log(quantityProduct, randomProduct);
+        setPromoProduct(randomProduct);
+        initPromoProduct.current = true;
+      }
+    }
+
+    getPromoProduct();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <UserContext.Provider value={{ activeUser, setActiveUser }}>
@@ -85,9 +107,15 @@ function App() {
             <div className={styles.appContainer}>
               <Header />
               <Routes>
-                <Route path="/" element={<Shop />} />
+                <Route
+                  path="/"
+                  element={<Shop promoProduct={promoProduct} />}
+                />
                 <Route path="/products/:productId" element={<ProductPage />} />
-                <Route path="/main" element={<Main />} />
+                <Route
+                  path="/main"
+                  element={<Main promoProduct={promoProduct} />}
+                />
                 <Route path="/about" element={<About />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/userData" element={<UserData />} />
