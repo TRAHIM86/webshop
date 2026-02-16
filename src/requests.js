@@ -19,7 +19,7 @@ export default class Requests {
           headers: SUPABASE_HEADERS,
         },
       );
-      console.log(quantityProducts.data.length);
+
       return quantityProducts.data.length;
     } catch (err) {
       console.log(err);

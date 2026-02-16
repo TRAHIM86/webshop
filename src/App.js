@@ -41,8 +41,8 @@ function App() {
   // корзина
   const [cart, setCart] = useState(new Map());
 
-  // акционный товар (рандолм при каждом входе на сайт)
-  const [promoProduct, setPromoProduct] = useState(null);
+  // id акционного товара (рандом при каждом входе на сайт)
+  const [idActionProduct, setIdActionProduct] = useState(null);
 
   //
   const initPromoProduct = useRef(false);
@@ -89,9 +89,8 @@ function App() {
     async function getPromoProduct() {
       if (!initPromoProduct.current) {
         const quantityProduct = await Requests.getQuantityProducts();
-        const randomProduct = Math.floor(Math.random() * quantityProduct);
-        console.log(quantityProduct, randomProduct);
-        setPromoProduct(randomProduct);
+        const randomNumProduct = Math.floor(Math.random() * quantityProduct);
+        setIdActionProduct(randomNumProduct);
         initPromoProduct.current = true;
       }
     }
@@ -109,12 +108,12 @@ function App() {
               <Routes>
                 <Route
                   path="/"
-                  element={<Shop promoProduct={promoProduct} />}
+                  element={<Shop idActionProduct={idActionProduct} />}
                 />
                 <Route path="/products/:productId" element={<ProductPage />} />
                 <Route
                   path="/main"
-                  element={<Main promoProduct={promoProduct} />}
+                  element={<Main idActionProduct={idActionProduct} />}
                 />
                 <Route path="/about" element={<About />} />
                 <Route path="/cart" element={<Cart />} />

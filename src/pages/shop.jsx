@@ -48,7 +48,7 @@ async function fetchAllProducts(str, quantity, arrCategories, minP, maxP) {
   return allProducts;
 }
 
-export const Shop = ({ promoProduct }) => {
+export const Shop = ({ idActionProduct }) => {
   // метод сорт, порядок сорт
   const [sortMethod, setSortMethod] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
