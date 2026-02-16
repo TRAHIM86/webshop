@@ -101,6 +101,7 @@ export const Cart = () => {
     });
   }
 
+  // функция проверки промокода
   function applyPromoCode(code) {
     console.log("PROMO :", code);
 
