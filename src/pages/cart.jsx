@@ -8,6 +8,7 @@ import { ProductCart } from "../components/productCart/productCart";
 import { SumProduct } from "../components/sumProduct/sumProduct";
 import { Plus, Minus } from "lucide-react";
 import { PROMOCODES } from "../constants/promoCode";
+import toast, { Toaster } from "react-hot-toast";
 
 export const Cart = () => {
   // актиный юзер (глобальный контекст)
@@ -101,9 +102,32 @@ export const Cart = () => {
   function applyPromoCode(code) {
     // получить объект промокода по коду
     const promoCodeObj = PROMOCODES.find((item) => item.code === code);
+    console.log("promoCodeObj :", promoCodeObj);
+
+    if (!promoCodeObj) {
+      toast.error("Promocode not found!", {
+        className: styles.errorPromoCode,
+        duration: 2000,
+      });
+    } else {
+      toast.success("Promocode applied!", {
+        className: styles.successPromoCode,
+        duration: 2000,
+      });
+    }
+
     setAppliedPromoCode(promoCodeObj);
 
     setPromoCode("");
+  }
+
+  function removePromoCode() {
+    setPromoCode("");
+    setAppliedPromoCode(null);
+    toast.success("Promocode removed!", {
+      className: styles.successPromoCode,
+      duration: 2000,
+    });
   }
 
   // cartProducts - продукты после запроса при
@@ -117,9 +141,14 @@ export const Cart = () => {
 
     const oldSum = (product?.price || 0) * qty;
 
-    const disSum = appliedPromoCode
-      ? oldSum * (1 - appliedPromoCode.discount / 100)
-      : oldSum;
+    const isPromoCategory =
+      appliedPromoCode?.categoryes === product?.category ||
+      appliedPromoCode?.categoryes === "all";
+
+    const disSum =
+      appliedPromoCode && isPromoCategory
+        ? oldSum * (1 - appliedPromoCode.discount / 100)
+        : oldSum;
 
     return total + disSum;
   }, 0);
@@ -151,7 +180,11 @@ export const Cart = () => {
                     <Plus />
                   </Button>
 
-                  <SumProduct sum={sum} appliedPromoCode={appliedPromoCode} />
+                  <SumProduct
+                    product={product}
+                    sum={sum}
+                    appliedPromoCode={appliedPromoCode}
+                  />
                   <Button func={() => removeProductToCart(product.id)}>
                     Remove
                   </Button>
@@ -185,10 +218,7 @@ export const Cart = () => {
             >
               Apply
             </Button>
-            <Button
-              className={styles.buttonClean}
-              func={() => applyPromoCode("")}
-            >
+            <Button className={styles.buttonClean} func={removePromoCode}>
               Remove
             </Button>
           </div>
@@ -201,6 +231,7 @@ export const Cart = () => {
         </div>
         <Button className={styles.buttonOrder}>ORDER</Button>
       </div>
+      <Toaster position="bottom-right" />
     </div>
   );
 };
