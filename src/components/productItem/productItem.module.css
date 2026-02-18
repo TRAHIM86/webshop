@@ -29,3 +29,11 @@ a {
   justify-content: space-around;
   gap: 0.25em;
 }
+
+.crossText {
+  text-decoration: line-through;
+}
+
+.redText {
+  color: red;
+}

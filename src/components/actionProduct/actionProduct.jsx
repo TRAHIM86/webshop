@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import Requests from "../../requests";
 import { ProductImg } from "../productImg/productImg";
 import styles from "./actionProduct.module.css";
+import { DISCOUNTPERSENT } from "../../constants/discountPercent";
 
 export const ActionProduct = ({ idActionProduct }) => {
   const [actionProduct, setActionProduct] = useState(null);
+  console.log("discount :", actionProduct);
+  const discountPercent = DISCOUNTPERSENT;
+  const [discountPrice, setDiscountPrice] = useState(null);
 
   // массив номера фотографий
   const [photos, setPhotos] = useState([]);
@@ -81,11 +85,29 @@ export const ActionProduct = ({ idActionProduct }) => {
     return () => clearInterval(intervalId);
   }, [photos]);
 
+  useEffect(() => {
+    setDiscountPrice(
+      actionProduct?.price
+        ? (actionProduct.price * (1 - discountPercent / 100)).toFixed(2)
+        : null,
+    );
+  }, [actionProduct]);
+
   return (
     <div>
+      <div className={styles.redText}>ACTION! -{discountPercent}%!</div>
       <div>{actionProduct?.name}</div>
-      <div>{actionProduct?.price}</div>
-      <div>{actionProduct?.category}</div>
+      <div className={styles.priceBox}>
+        <div>Old price&nbsp;</div>
+        <div className={styles.crossText}>
+          {actionProduct?.price.toFixed(2)} $
+        </div>
+      </div>
+      <div className={styles.priceBox}>
+        New price&nbsp;{" "}
+        <div className={styles.redText}>{discountPrice} $</div>{" "}
+      </div>
+
       <div className={styles.containerImg}>
         <div className={`${styles.imageWrapper} ${fadeClass}`}>
           <ProductImg

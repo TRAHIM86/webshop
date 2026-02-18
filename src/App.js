@@ -32,6 +32,9 @@ export const CartContext = createContext({
 // активный юзер
 export const UserContext = createContext();
 
+// акционный товар
+export const IdDiscountContext = createContext();
+
 function App() {
   const [activeUser, setActiveUser] = useState(() => {
     const userData = localStorage.getItem("userWebshop");
@@ -90,7 +93,9 @@ function App() {
       if (!initPromoProduct.current) {
         const quantityProduct = await Requests.getQuantityProducts();
         const randomNumProduct = Math.floor(Math.random() * quantityProduct);
-        setIdActionProduct(randomNumProduct);
+
+        /*!!!!!!! ПОМЕНЯТЬ ПОТОМ НА randomNumProduct ВМЕСТО 1!!!!!! */ ///
+        setIdActionProduct(1);
         initPromoProduct.current = true;
       }
     }
@@ -102,30 +107,32 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <UserContext.Provider value={{ activeUser, setActiveUser }}>
         <CartContext.Provider value={{ cart, setCart }}>
-          <HashRouter>
-            <div className={styles.appContainer}>
-              <Header />
-              <Routes>
-                <Route
-                  path="/"
-                  element={<Shop idActionProduct={idActionProduct} />}
-                />
-                <Route path="/products/:productId" element={<ProductPage />} />
-                <Route
-                  path="/main"
-                  element={<Main idActionProduct={idActionProduct} />}
-                />
-                <Route path="/about" element={<About />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/userData" element={<UserData />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+          <IdDiscountContext.Provider value={{ idActionProduct }}>
+            <HashRouter>
+              <div className={styles.appContainer}>
+                <Header />
+                <Routes>
+                  <Route path="/" element={<Shop />} />
+                  <Route
+                    path="/products/:productId"
+                    element={<ProductPage />}
+                  />
+                  <Route
+                    path="/main"
+                    element={<Main idActionProduct={idActionProduct} />}
+                  />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/userData" element={<UserData />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
 
-                <Route path="*" element={<Navigate to="/" replace />}></Route>
-              </Routes>
-              <Footer />
-            </div>
-          </HashRouter>
+                  <Route path="*" element={<Navigate to="/" replace />}></Route>
+                </Routes>
+                <Footer />
+              </div>
+            </HashRouter>
+          </IdDiscountContext.Provider>
         </CartContext.Provider>
       </UserContext.Provider>
     </QueryClientProvider>

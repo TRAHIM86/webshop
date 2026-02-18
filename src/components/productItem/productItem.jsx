@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import styles from "./productItem.module.css";
-import { CartContext, UserContext } from "../../App";
+import { CartContext, IdDiscountContext, UserContext } from "../../App";
 
 import { Link } from "react-router-dom";
 import { ProductImg } from "../productImg/productImg";
@@ -9,11 +9,15 @@ import { Button } from "../button/button";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Requests from "../../requests";
+import { DISCOUNTPERSENT } from "../../constants/discountPercent";
 
 export const ProductItem = ({ product }) => {
   // актиный юзер (глобальный контекст)
   const { activeUser, setActiveUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
+  const { idActionProduct } = useContext(IdDiscountContext);
+  console.log("DisC :", idActionProduct);
+  const discountPercent = DISCOUNTPERSENT;
 
   const maxNum = 5;
   const [currentNum, setCurrentNum] = useState(1);
@@ -115,8 +119,23 @@ export const ProductItem = ({ product }) => {
             <ChevronRight size={16} />
           </Arrow>
         </div>
+        {product.id === idActionProduct ? (
+          <div>
+            {" "}
+            <div
+              className={styles.crossText}
+            >{`${product.price.toFixed(2)} $`}</div>
+            <div className={styles.redText}>
+              {`${(product.price * (1 - discountPercent / 100)).toFixed(2)} $`}
+            </div>
+          </div>
+        ) : (
+          <div>
+            {" "}
+            <div>{`${product.price.toFixed(2)} $`}</div>
+          </div>
+        )}
 
-        <div>{`${product.price.toFixed(2)} $`}</div>
         <Button func={() => toggleProductInCart(product.id)}>
           {cart.has(product.id) ? "Remove" : "Add"}
         </Button>

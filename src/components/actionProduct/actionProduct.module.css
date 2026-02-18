@@ -19,3 +19,16 @@
 .imageWrapper.fadeIn {
   opacity: 1;
 }
+
+.redText {
+  color: red;
+}
+
+.priceBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.crossText {
+  text-decoration: line-through;
+}
