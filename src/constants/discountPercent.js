@@ -1,1 +1,1 @@
-export const DISCOUNTPERSENT = 30;
+export const DISCOUNTPERSENT = 10;

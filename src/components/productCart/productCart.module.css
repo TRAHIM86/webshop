@@ -31,3 +31,11 @@ a {
   gap: 0.25em;
   border: 3px solid salmon;
 }
+
+.crossText {
+  text-decoration: line-through;
+}
+
+.redText {
+  color: red;
+}

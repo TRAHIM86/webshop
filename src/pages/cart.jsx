@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { CartContext, UserContext } from "../App";
+import { CartContext, IdDiscountContext, UserContext } from "../App";
 import Requests from "../requests";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "../components/button/button";
@@ -9,6 +9,7 @@ import { SumProduct } from "../components/sumProduct/sumProduct";
 import { Plus, Minus } from "lucide-react";
 import { PROMOCODES } from "../constants/promoCode";
 import toast, { Toaster } from "react-hot-toast";
+import { DISCOUNTPERSENT } from "../constants/discountPercent";
 
 export const Cart = () => {
   // актиный юзер (глобальный контекст)
@@ -16,6 +17,8 @@ export const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromoCode, setAppliedPromoCode] = useState(null);
+  const { idActionProduct } = useContext(IdDiscountContext);
+  const discountPercent = DISCOUNTPERSENT;
 
   async function fetchCartProduct(ids) {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -141,12 +144,15 @@ export const Cart = () => {
 
     const oldSum = (product?.price || 0) * qty;
 
+    const isDiscountProduct = product.id === idActionProduct;
+
     const isPromoCategory =
       appliedPromoCode?.categoryes === product?.category ||
       appliedPromoCode?.categoryes === "all";
 
-    const disSum =
-      appliedPromoCode && isPromoCategory
+    const disSum = isDiscountProduct
+      ? oldSum * (1 - DISCOUNTPERSENT / 100)
+      : appliedPromoCode && isPromoCategory
         ? oldSum * (1 - appliedPromoCode.discount / 100)
         : oldSum;
 
@@ -160,7 +166,14 @@ export const Cart = () => {
           ?.filter((product) => cart.has(product.id))
           .map((product) => {
             const quantity = cart.get(product.id);
-            const sum = (quantity * product.price).toFixed(2);
+            const isDiscountProduct = product.id === idActionProduct;
+
+            const sum = isDiscountProduct
+              ? (
+                  quantity *
+                  (product.price * (1 - discountPercent / 100))
+                ).toFixed(2)
+              : (quantity * product.price).toFixed(2);
 
             return (
               <div key={product.id} className={styles.cartItem}>
