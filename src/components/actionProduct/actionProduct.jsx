@@ -76,7 +76,7 @@ export const ActionProduct = ({ idActionProduct }) => {
 
         setFadeClass(styles.fadeIn);
       }, 500);
-    }, 5000);
+    }, 30000);
 
     return () => clearInterval(intervalId);
   }, [photos]);
