@@ -137,7 +137,9 @@ export const ProductItem = ({ product }) => {
         )}
 
         <Rating product={product} />
-        <div>Reviews</div>
+        <Button func={() => console.log("Soon will be opening reviews")}>
+          Reviews
+        </Button>
 
         <Button func={() => toggleProductInCart(product.id)}>
           {cart.has(product.id) ? "Remove" : "Add"}

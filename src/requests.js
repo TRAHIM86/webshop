@@ -314,7 +314,6 @@ export default class Requests {
 
       const averageRating = sumRating / productReviews.length;
 
-      console.log("averageRating :", Number(averageRating));
       return averageRating;
     } catch (err) {
       console.log(err);
