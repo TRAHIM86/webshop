@@ -146,8 +146,9 @@ export const Cart = () => {
     const isDiscountProduct = product?.id === idActionProduct;
 
     const isPromoCategory =
-      appliedPromoCode?.categoryes === product?.category ||
-      appliedPromoCode?.categoryes === "all";
+      appliedPromoCode &&
+      (appliedPromoCode?.categoryes === product?.category ||
+        appliedPromoCode?.categoryes === "all");
 
     const disSum = isDiscountProduct
       ? isPromoCategory && appliedPromoCode

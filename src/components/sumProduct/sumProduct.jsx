@@ -23,8 +23,6 @@ export const SumProduct = ({ product, quantity, appliedPromoCode }) => {
       ? oldSum * (1 - appliedPromoCode.discount / 100)
       : null;
 
-  console.log("disSum :", disSum);
-
   return (
     <div className={styles.sum}>
       {disSum ? (
