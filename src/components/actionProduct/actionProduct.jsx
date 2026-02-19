@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Requests from "../../requests";
 import { ProductImg } from "../productImg/productImg";
 import styles from "./actionProduct.module.css";
 import { DISCOUNTPERSENT } from "../../constants/discountPercent";
+import { Button } from "../button/button";
+import { CartContext, UserContext } from "../../App";
 
 export const ActionProduct = ({ idActionProduct }) => {
+  const { activeUser, setActiveUser } = useContext(UserContext);
+  const { cart, setCart } = useContext(CartContext);
   const [actionProduct, setActionProduct] = useState(null);
-  console.log("discount :", actionProduct);
   const discountPercent = DISCOUNTPERSENT;
   const [discountPrice, setDiscountPrice] = useState(null);
 
@@ -93,6 +96,42 @@ export const ActionProduct = ({ idActionProduct }) => {
     );
   }, [actionProduct]);
 
+  function addDiscountProductInCart(productId) {
+    if (!activeUser) {
+      setCart((prev) => {
+        const newCart = new Map(prev);
+        console.log("newCart :", newCart);
+
+        if (newCart.has(productId)) {
+          return newCart;
+        } else {
+          newCart.set(productId, 1);
+        }
+
+        const cartData = Object.fromEntries(newCart);
+        localStorage.setItem("cartWebshop", JSON.stringify(cartData));
+
+        return newCart;
+      });
+
+      return;
+    }
+
+    setCart((prev) => {
+      const newCart = new Map(prev);
+
+      if (newCart.has(productId)) {
+        console.log("have", newCart);
+        return newCart;
+      } else {
+        newCart.set(productId, 1);
+      }
+
+      Requests.putCartByUserId(activeUser.id, newCart);
+      return newCart;
+    });
+  }
+
   return (
     <div>
       <div className={styles.redText}>ACTION! -{discountPercent}%!</div>
@@ -116,6 +155,9 @@ export const ActionProduct = ({ idActionProduct }) => {
           />
         </div>
       </div>
+      <Button func={() => addDiscountProductInCart(idActionProduct)}>
+        {"Add"}
+      </Button>
     </div>
   );
 };

@@ -18,6 +18,7 @@ export const Navbar = () => {
     setCart(new Map());
   }
 
+  //console.log("NAVBAR :", cart);
   // сумма всех товаров
   const total = [...cart.values()].reduce((sum, quantity) => sum + quantity, 0);
 
