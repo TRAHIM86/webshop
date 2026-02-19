@@ -105,7 +105,6 @@ export const Cart = () => {
   function applyPromoCode(code) {
     // получить объект промокода по коду
     const promoCodeObj = PROMOCODES.find((item) => item.code === code);
-    console.log("promoCodeObj :", promoCodeObj);
 
     if (!promoCodeObj) {
       toast.error("Promocode not found!", {
@@ -142,17 +141,19 @@ export const Cart = () => {
   const sumTotal = [...cart.entries()].reduce((total, [id, qty]) => {
     const product = cartProducts?.find((p) => p.id === id);
 
-    const oldSum = (product?.price || 0) * qty;
+    const oldSum = (product?.price || 0).toFixed(2) * qty;
 
-    const isDiscountProduct = product.id === idActionProduct;
+    const isDiscountProduct = product?.id === idActionProduct;
 
     const isPromoCategory =
       appliedPromoCode?.categoryes === product?.category ||
       appliedPromoCode?.categoryes === "all";
 
     const disSum = isDiscountProduct
-      ? oldSum * (1 - DISCOUNTPERSENT / 100)
-      : appliedPromoCode && isPromoCategory
+      ? isPromoCategory && appliedPromoCode
+        ? oldSum * (1 - DISCOUNTPERSENT / 100 - appliedPromoCode.discount / 100)
+        : oldSum * (1 - DISCOUNTPERSENT / 100)
+      : isPromoCategory
         ? oldSum * (1 - appliedPromoCode.discount / 100)
         : oldSum;
 
@@ -166,14 +167,6 @@ export const Cart = () => {
           ?.filter((product) => cart.has(product.id))
           .map((product) => {
             const quantity = cart.get(product.id);
-            const isDiscountProduct = product.id === idActionProduct;
-
-            const sum = isDiscountProduct
-              ? (
-                  quantity *
-                  (product.price * (1 - discountPercent / 100))
-                ).toFixed(2)
-              : (quantity * product.price).toFixed(2);
 
             return (
               <div key={product.id} className={styles.cartItem}>
@@ -195,7 +188,7 @@ export const Cart = () => {
 
                   <SumProduct
                     product={product}
-                    sum={sum}
+                    quantity={quantity}
                     appliedPromoCode={appliedPromoCode}
                   />
                   <Button func={() => removeProductToCart(product.id)}>
