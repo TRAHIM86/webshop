@@ -1,3 +1,5 @@
+/*!!!!!!! ПОМЕНЯТЬ ПОТОМ НА randomNumProduct ВМЕСТО 1!!!!!! */
+
 /**
  * @license React
  * react-dom-client.production.js

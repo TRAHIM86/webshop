@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/webshop/static/css/main.55a9d826.css",
-    "main.js": "/webshop/static/js/main.4770a277.js",
+    "main.css": "/webshop/static/css/main.9d069ad9.css",
+    "main.js": "/webshop/static/js/main.df9b0898.js",
     "static/media/Montserrat-VariableFont_wght.ttf": "/webshop/static/media/Montserrat-VariableFont_wght.7e687123cd4528224ce5.ttf",
     "index.html": "/webshop/index.html",
-    "main.55a9d826.css.map": "/webshop/static/css/main.55a9d826.css.map",
-    "main.4770a277.js.map": "/webshop/static/js/main.4770a277.js.map"
+    "main.9d069ad9.css.map": "/webshop/static/css/main.9d069ad9.css.map",
+    "main.df9b0898.js.map": "/webshop/static/js/main.df9b0898.js.map"
   },
   "entrypoints": [
-    "static/css/main.55a9d826.css",
-    "static/js/main.4770a277.js"
+    "static/css/main.9d069ad9.css",
+    "static/js/main.df9b0898.js"
   ]
 }
