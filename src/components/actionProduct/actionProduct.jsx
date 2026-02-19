@@ -83,7 +83,7 @@ export const ActionProduct = ({ idActionProduct }) => {
 
         setFadeClass(styles.fadeIn);
       }, 500);
-    }, 30000);
+    }, 5000);
 
     return () => clearInterval(intervalId);
   }, [photos]);

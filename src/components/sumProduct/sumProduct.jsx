@@ -17,10 +17,13 @@ export const SumProduct = ({ product, quantity, appliedPromoCode }) => {
 
   const disSum = isDiscountProduct
     ? isPromoCategory && appliedPromoCode
-      ? oldSum * (1 - DISCOUNTPERSENT / 100 - appliedPromoCode.discount / 100)
-      : oldSum * (1 - DISCOUNTPERSENT / 100)
+      ? (
+          oldSum *
+          (1 - DISCOUNTPERSENT / 100 - appliedPromoCode.discount / 100)
+        ).toFixed(2)
+      : (oldSum * (1 - DISCOUNTPERSENT / 100)).toFixed(2)
     : isPromoCategory
-      ? oldSum * (1 - appliedPromoCode.discount / 100)
+      ? (oldSum * (1 - appliedPromoCode.discount / 100)).toFixed(2)
       : null;
 
   return (
