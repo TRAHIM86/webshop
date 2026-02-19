@@ -115,8 +115,6 @@ export default class Requests {
   }
 
   // получить конкретный продукт по id.
-  // Здесь КОСТЫЛЬ, т.к. mocapi при запросе id === 5,
-  // возвращает массив где в id есть '5' (5,15,25...)
   static async getProductById(id) {
     // Получаем ВСЕ товары один раз
     const response = await axios.get(
@@ -291,6 +289,35 @@ export default class Requests {
       return response.data[0];
     } catch (err) {
       console.log("err :", err);
+    }
+  }
+
+  /*********ЗАПРОСЫ ПО ОЦЕНКАМ И КОММЕНТАМ*******/
+
+  static async getAverageRatingProductById(productId) {
+    try {
+      const allReviews = await axios.get(`${SUPABASE_URL}/rest/v1/reviews`, {
+        headers: SUPABASE_HEADERS,
+        params: {
+          product_id: `eq.${productId}`,
+        },
+      });
+
+      const productReviews = allReviews.data;
+
+      if (productReviews.length === 0) return null;
+
+      const sumRating = productReviews.reduce(
+        (total, reviews) => total + reviews.rating,
+        0,
+      );
+
+      const averageRating = sumRating / productReviews.length;
+
+      console.log("averageRating :", Number(averageRating));
+      return averageRating;
+    } catch (err) {
+      console.log(err);
     }
   }
 }

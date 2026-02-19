@@ -10,13 +10,13 @@ import { Button } from "../button/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Requests from "../../requests";
 import { DISCOUNTPERSENT } from "../../constants/discountPercent";
+import { Rating } from "../rating/rating";
 
 export const ProductItem = ({ product }) => {
   // актиный юзер (глобальный контекст)
   const { activeUser, setActiveUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
   const { idActionProduct } = useContext(IdDiscountContext);
-  console.log("DisC :", idActionProduct);
   const discountPercent = DISCOUNTPERSENT;
 
   const maxNum = 5;
@@ -135,6 +135,9 @@ export const ProductItem = ({ product }) => {
             <div>{`${product.price.toFixed(2)} $`}</div>
           </div>
         )}
+
+        <Rating product={product} />
+        <div>Reviews</div>
 
         <Button func={() => toggleProductInCart(product.id)}>
           {cart.has(product.id) ? "Remove" : "Add"}
