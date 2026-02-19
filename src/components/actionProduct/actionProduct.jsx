@@ -97,37 +97,24 @@ export const ActionProduct = ({ idActionProduct }) => {
   }, [actionProduct]);
 
   function addDiscountProductInCart(productId) {
-    if (!activeUser) {
-      setCart((prev) => {
-        const newCart = new Map(prev);
-        console.log("newCart :", newCart);
-
-        if (newCart.has(productId)) {
-          return newCart;
-        } else {
-          newCart.set(productId, 1);
-        }
-
-        const cartData = Object.fromEntries(newCart);
-        localStorage.setItem("cartWebshop", JSON.stringify(cartData));
-
-        return newCart;
-      });
-
-      return;
-    }
-
     setCart((prev) => {
       const newCart = new Map(prev);
 
       if (newCart.has(productId)) {
-        console.log("have", newCart);
         return newCart;
-      } else {
-        newCart.set(productId, 1);
       }
 
-      Requests.putCartByUserId(activeUser.id, newCart);
+      newCart.set(productId, 1);
+
+      if (!activeUser) {
+        localStorage.setItem(
+          "cartWebshop",
+          JSON.stringify(Object.fromEntries(newCart)),
+        );
+      } else {
+        Requests.putCartByUserId(activeUser.id, newCart);
+      }
+
       return newCart;
     });
   }
