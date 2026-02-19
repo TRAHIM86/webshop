@@ -96,7 +96,8 @@ export const ActionProduct = ({ idActionProduct }) => {
     );
   }, [actionProduct]);
 
-  function addDiscountProductInCart(productId) {
+  // добавить
+  function addActionProductInCart(productId) {
     setCart((prev) => {
       const newCart = new Map(prev);
 
@@ -142,9 +143,11 @@ export const ActionProduct = ({ idActionProduct }) => {
           />
         </div>
       </div>
-      <Button func={() => addDiscountProductInCart(idActionProduct)}>
-        {"Add"}
-      </Button>
+      {!cart.has(idActionProduct) && (
+        <Button func={() => addActionProductInCart(idActionProduct)}>
+          Add
+        </Button>
+      )}
     </div>
   );
 };
