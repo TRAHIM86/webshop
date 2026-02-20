@@ -319,4 +319,21 @@ export default class Requests {
       console.log(err);
     }
   }
+
+  static async getAllReviewsProduct(productId) {
+    try {
+      const allReviews = await axios.get(`${SUPABASE_URL}/rest/v1/reviews`, {
+        headers: SUPABASE_HEADERS,
+        params: {
+          product_id: `eq.${productId}`,
+        },
+      });
+
+      const productReviews = allReviews.data;
+
+      return productReviews;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }

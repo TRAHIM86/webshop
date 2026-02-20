@@ -9,6 +9,7 @@ import { Carousel } from "../components/carousel/carousel";
 import { CartContext, UserContext } from "../App";
 import { Button } from "../components/button/button";
 import { Rating } from "../components/rating/rating";
+import { ProductFeedback } from "../components/productFeedback/productFeedback";
 
 export const ProductPage = () => {
   // актиный юзер (глобальный контекст)
@@ -140,18 +141,16 @@ export const ProductPage = () => {
         <div>{`${productById.price} $`}</div>
         <div>{productById.category}</div>
       </div>
-
       <Carousel
         product={productById}
         arrNumsPhoto={photos}
         currentNum={currentNumPhoto}
         setCurrentNum={setCurrentNumPhoto}
       />
-
+      <ProductFeedback product={productById} />
       <Button func={() => toggleProductInCart(productById.id)}>
         {cart.has(productById.id) ? "Remove" : "Add"}
       </Button>
-      <Rating product={productById} />
     </div>
   );
 };

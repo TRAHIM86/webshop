@@ -1,0 +1,7 @@
+.productFeedback {
+  border: 1px saddlebrown solid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 10em;
+}
