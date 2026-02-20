@@ -5,6 +5,8 @@ import { Rating } from "../rating/rating";
 import styles from "./productFeedback.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingDots } from "../loadingDots/loadingDots";
+import { Review } from "../review/review";
+import { Star } from "lucide-react";
 
 export const ProductFeedback = ({ product }) => {
   const [showReviews, setShowReviews] = useState(false);
@@ -23,9 +25,16 @@ export const ProductFeedback = ({ product }) => {
   return (
     <div className={styles.productFeedback}>
       <div>
-        <Rating product={product} />
+        <div className={styles.ratingBlock}>
+          <Star size={16} fill="orange" />
+          <Rating product={product} />
+        </div>
 
-        <Button func={() => setShowReviews(true)}>Reviews</Button>
+        {!reviewList ? (
+          <Button func={() => setShowReviews(true)}>Reviews</Button>
+        ) : (
+          ""
+        )}
       </div>
 
       <div>
@@ -35,11 +44,7 @@ export const ProductFeedback = ({ product }) => {
               <LoadingDots>...</LoadingDots>
             ) : (
               reviewList?.map((review) => (
-                <div key={review.id}>
-                  <div>{review.user_name}</div>
-                  <div>Rating: {review.rating}</div>
-                  <div>{review.review_text}</div>
-                </div>
+                <Review key={review.id} review={review} />
               ))
             )}
           </div>

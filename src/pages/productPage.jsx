@@ -8,7 +8,6 @@ import { Arrow } from "../components/arrow/arrow";
 import { Carousel } from "../components/carousel/carousel";
 import { CartContext, UserContext } from "../App";
 import { Button } from "../components/button/button";
-import { Rating } from "../components/rating/rating";
 import { ProductFeedback } from "../components/productFeedback/productFeedback";
 
 export const ProductPage = () => {
@@ -147,10 +146,10 @@ export const ProductPage = () => {
         currentNum={currentNumPhoto}
         setCurrentNum={setCurrentNumPhoto}
       />
-      <ProductFeedback product={productById} />
       <Button func={() => toggleProductInCart(productById.id)}>
         {cart.has(productById.id) ? "Remove" : "Add"}
       </Button>
+      <ProductFeedback product={productById} />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import react from "react";
 import { InputSearch } from "../inputSearch/inputSearch";
 import { Select } from "../select/select";
 import styles from "./productMenu.module.css";
+import { Button } from "../button/button";
 
 export const ProductMenu = ({
   searchStr,
@@ -32,19 +33,19 @@ export const ProductMenu = ({
           />
         </div>
 
-        <div style={{ border: "2px solid red" }}>
-          <button
+        <div style={{ border: "2px solid red", display: "flex" }}>
+          <Button
             className={styles.buttonSort}
-            onClick={() => setSortOrder("asc")}
+            func={() => setSortOrder("asc")}
           >
             ▲
-          </button>
-          <button
+          </Button>
+          <Button
             className={styles.buttonSort}
-            onClick={() => setSortOrder("desc")}
+            func={() => setSortOrder("desc")}
           >
             ▼
-          </button>
+          </Button>
         </div>
 
         <div style={{ border: "2px solid red" }}>
