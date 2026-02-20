@@ -8,6 +8,7 @@ import { Arrow } from "../components/arrow/arrow";
 import { Carousel } from "../components/carousel/carousel";
 import { CartContext, UserContext } from "../App";
 import { Button } from "../components/button/button";
+import { Rating } from "../components/rating/rating";
 
 export const ProductPage = () => {
   // актиный юзер (глобальный контекст)
@@ -150,6 +151,7 @@ export const ProductPage = () => {
       <Button func={() => toggleProductInCart(productById.id)}>
         {cart.has(productById.id) ? "Remove" : "Add"}
       </Button>
+      <Rating product={productById} />
     </div>
   );
 };

@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react";
 import Requests from "../../requests";
 import styles from "./rating.module.css";
+import { useQuery } from "@tanstack/react-query";
 
 export const Rating = ({ product }) => {
-  const [averageRating, setAverageRating] = useState(null);
+  const { data: averageRating, isLoading } = useQuery({
+    queryKey: ["averageRating", product.id],
+    queryFn: () => Requests.getAverageRatingProductById(product.id),
+  });
 
-  async function getRatingProduct(productId) {
-    const averageRating = await Requests.getAverageRatingProductById(productId);
-    setAverageRating(averageRating);
-  }
-
-  useEffect(() => {
-    getRatingProduct(product.id);
-  }, [product.id]);
+  if (isLoading) return <div className={styles.blueText}>...</div>;
 
   return (
     <div className={styles.blueText}>
-      {averageRating ? Number(averageRating).toFixed(1) : ""}
+      {averageRating ? averageRating.toFixed(2) : "No rating"}
     </div>
   );
 };
