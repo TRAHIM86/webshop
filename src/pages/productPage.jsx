@@ -111,10 +111,8 @@ export const ProductPage = () => {
 
       if (newCart.has(productId)) {
         newCart.delete(productId);
-        console.log("Удалил товар", productId);
       } else {
         newCart.set(productId, 1);
-        console.log("Добавил товар", productId);
       }
 
       Requests.putCartByUserId(activeUser.id, newCart);

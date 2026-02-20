@@ -30,6 +30,10 @@ export const ProductFeedback = ({ product }) => {
           <Rating product={product} />
         </div>
 
+        <Button func={() => console.log("Will be adding review")}>
+          Add review
+        </Button>
+
         {!reviewList ? (
           <Button func={() => setShowReviews(true)}>Reviews</Button>
         ) : (
