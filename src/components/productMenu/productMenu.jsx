@@ -1,4 +1,3 @@
-import react from "react";
 import { InputSearch } from "../inputSearch/inputSearch";
 import { Select } from "../select/select";
 import styles from "./productMenu.module.css";

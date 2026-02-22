@@ -23,7 +23,6 @@ export const Rating = ({ product }) => {
       <div className={styles.starBlock}>
         <Star size={16} fill="orange" />
       </div>
-
       {averageRating ? averageRating.toFixed(2) : "No rating"}
     </div>
   );

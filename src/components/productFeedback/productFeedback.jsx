@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Requests from "../../requests";
 import { Button } from "../button/button";
 import { Rating } from "../rating/rating";
@@ -6,10 +6,15 @@ import styles from "./productFeedback.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingDots } from "../loadingDots/loadingDots";
 import { Review } from "../review/review";
-import { Star } from "lucide-react";
+import { UserContext } from "../../App";
+import { PopupReview } from "../popupReview/popupReview";
 
 export const ProductFeedback = ({ product }) => {
+  const { activeUser } = useContext(UserContext);
   const [showReviews, setShowReviews] = useState(false);
+
+  // состояние попапа
+  const [popupOpen, setPopupOpen] = useState(false);
 
   const { data: reviewList, isLoading } = useQuery({
     queryKey: ["reviewList", product.id],
@@ -22,6 +27,10 @@ export const ProductFeedback = ({ product }) => {
     return await Requests.getAllReviewsProduct(productId);
   }
 
+  function addNewReview() {
+    activeUser ? console.log("Added") : setPopupOpen(true);
+  }
+
   return (
     <div className={styles.productFeedback}>
       <div>
@@ -29,9 +38,7 @@ export const ProductFeedback = ({ product }) => {
           <Rating product={product} />
         </div>
 
-        <Button func={() => console.log("Will be adding review")}>
-          Add review
-        </Button>
+        <Button func={() => addNewReview()}>Add review</Button>
 
         {!reviewList ? (
           <Button func={() => setShowReviews(true)}>Reviews</Button>
@@ -53,6 +60,7 @@ export const ProductFeedback = ({ product }) => {
           </div>
         )}
       </div>
+      <PopupReview popupOpen={popupOpen} setPopupOpen={setPopupOpen} />
     </div>
   );
 };

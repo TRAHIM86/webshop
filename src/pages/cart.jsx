@@ -18,7 +18,6 @@ export const Cart = () => {
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromoCode, setAppliedPromoCode] = useState(null);
   const { idActionProduct } = useContext(IdDiscountContext);
-  const discountPercent = DISCOUNTPERSENT;
 
   async function fetchCartProduct(ids) {
     await new Promise((resolve) => setTimeout(resolve, 500));
