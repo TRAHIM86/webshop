@@ -64,27 +64,6 @@ export const ProductItem = ({ product }) => {
   // чтобы были только уникальные id товара. Количество
   // будет регулироваться на странице корзины
   function toggleProductInCart(productId) {
-    if (!activeUser) {
-      setCart((prev) => {
-        const newCart = new Map(prev);
-
-        if (newCart.has(productId)) {
-          newCart.delete(productId);
-        } else {
-          newCart.set(productId, 1);
-        }
-
-        console.log("newCart :", newCart);
-
-        const cartData = Object.fromEntries(newCart);
-        localStorage.setItem("cartWebshop", JSON.stringify(cartData));
-
-        return newCart;
-      });
-
-      return;
-    }
-
     setCart((prev) => {
       const newCart = new Map(prev);
 
@@ -94,7 +73,15 @@ export const ProductItem = ({ product }) => {
         newCart.set(productId, 1);
       }
 
-      Requests.putCartByUserId(activeUser.id, newCart);
+      if (!activeUser) {
+        localStorage.setItem(
+          "cartWebshop",
+          JSON.stringify(Object.fromEntries(newCart)),
+        );
+      } else {
+        Requests.putCartByUserId(activeUser.id, newCart);
+      }
+
       return newCart;
     });
   }

@@ -115,7 +115,15 @@ export const ProductPage = () => {
         newCart.set(productId, 1);
       }
 
-      Requests.putCartByUserId(activeUser.id, newCart);
+      if (!activeUser) {
+        localStorage.setItem(
+          "cartWebshop",
+          JSON.stringify(Object.fromEntries(newCart)),
+        );
+      } else {
+        Requests.putCartByUserId(activeUser.id, newCart);
+      }
+
       return newCart;
     });
   }
