@@ -26,7 +26,6 @@ export const ProductFeedback = ({ product }) => {
     <div className={styles.productFeedback}>
       <div>
         <div className={styles.ratingBlock}>
-          <Star size={16} fill="orange" />
           <Rating product={product} />
         </div>
 
