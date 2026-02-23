@@ -229,7 +229,6 @@ export default class Requests {
 
   // проверить есть ли юзер по логину и паролю
   static async checkLoginedUser(login, password) {
-    console.log("login: ", login, "password", password);
     try {
       const response = await axios.get(`${SUPABASE_URL}/rest/v1/users`, {
         headers: SUPABASE_HEADERS,

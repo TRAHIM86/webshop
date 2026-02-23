@@ -60,7 +60,11 @@ export const ProductFeedback = ({ product }) => {
           </div>
         )}
       </div>
-      <PopupReview popupOpen={popupOpen} setPopupOpen={setPopupOpen} />
+      <PopupReview
+        popupOpen={popupOpen}
+        setPopupOpen={setPopupOpen}
+        product={product}
+      />
     </div>
   );
 };

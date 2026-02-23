@@ -5,12 +5,22 @@ import { UserContext } from "../App";
 import Requests from "../requests";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // актиный юзер (глобальный контекст)
   const { setActiveUser } = useContext(UserContext);
+
+  // данные из state, если нету то на main
+  // для обратного редиректа и передачи true
+  const from = location.state?.from || "/main";
+  console.log(from, from === "/products/4");
+  const openReview = location.state?.openReview;
+
+  console.log("state: ", from, openReview);
 
   // состояние "входимого" юзера
   const [loginedUser, setLoginedUser] = useState({
@@ -26,7 +36,10 @@ export const Login = () => {
       if (userData) {
         localStorage.setItem("userWebshop", JSON.stringify(userData));
         setActiveUser(userData);
-        navigate("/main");
+
+        // редирект на from и state если он есть
+        console.log("Redirect to:", from);
+        navigate(from, { state: openReview ? { openReview } : undefined });
       }
     },
   });
@@ -46,7 +59,7 @@ export const Login = () => {
 
   return (
     <div>
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className={styles.dataLogin}>
           <input
             type="text"
