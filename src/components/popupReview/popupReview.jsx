@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "../button/button";
 import styles from "./popupReview.module.css";
+import { UserContext } from "../../App";
 
-export const PopupReview = ({ popupOpen, setPopupOpen }) => {
+export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
+  const { activeUser } = useContext(UserContext);
   const [review, setReview] = useState("");
 
   function checkLeReviewLength(str) {
@@ -16,7 +18,17 @@ export const PopupReview = ({ popupOpen, setPopupOpen }) => {
   }
 
   function addReview() {
-    console.log(review);
+    const now = new Date();
+    const formattedDate = now.toISOString();
+
+    console.log({
+      id: "auto",
+      product_id: product.id,
+      user_name: activeUser,
+      rating: null,
+      review_text: review,
+      created_at: formattedDate,
+    });
   }
 
   return (

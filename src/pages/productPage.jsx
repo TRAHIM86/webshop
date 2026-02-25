@@ -193,6 +193,7 @@ export const ProductPage = () => {
       <PopupReview
         popupOpen={popupReviewOpen}
         setPopupOpen={setPopupReviewOpen}
+        product={productById}
       />
     </div>
   );
