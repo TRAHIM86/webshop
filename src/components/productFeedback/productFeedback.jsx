@@ -21,6 +21,8 @@ export const ProductFeedback = ({ product, addNewReview }) => {
     return await Requests.getAllReviewsProduct(productId);
   }
 
+  console.log(reviewList);
+
   return (
     <div className={styles.productFeedback}>
       <div>
@@ -29,12 +31,7 @@ export const ProductFeedback = ({ product, addNewReview }) => {
         </div>
 
         <Button func={() => addNewReview()}>Add review</Button>
-
-        {!reviewList ? (
-          <Button func={() => setShowReviews(true)}>Reviews</Button>
-        ) : (
-          ""
-        )}
+        <Button func={() => setShowReviews(true)}>Reviews</Button>
       </div>
 
       <div>

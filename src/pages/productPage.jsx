@@ -9,7 +9,8 @@ import { Carousel } from "../components/carousel/carousel";
 import { CartContext, UserContext } from "../App";
 import { Button } from "../components/button/button";
 import { ProductFeedback } from "../components/productFeedback/productFeedback";
-import { PopupLoginReview } from "../components/popupLoginReview/popupLoginReview";
+import { PopupLogin } from "../components/popupLogin/popupLogin";
+import { PopupReview } from "../components/popupReview/popupReview";
 
 export const ProductPage = () => {
   // актиный юзер (глобальный контекст)
@@ -21,8 +22,11 @@ export const ProductPage = () => {
   // состояние попапаLogin
   const [popupLoginOpen, setPopupLoginOpen] = useState(false);
 
+  // состояние попапаAddReview
+  const [popupReviewOpen, setPopupReviewOpen] = useState(false);
+
   function addNewReview() {
-    activeUser ? console.log("Added") : setPopupLoginOpen(true);
+    activeUser ? setPopupReviewOpen(true) : setPopupLoginOpen(true);
   }
 
   // для обратного редиректа и передачи true
@@ -30,16 +34,14 @@ export const ProductPage = () => {
 
   useEffect(() => {
     if (openReview) {
+      setPopupReviewOpen(openReview);
+
       navigate(location.pathname, {
         replace: true,
         state: {},
       });
-
-      console.log("NavDATA :", openReview);
     }
   }, [openReview, location.pathname, navigate]);
-
-  console.log("NavDATA :", openReview);
 
   let { productId } = useParams();
 
@@ -183,10 +185,14 @@ export const ProductPage = () => {
       </Button>
       <ProductFeedback product={productById} addNewReview={addNewReview} />
 
-      <PopupLoginReview
+      <PopupLogin
         popupOpen={popupLoginOpen}
-        setPopupOpen={popupLoginOpen}
+        setPopupOpen={setPopupLoginOpen}
         product={productById}
+      />
+      <PopupReview
+        popupOpen={popupReviewOpen}
+        setPopupOpen={setPopupReviewOpen}
       />
     </div>
   );

@@ -1,8 +1,8 @@
 import { Button } from "../button/button";
-import styles from "./popupLoginReview.module.css";
+import styles from "./popupLogin.module.css";
 import { Link } from "react-router-dom";
 
-export const PopupLoginReview = ({ popupOpen, setPopupOpen, product }) => {
+export const PopupLogin = ({ popupOpen, setPopupOpen, product }) => {
   function closePopup() {
     setPopupOpen(false);
   }
