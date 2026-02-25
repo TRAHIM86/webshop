@@ -17,10 +17,7 @@ export const Login = () => {
   // данные из state, если нету то на main
   // для обратного редиректа и передачи true
   const from = location.state?.from || "/main";
-  console.log(from, from === "/products/4");
   const openReview = location.state?.openReview;
-
-  console.log("state: ", from, openReview);
 
   // состояние "входимого" юзера
   const [loginedUser, setLoginedUser] = useState({
@@ -38,7 +35,6 @@ export const Login = () => {
         setActiveUser(userData);
 
         // редирект на from и state если он есть
-        console.log("Redirect to:", from);
         navigate(from, { state: openReview ? { openReview } : undefined });
       }
     },

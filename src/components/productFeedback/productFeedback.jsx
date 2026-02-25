@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Requests from "../../requests";
 import { Button } from "../button/button";
 import { Rating } from "../rating/rating";
@@ -6,15 +6,9 @@ import styles from "./productFeedback.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingDots } from "../loadingDots/loadingDots";
 import { Review } from "../review/review";
-import { UserContext } from "../../App";
-import { PopupReview } from "../popupReview/popupReview";
 
-export const ProductFeedback = ({ product }) => {
-  const { activeUser } = useContext(UserContext);
+export const ProductFeedback = ({ product, addNewReview }) => {
   const [showReviews, setShowReviews] = useState(false);
-
-  // состояние попапа
-  const [popupOpen, setPopupOpen] = useState(false);
 
   const { data: reviewList, isLoading } = useQuery({
     queryKey: ["reviewList", product.id],
@@ -25,10 +19,6 @@ export const ProductFeedback = ({ product }) => {
   async function fetchAllReviews(productId) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return await Requests.getAllReviewsProduct(productId);
-  }
-
-  function addNewReview() {
-    activeUser ? console.log("Added") : setPopupOpen(true);
   }
 
   return (
@@ -60,11 +50,6 @@ export const ProductFeedback = ({ product }) => {
           </div>
         )}
       </div>
-      <PopupReview
-        popupOpen={popupOpen}
-        setPopupOpen={setPopupOpen}
-        product={product}
-      />
     </div>
   );
 };

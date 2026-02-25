@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Requests from "../requests";
 import styles from "./productPage.module.css";
 import { useQuery } from "@tanstack/react-query";
@@ -9,11 +9,37 @@ import { Carousel } from "../components/carousel/carousel";
 import { CartContext, UserContext } from "../App";
 import { Button } from "../components/button/button";
 import { ProductFeedback } from "../components/productFeedback/productFeedback";
+import { PopupLoginReview } from "../components/popupLoginReview/popupLoginReview";
 
 export const ProductPage = () => {
   // актиный юзер (глобальный контекст)
   const { activeUser, setActiveUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // состояние попапаLogin
+  const [popupLoginOpen, setPopupLoginOpen] = useState(false);
+
+  function addNewReview() {
+    activeUser ? console.log("Added") : setPopupLoginOpen(true);
+  }
+
+  // для обратного редиректа и передачи true
+  const openReview = location.state?.openReview || false;
+
+  useEffect(() => {
+    if (openReview) {
+      navigate(location.pathname, {
+        replace: true,
+        state: {},
+      });
+
+      console.log("NavDATA :", openReview);
+    }
+  }, [openReview, location.pathname, navigate]);
+
+  console.log("NavDATA :", openReview);
 
   let { productId } = useParams();
 
@@ -155,7 +181,13 @@ export const ProductPage = () => {
       <Button func={() => toggleProductInCart(productById.id)}>
         {cart.has(productById.id) ? "Remove" : "Add"}
       </Button>
-      <ProductFeedback product={productById} />
+      <ProductFeedback product={productById} addNewReview={addNewReview} />
+
+      <PopupLoginReview
+        popupOpen={popupLoginOpen}
+        setPopupOpen={popupLoginOpen}
+        product={productById}
+      />
     </div>
   );
 };

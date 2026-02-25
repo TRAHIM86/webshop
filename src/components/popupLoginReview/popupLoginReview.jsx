@@ -1,11 +1,8 @@
-import { useState } from "react";
 import { Button } from "../button/button";
-import styles from "./popupReview.module.css";
+import styles from "./popupLoginReview.module.css";
 import { Link } from "react-router-dom";
 
-export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
-  console.log("id :", product.id);
-
+export const PopupLoginReview = ({ popupOpen, setPopupOpen, product }) => {
   function closePopup() {
     setPopupOpen(false);
   }
