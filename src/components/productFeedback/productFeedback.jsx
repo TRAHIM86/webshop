@@ -21,8 +21,6 @@ export const ProductFeedback = ({ product, addNewReview }) => {
     return await Requests.getAllReviewsProduct(productId);
   }
 
-  console.log(reviewList);
-
   return (
     <div className={styles.productFeedback}>
       <div>

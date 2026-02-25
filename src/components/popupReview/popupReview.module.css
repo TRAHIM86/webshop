@@ -23,3 +23,8 @@
   border-radius: 4px;
   padding: 2em;
 }
+.buttonBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
