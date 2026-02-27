@@ -11,10 +11,11 @@ import { Button } from "../components/button/button";
 import { ProductFeedback } from "../components/productFeedback/productFeedback";
 import { PopupLogin } from "../components/popupLogin/popupLogin";
 import { PopupReview } from "../components/popupReview/popupReview";
+import { LoadingDots } from "../components/loadingDots/loadingDots";
 
 export const ProductPage = () => {
   // актиный юзер (глобальный контекст)
-  const { activeUser, setActiveUser } = useContext(UserContext);
+  const { activeUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -50,11 +51,25 @@ export const ProductPage = () => {
 
   let { productId } = useParams();
 
-  const { data: reviewList, isLoading: isLoadingReviewList } = useQuery({
-    queryKey: ["reviewList", productId],
+  const {
+    data: reviewList,
+    isLoading: isLoadingReviewList,
+    isFetching: isFetchingReviewList,
+  } = useQuery({
+    queryKey: ["reviewList", Number(productId)],
     queryFn: () => fetchAllReviews(productId),
-    enabled: !!activeUser,
   });
+
+  const sumRating = reviewList?.reduce(
+    (total, reviews) => total + reviews.rating,
+    0,
+  );
+
+  const averageRating = sumRating / reviewList?.length;
+
+  const hasUserReview = reviewList?.some(
+    (review) => review.user_name === activeUser?.login,
+  );
 
   async function fetchProductById(id) {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -168,7 +183,7 @@ export const ProductPage = () => {
   }
 
   return isLoadingProduct ? (
-    <div>Loading product...</div>
+    <LoadingDots />
   ) : isError ? (
     <div>Error...</div>
   ) : (
@@ -194,12 +209,17 @@ export const ProductPage = () => {
       <Button func={() => toggleProductInCart(productById.id)}>
         {cart.has(productById.id) ? "Remove" : "Add"}
       </Button>
-      <ProductFeedback
-        product={productById}
-        addNewReview={addNewReview}
-        reviewList={reviewList}
-        isLoading={isLoadingReviewList}
-      />
+      {isLoadingReviewList || isFetchingReviewList ? (
+        <LoadingDots />
+      ) : (
+        <ProductFeedback
+          product={productById}
+          addNewReview={addNewReview}
+          reviewList={reviewList}
+          hasUserReview={hasUserReview}
+          averageRating={averageRating}
+        />
+      )}
 
       <PopupLogin
         popupOpen={popupLoginOpen}

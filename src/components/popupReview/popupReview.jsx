@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { Button } from "../button/button";
 import styles from "./popupReview.module.css";
 import { UserContext } from "../../App";
@@ -10,6 +11,11 @@ export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
   const { activeUser } = useContext(UserContext);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
+
+  // для инвалидации данных. После длобавления отзыва
+  // в ДРУГОМ компоненте - получить данные по ключу
+  // и запросить новые отзывы
+  const queryClient = useQueryClient();
 
   // текущий отзыв для отправки (если нет на сервере)
   const reviewData = {
@@ -30,12 +36,6 @@ export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
     setPopupOpen(false);
   }
 
-  function addReview() {
-    console.log(reviewData);
-
-    reviewMutation.mutate();
-  }
-
   // функция для выставления звезд (оценок)
   function rateProduct(index) {
     setRating(index + 1);
@@ -46,11 +46,18 @@ export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
     mutationFn: () => Requests.addNewReview(reviewData),
     onSuccess: (ratingData) => {
       if (ratingData) {
-        console.log("New review :", reviewData);
+        queryClient.invalidateQueries({
+          queryKey: ["reviewList", product.id],
+        });
+
         closePopup();
       }
     },
   });
+
+  function addReview() {
+    reviewMutation.mutate();
+  }
 
   return (
     <div className={`${styles.popup} ${!popupOpen ? styles.popupHidden : ""}`}>

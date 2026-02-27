@@ -4,20 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { LoadingDots } from "../loadingDots/loadingDots";
 import { Star } from "lucide-react";
 
-export const Rating = ({ product }) => {
-  async function fetchAverageRatingProductById(productId) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    return await Requests.getAverageRatingProductById(productId);
-  }
-
-  const { data: averageRating, isLoading } = useQuery({
-    queryKey: ["averageRating", product.id],
-    queryFn: () => fetchAverageRatingProductById(product.id),
-  });
-
-  if (isLoading) return <LoadingDots>...</LoadingDots>;
-
+export const Rating = ({ product, averageRating }) => {
   return (
     <div className={styles.ratingBlock}>
       <div className={styles.starBlock}>
