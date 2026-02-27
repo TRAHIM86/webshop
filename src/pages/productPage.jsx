@@ -23,7 +23,7 @@ export const ProductPage = () => {
   const [popupLoginOpen, setPopupLoginOpen] = useState(false);
 
   // состояние попапаAddReview
-  const [popupReviewOpen, setPopupReviewOpen] = useState(true);
+  const [popupReviewOpen, setPopupReviewOpen] = useState(false);
 
   function addNewReview() {
     activeUser ? setPopupReviewOpen(true) : setPopupLoginOpen(true);
