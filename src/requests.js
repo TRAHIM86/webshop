@@ -293,32 +293,7 @@ export default class Requests {
 
   /*********ЗАПРОСЫ ПО ОЦЕНКАМ И КОММЕНТАМ*******/
 
-  static async getAverageRatingProductById(productId) {
-    try {
-      const allReviews = await axios.get(`${SUPABASE_URL}/rest/v1/reviews`, {
-        headers: SUPABASE_HEADERS,
-        params: {
-          product_id: `eq.${productId}`,
-        },
-      });
-
-      const productReviews = allReviews.data;
-
-      if (productReviews.length === 0) return null;
-
-      const sumRating = productReviews.reduce(
-        (total, reviews) => total + reviews.rating,
-        0,
-      );
-
-      const averageRating = sumRating / productReviews.length;
-
-      return averageRating;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
+  // получить все отзывы к продукту
   static async getAllReviewsProduct(productId) {
     try {
       const allReviews = await axios.get(`${SUPABASE_URL}/rest/v1/reviews`, {
