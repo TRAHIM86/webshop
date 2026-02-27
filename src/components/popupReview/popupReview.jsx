@@ -2,10 +2,12 @@ import { useContext, useState } from "react";
 import { Button } from "../button/button";
 import styles from "./popupReview.module.css";
 import { UserContext } from "../../App";
+import { Star } from "lucide-react";
 
 export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
   const { activeUser } = useContext(UserContext);
   const [review, setReview] = useState("");
+  const [rating, setRating] = useState(0);
 
   function checkLeReviewLength(str) {
     if (str.length <= 100) {
@@ -22,13 +24,17 @@ export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
     const formattedDate = now.toISOString();
 
     console.log({
-      id: "auto",
       product_id: product.id,
-      user_name: activeUser,
-      rating: null,
+      user_name: activeUser.login,
+      rating: rating,
       review_text: review,
       created_at: formattedDate,
     });
+  }
+
+  // функция для выставления звезд (оценок)
+  function rateProduct(index) {
+    setRating(index + 1);
   }
 
   return (
@@ -46,6 +52,16 @@ export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
           maxLength={100}
           style={{ resize: "none" }}
         />
+        <div>
+          {[...Array(5)].map((_, index) => (
+            <Star
+              className={styles.starRating}
+              key={index}
+              fill={index < rating ? "orange" : "none"}
+              onClick={() => rateProduct(index)}
+            />
+          ))}
+        </div>
         <div className={styles.buttonBlock}>
           <Button func={() => addReview()}>Add</Button>
           <Button func={() => closePopup()}>Cancel</Button>
