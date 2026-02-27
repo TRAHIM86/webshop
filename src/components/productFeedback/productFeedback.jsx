@@ -9,7 +9,6 @@ export const ProductFeedback = ({
   addNewReview,
   reviewList,
   hasUserReview,
-  averageRating,
 }) => {
   const [showReviews, setShowReviews] = useState(false);
 
@@ -17,7 +16,7 @@ export const ProductFeedback = ({
     <div className={styles.productFeedback}>
       <div>
         <div className={styles.ratingBlock}>
-          <Rating product={product} averageRating={averageRating} />
+          <Rating product={product} />
         </div>
 
         {hasUserReview ? (

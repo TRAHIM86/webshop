@@ -60,13 +60,6 @@ export const ProductPage = () => {
     queryFn: () => fetchAllReviews(productId),
   });
 
-  const sumRating = reviewList?.reduce(
-    (total, reviews) => total + reviews.rating,
-    0,
-  );
-
-  const averageRating = sumRating / reviewList?.length;
-
   const hasUserReview = reviewList?.some(
     (review) => review.user_name === activeUser?.login,
   );
@@ -217,7 +210,6 @@ export const ProductPage = () => {
           addNewReview={addNewReview}
           reviewList={reviewList}
           hasUserReview={hasUserReview}
-          averageRating={averageRating}
         />
       )}
 
