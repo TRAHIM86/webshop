@@ -25,6 +25,11 @@ export const ProductPage = () => {
   // состояние попапаAddReview
   const [popupReviewOpen, setPopupReviewOpen] = useState(false);
 
+  async function fetchAllReviews(productId) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return await Requests.getAllReviewsProduct(productId);
+  }
+
   function addNewReview() {
     activeUser ? setPopupReviewOpen(true) : setPopupLoginOpen(true);
   }
@@ -45,6 +50,12 @@ export const ProductPage = () => {
 
   let { productId } = useParams();
 
+  const { data: reviewList, isLoading: isLoadingReviewList } = useQuery({
+    queryKey: ["reviewList", productId],
+    queryFn: () => fetchAllReviews(productId),
+    enabled: !!activeUser,
+  });
+
   async function fetchProductById(id) {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -53,7 +64,7 @@ export const ProductPage = () => {
 
   const {
     data: productById,
-    isLoading,
+    isLoading: isLoadingProduct,
     isError,
   } = useQuery({
     queryKey: ["currentProduct", productId],
@@ -156,7 +167,7 @@ export const ProductPage = () => {
     });
   }
 
-  return isLoading ? (
+  return isLoadingProduct ? (
     <div>Loading product...</div>
   ) : isError ? (
     <div>Error...</div>
@@ -183,7 +194,12 @@ export const ProductPage = () => {
       <Button func={() => toggleProductInCart(productById.id)}>
         {cart.has(productById.id) ? "Remove" : "Add"}
       </Button>
-      <ProductFeedback product={productById} addNewReview={addNewReview} />
+      <ProductFeedback
+        product={productById}
+        addNewReview={addNewReview}
+        reviewList={reviewList}
+        isLoading={isLoadingReviewList}
+      />
 
       <PopupLogin
         popupOpen={popupLoginOpen}

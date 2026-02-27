@@ -1,33 +1,22 @@
 import { useContext, useState } from "react";
-import Requests from "../../requests";
 import { Button } from "../button/button";
 import { Rating } from "../rating/rating";
 import styles from "./productFeedback.module.css";
-import { useQuery } from "@tanstack/react-query";
-import { LoadingDots } from "../loadingDots/loadingDots";
 import { Review } from "../review/review";
 import { UserContext } from "../../App";
 
-export const ProductFeedback = ({ product, addNewReview }) => {
+export const ProductFeedback = ({
+  product,
+  addNewReview,
+  reviewList,
+  isLoading,
+}) => {
   const { activeUser } = useContext(UserContext);
   const [showReviews, setShowReviews] = useState(false);
-
-  const { data: reviewList, isLoading } = useQuery({
-    queryKey: ["reviewList", product.id],
-    queryFn: () => fetchAllReviews(product.id),
-    enabled: !!activeUser,
-  });
 
   const hasUserReview = reviewList?.some(
     (review) => review.user_name === activeUser?.login,
   );
-
-  console.log("hasUserReview :", hasUserReview);
-
-  async function fetchAllReviews(productId) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return await Requests.getAllReviewsProduct(productId);
-  }
 
   if (isLoading) {
     return (

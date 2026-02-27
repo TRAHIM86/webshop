@@ -11,9 +11,10 @@ export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
 
+  // текущий отзыв для отправки (если нет на сервере)
   const reviewData = {
     product_id: product.id,
-    user_name: activeUser.login,
+    user_name: activeUser?.login,
     rating: rating,
     review_text: reviewText,
     created_at: new Date().toISOString(),
