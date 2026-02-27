@@ -339,13 +339,17 @@ export default class Requests {
   // добавить отзыв к продукту
   static async addNewReview(review) {
     try {
-      const response = await axios.post(`${SUPABASE_URL}/rest/v1/review`, {
-        headers: {
-          ...SUPABASE_HEADERS,
-          "Content-Type": "application/json",
-          Prefer: "return=representation",
+      const response = await axios.post(
+        `${SUPABASE_URL}/rest/v1/reviews`,
+        review,
+        {
+          headers: {
+            ...SUPABASE_HEADERS,
+            "Content-Type": "application/json",
+            Prefer: "return=representation",
+          },
         },
-      });
+      );
 
       console.log("New review added");
       return response.data[0];
