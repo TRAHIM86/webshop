@@ -55,6 +55,10 @@ export const PopupReview = ({
           queryKey: ["reviewList", product.id],
         });
 
+        queryClient.invalidateQueries({
+          queryKey: ["averageRating", product.id],
+        });
+
         closePopup();
       }
     },
