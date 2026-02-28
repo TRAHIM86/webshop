@@ -7,7 +7,12 @@ import { UserContext } from "../../App";
 import { Star } from "lucide-react";
 import Requests from "../../requests";
 
-export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
+export const PopupReview = ({
+  popupOpen,
+  setPopupOpen,
+  product,
+  hasUserReview,
+}) => {
   const { activeUser } = useContext(UserContext);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
@@ -58,6 +63,8 @@ export const PopupReview = ({ popupOpen, setPopupOpen, product }) => {
   function addReview() {
     reviewMutation.mutate();
   }
+
+  if (hasUserReview) return;
 
   return (
     <div className={`${styles.popup} ${!popupOpen ? styles.popupHidden : ""}`}>

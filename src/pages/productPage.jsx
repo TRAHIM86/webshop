@@ -38,17 +38,6 @@ export const ProductPage = () => {
   // для обратного редиректа и передачи true
   const openReview = location.state?.openReview || false;
 
-  useEffect(() => {
-    if (openReview) {
-      setPopupReviewOpen(openReview);
-
-      navigate(location.pathname, {
-        replace: true,
-        state: {},
-      });
-    }
-  }, [openReview, location.pathname, navigate]);
-
   let { productId } = useParams();
 
   const {
@@ -63,6 +52,19 @@ export const ProductPage = () => {
   const hasUserReview = reviewList?.some(
     (review) => review.user_name === activeUser?.login,
   );
+
+  console.log("has :", hasUserReview);
+
+  useEffect(() => {
+    if (openReview) {
+      setPopupReviewOpen(openReview);
+
+      navigate(location.pathname, {
+        replace: true,
+        state: {},
+      });
+    }
+  }, [openReview, location.pathname, navigate]);
 
   async function fetchProductById(id) {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -222,6 +224,7 @@ export const ProductPage = () => {
         popupOpen={popupReviewOpen}
         setPopupOpen={setPopupReviewOpen}
         product={productById}
+        hasUserReview={hasUserReview}
       />
     </div>
   );

@@ -2,12 +2,7 @@ import { Button } from "../button/button";
 import styles from "./popupLogin.module.css";
 import { Link } from "react-router-dom";
 
-export const PopupLogin = ({
-  popupOpen,
-  setPopupOpen,
-  product,
-  hasUserReview,
-}) => {
+export const PopupLogin = ({ popupOpen, setPopupOpen, product }) => {
   function closePopup() {
     setPopupOpen(false);
   }
@@ -20,7 +15,7 @@ export const PopupLogin = ({
           to="/login"
           state={{
             from: `/products/${product.id}`,
-            openReview: hasUserReview,
+            openReview: true,
           }}
         >
           Login
