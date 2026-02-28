@@ -3,14 +3,21 @@ import { Button } from "../components/button/button";
 import styles from "./register.module.css";
 import { useContext, useEffect, useState } from "react";
 import Requests from "../requests";
-import { useMutation } from "@tanstack/react-query";
 import { UserContext } from "../App";
+import { useMutation } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 
 export const Register = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // актиный юзер (глобальный контекст)
   const { setActiveUser } = useContext(UserContext);
+
+  // данные из state, если нету то на main
+  // для обратного редиректа и передачи true
+  const from = location.state?.from || "/main";
+  const openReview = location.state?.openReview;
 
   // состояние нового юзера
   const [newUser, setNewUser] = useState({
@@ -52,7 +59,9 @@ export const Register = () => {
         localStorage.setItem("userWebshop", JSON.stringify(userData));
         setActiveUser(userData);
         cleanUser();
-        navigate("/main");
+        // редирект на from и state если он есть
+        console.log("from: ", from, "openReview :", openReview);
+        navigate(from, { state: openReview ? { openReview } : undefined });
       }
     },
   });
@@ -146,6 +155,7 @@ export const Register = () => {
   return (
     <div>
       <form
+        onSubmit={(e) => e.preventDefault()}
         style={{ width: "100%", display: "flex", justifyContent: "center" }}
       >
         <div>

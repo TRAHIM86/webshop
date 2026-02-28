@@ -21,7 +21,14 @@ export const PopupLogin = ({ popupOpen, setPopupOpen, product }) => {
           Login
         </Link>{" "}
         or{" "}
-        <Link className={styles.registerLink} to="/register">
+        <Link
+          className={styles.registerLink}
+          to="/register"
+          state={{
+            from: `/products/${product.id}`,
+            openReview: true,
+          }}
+        >
           register
         </Link>{" "}
         to leave a review.
