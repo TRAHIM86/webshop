@@ -31,6 +31,8 @@ export const PopupReview = ({
     created_at: new Date().toISOString(),
   };
 
+  const minDataReiew = reviewText.length >= 3 && rating > 0;
+
   function checkLeReviewLength(str) {
     if (str.length <= 100) {
       setReviewText(str);
@@ -76,7 +78,7 @@ export const PopupReview = ({
         <textarea
           type="text"
           value={reviewText}
-          placeholder="No more than 100 characters..."
+          placeholder="From 3 to 100 characters..."
           rows={4}
           cols={30}
           onChange={(e) => {
@@ -96,7 +98,13 @@ export const PopupReview = ({
           ))}
         </div>
         <div className={styles.buttonBlock}>
-          <Button func={() => addReview()}>Add</Button>
+          <Button
+            className={styles.btnAdd}
+            disabled={!minDataReiew}
+            func={() => addReview()}
+          >
+            Add
+          </Button>
           <Button func={() => closePopup()}>Cancel</Button>
         </div>
       </div>

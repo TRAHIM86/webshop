@@ -32,3 +32,9 @@
 .starRating {
   cursor: pointer;
 }
+
+.btnAdd:disabled {
+  cursor: default;
+  opacity: 0.5;
+  pointer-events: none;
+}
