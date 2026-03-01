@@ -1,7 +1,7 @@
 .productList {
   display: flex;
   justify-content: space-between;
-  border: 3px salmon solid;
+  border: 3px salmon dotted;
   max-width: 80%;
   margin: 0 auto;
   flex-wrap: wrap;

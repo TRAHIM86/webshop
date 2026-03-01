@@ -2,12 +2,12 @@ import { useContext, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Button } from "../button/button";
-import styles from "./popupReview.module.css";
+import styles from "./popupWriteReview.module.css";
 import { UserContext } from "../../App";
 import { Star } from "lucide-react";
 import Requests from "../../requests";
 
-export const PopupReview = ({
+export const PopupWriteReview = ({
   popupOpen,
   setPopupOpen,
   product,

@@ -10,7 +10,7 @@ import { CartContext, UserContext } from "../App";
 import { Button } from "../components/button/button";
 import { ProductFeedback } from "../components/productFeedback/productFeedback";
 import { PopupLogin } from "../components/popupLogin/popupLogin";
-import { PopupReview } from "../components/popupReview/popupReview";
+import { PopupWriteReview } from "../components/popupWriteReview/popupWriteReview";
 import { LoadingDots } from "../components/loadingDots/loadingDots";
 
 export const ProductPage = () => {
@@ -218,7 +218,7 @@ export const ProductPage = () => {
         setPopupOpen={setPopupLoginOpen}
         product={productById}
       />
-      <PopupReview
+      <PopupWriteReview
         popupOpen={popupReviewOpen}
         setPopupOpen={setPopupReviewOpen}
         product={productById}

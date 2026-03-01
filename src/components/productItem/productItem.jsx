@@ -12,9 +12,9 @@ import Requests from "../../requests";
 import { DISCOUNTPERSENT } from "../../constants/discountPercent";
 import { Rating } from "../rating/rating";
 
-export const ProductItem = ({ product }) => {
+export const ProductItem = ({ product, setSelectedProduct }) => {
   // актиный юзер (глобальный контекст)
-  const { activeUser, setActiveUser } = useContext(UserContext);
+  const { activeUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
   const { idActionProduct } = useContext(IdDiscountContext);
   const discountPercent = DISCOUNTPERSENT;
@@ -124,9 +124,7 @@ export const ProductItem = ({ product }) => {
         )}
 
         <Rating product={product} />
-        <Button func={() => console.log("Soon will be opening reviews")}>
-          Reviews
-        </Button>
+        <Button func={() => setSelectedProduct(product)}>Reviews</Button>
 
         <Button func={() => toggleProductInCart(product.id)}>
           {cart.has(product.id) ? "Remove" : "Add"}
