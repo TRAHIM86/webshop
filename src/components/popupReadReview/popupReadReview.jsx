@@ -19,48 +19,50 @@ export const PopupReadReview = ({
       <div className={styles.popupWrapper}>
         {isLoadingReviewList ? (
           <LoadingDots />
-        ) : reviewList?.length > 0 ? (
-          reviewList?.map((review) => (
-            <Review key={review.id} review={review} />
-          ))
         ) : (
           <div>
-            <div>This product doesn't have any reviews yet.</div>
+            {reviewList?.length > 0 ? (
+              reviewList?.map((review) => (
+                <Review key={review.id} review={review} />
+              ))
+            ) : (
+              <div>
+                <div>This product doesn't have any reviews yet.</div>
+              </div>
+            )}
+            <div>Would you like to leave a review?</div>
+            {activeUser ? (
+              <Button func={() => console.log("Soon will be a function")}>
+                Leave a review
+              </Button>
+            ) : (
+              <div>
+                <Link
+                  className={styles.registerLink}
+                  to="/login"
+                  state={{
+                    from: `/products/${selectedProduct.id}`,
+                    openReview: true,
+                  }}
+                >
+                  Login
+                </Link>{" "}
+                or{" "}
+                <Link
+                  className={styles.registerLink}
+                  to="/register"
+                  state={{
+                    from: `/products/${selectedProduct.id}`,
+                    openReview: true,
+                  }}
+                >
+                  Register
+                </Link>
+              </div>
+            )}
+            <Button func={() => closePopupReadReview()}>Close</Button>
           </div>
         )}
-        Would you like to leave a review?
-        <div>
-          {activeUser ? (
-            <Button func={() => console.log("Soon will be a function")}>
-              Leave a review
-            </Button>
-          ) : (
-            <div>
-              <Link
-                className={styles.registerLink}
-                to="/login"
-                state={{
-                  from: `/products/${selectedProduct.id}`,
-                  openReview: true,
-                }}
-              >
-                Login
-              </Link>{" "}
-              or{" "}
-              <Link
-                className={styles.registerLink}
-                to="/register"
-                state={{
-                  from: `/products/${selectedProduct.id}`,
-                  openReview: true,
-                }}
-              >
-                Register
-              </Link>
-            </div>
-          )}
-        </div>
-        <Button func={() => closePopupReadReview()}>Close</Button>
       </div>
     </div>
   );
