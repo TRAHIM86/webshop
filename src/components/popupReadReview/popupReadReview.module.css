@@ -28,3 +28,12 @@
   flex-direction: row;
   justify-content: space-around;
 }
+
+.registerLink {
+  transition: all 0.3s ease;
+  color: rgb(255, 153, 0);
+}
+
+.registerLink:hover {
+  color: rgb(255, 100, 0);
+}

@@ -45,6 +45,7 @@ export const ProductList = ({ products }) => {
           reviewList={reviewList}
           closePopupReadReview={closePopupReadReview}
           isLoadingReviewList={isLoadingReviewList}
+          selectedProduct={selectedProduct}
         />
       )}
     </div>
