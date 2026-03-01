@@ -13,10 +13,12 @@ export const PopupReadReview = ({
       <div className={styles.popupWrapper}>
         {isLoadingReviewList ? (
           <LoadingDots />
-        ) : (
+        ) : reviewList?.length > 0 ? (
           reviewList?.map((review) => (
-            <Review review={review} key={review.id} />
+            <Review key={review.id} review={review} />
           ))
+        ) : (
+          <p>This product doesn't have any reviews yet.</p>
         )}
         <Button func={() => closePopupReadReview()}>Close</Button>
       </div>

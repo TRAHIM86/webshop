@@ -14,9 +14,6 @@ export const ProductList = ({ products }) => {
     enabled: !!selectedProduct,
   });
 
-  console.log("selectedProduct :", selectedProduct);
-  console.log("reviewList :", reviewList);
-
   // получить все отзывы продукта
   async function fetchAllReviews(productId) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
