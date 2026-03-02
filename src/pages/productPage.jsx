@@ -1,12 +1,12 @@
+import styles from "./productPage.module.css";
+import { CartContext, UserContext } from "../App";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Requests from "../requests";
-import styles from "./productPage.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { ProductImg } from "../components/productImg/productImg";
 import { Arrow } from "../components/arrow/arrow";
 import { Carousel } from "../components/carousel/carousel";
-import { CartContext, UserContext } from "../App";
 import { Button } from "../components/button/button";
 import { ProductFeedback } from "../components/productFeedback/productFeedback";
 import { PopupLogin } from "../components/popupLogin/popupLogin";
@@ -20,25 +20,26 @@ export const ProductPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // состояние попапаLogin
+  // состояние попапаLogin открыть/закрыть
   const [popupLoginOpen, setPopupLoginOpen] = useState(false);
 
-  // состояние попапаAddReview
+  // состояние попапаAddReview открыть/закрыть
   const [popupReviewOpen, setPopupReviewOpen] = useState(false);
-
-  async function fetchAllReviews(productId) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return await Requests.getAllReviewsProduct(productId);
-  }
-
-  function addNewReview() {
-    activeUser ? setPopupReviewOpen(true) : setPopupLoginOpen(true);
-  }
 
   // для обратного редиректа и передачи true
   const openReview = location.state?.openReview || false;
 
   let { productId } = useParams();
+
+  function addNewReview() {
+    activeUser ? setPopupReviewOpen(true) : setPopupLoginOpen(true);
+  }
+
+  /********** получить все отзывы продукта *********/
+  async function fetchAllReviews(productId) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return await Requests.getAllReviewsProduct(productId);
+  }
 
   const {
     data: reviewList,
@@ -49,6 +50,8 @@ export const ProductPage = () => {
     queryFn: () => fetchAllReviews(productId),
   });
 
+  // есть ли отзыв юзера. Попап ревью откроется только если
+  // нету отзыва + состояние открыть!
   const hasUserReview = reviewList?.some(
     (review) => review.user_name === activeUser?.login,
   );
@@ -66,6 +69,9 @@ export const ProductPage = () => {
     }
   }, [openReview, location.pathname, navigate]);
 
+  /*************************************************/
+
+  /********** получить продкут по id ***************/
   async function fetchProductById(id) {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -81,14 +87,15 @@ export const ProductPage = () => {
     queryFn: () => fetchProductById(productId),
   });
 
+  /*************************************************/
+
+  /********** функции для фотографий ***************/
   // массив номера фотографий
   const [photos, setPhotos] = useState([]);
 
   // заполнить номера фотографий (максимум 5). В
   // зависимости от количества фото в папке продукта
   // (1-5) получить массив с номерами.
-
-  // заполнить массив номерами фоток (от 1 до 5)
   function fillPhotos() {
     if (!productById || !productById.name) return;
 
@@ -150,6 +157,8 @@ export const ProductPage = () => {
 
     setCurrentNumPhoto(photos[nextIndex]);
   }
+
+  /*************************************************/
 
   // добавить/удалить товар в корзину. Используем Map
   // чтобы были только уникальные id товара. Количество
