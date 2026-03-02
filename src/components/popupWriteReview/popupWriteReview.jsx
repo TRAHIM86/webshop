@@ -7,12 +7,7 @@ import { UserContext } from "../../App";
 import { Star } from "lucide-react";
 import Requests from "../../requests";
 
-export const PopupWriteReview = ({
-  popupOpen,
-  setPopupOpen,
-  product,
-  hasUserReview,
-}) => {
+export const PopupWriteReview = ({ setPopupOpen, product }) => {
   const { activeUser } = useContext(UserContext);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
@@ -70,10 +65,8 @@ export const PopupWriteReview = ({
     reviewMutation.mutate();
   }
 
-  if (hasUserReview) return;
-
   return (
-    <div className={`${styles.popup} ${!popupOpen ? styles.popupHidden : ""}`}>
+    <div className={styles.popup}>
       <div className={styles.popupWrapper}>
         <textarea
           type="text"

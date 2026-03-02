@@ -222,10 +222,8 @@ export const ProductPage = () => {
       />
       {hasUserReview === false && popupReviewOpen && (
         <PopupWriteReview
-          popupOpen={popupReviewOpen}
           setPopupOpen={setPopupReviewOpen}
           product={productById}
-          hasUserReview={hasUserReview}
         />
       )}
     </div>
