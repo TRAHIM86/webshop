@@ -53,6 +53,8 @@ export const ProductPage = () => {
     (review) => review.user_name === activeUser?.login,
   );
 
+  console.log("open :", popupReviewOpen, "has :", hasUserReview);
+
   useEffect(() => {
     if (openReview) {
       setPopupReviewOpen(openReview);
@@ -218,12 +220,14 @@ export const ProductPage = () => {
         setPopupOpen={setPopupLoginOpen}
         product={productById}
       />
-      <PopupWriteReview
-        popupOpen={popupReviewOpen}
-        setPopupOpen={setPopupReviewOpen}
-        product={productById}
-        hasUserReview={hasUserReview}
-      />
+      {hasUserReview === false && popupReviewOpen && (
+        <PopupWriteReview
+          popupOpen={popupReviewOpen}
+          setPopupOpen={setPopupReviewOpen}
+          product={productById}
+          hasUserReview={hasUserReview}
+        />
+      )}
     </div>
   );
 };

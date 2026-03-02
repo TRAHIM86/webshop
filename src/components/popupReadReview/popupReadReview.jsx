@@ -32,9 +32,15 @@ export const PopupReadReview = ({
             )}
             <div>Would you like to leave a review?</div>
             {activeUser ? (
-              <Button func={() => console.log("Soon will be a function")}>
-                Leave a review
-              </Button>
+              <Link
+                className={styles.registerLink}
+                to={`/products/${selectedProduct.id}`}
+                state={{
+                  openReview: true,
+                }}
+              >
+                <Button>Leave a review</Button>
+              </Link>
             ) : (
               <div>
                 <Link
