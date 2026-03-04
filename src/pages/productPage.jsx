@@ -56,8 +56,6 @@ export const ProductPage = () => {
     (review) => review.user_name === activeUser?.login,
   );
 
-  console.log("open :", popupReviewOpen, "has :", hasUserReview);
-
   useEffect(() => {
     if (openReview) {
       setPopupReviewOpen(openReview);

@@ -12,3 +12,8 @@
   align-items: center;
   gap: 0.25em;
 }
+
+.linkCurrentReview {
+  cursor: pointer;
+  color: orange;
+}

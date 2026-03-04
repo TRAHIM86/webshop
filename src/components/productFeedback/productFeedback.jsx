@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "../button/button";
 import { Rating } from "../rating/rating";
 import styles from "./productFeedback.module.css";
 import { Review } from "../review/review";
+import { UserContext } from "../../App";
+import { PopupCorrectReview } from "../popupCorrectReview/popupCorrectReview";
 
 export const ProductFeedback = ({
   product,
@@ -12,6 +14,9 @@ export const ProductFeedback = ({
 }) => {
   const [showReviews, setShowReviews] = useState(false);
 
+  // состояние попапаoldReview открыть/закрыть
+  const [popupOldReviewOpen, setPopupOldReviewOpen] = useState(false);
+
   return (
     <div className={styles.productFeedback}>
       <div>
@@ -20,7 +25,15 @@ export const ProductFeedback = ({
         </div>
 
         {hasUserReview ? (
-          "You have already made a review"
+          <span>
+            You have already made a{" "}
+            <span
+              onClick={() => setPopupOldReviewOpen(true)}
+              className={styles.linkCurrentReview}
+            >
+              review
+            </span>
+          </span>
         ) : (
           <Button func={() => addNewReview()}>"Add review"</Button>
         )}
@@ -37,6 +50,13 @@ export const ProductFeedback = ({
           </div>
         )}
       </div>
+
+      <PopupCorrectReview
+        product={product}
+        reviewList={reviewList}
+        popupOldReviewOpen={popupOldReviewOpen}
+        setPopupOldReviewOpen={setPopupOldReviewOpen}
+      />
     </div>
   );
 };

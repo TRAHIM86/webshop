@@ -357,4 +357,26 @@ export default class Requests {
       console.log("err :", err);
     }
   }
+
+  // редактировать отзыв к продукту
+  static async updateReview(review) {
+    try {
+      const response = await axios.put(
+        `${SUPABASE_URL}/rest/v1/reviews?id=eq.${review.id}`,
+        review,
+        {
+          headers: {
+            ...SUPABASE_HEADERS,
+            "Content-Type": "application/json",
+            Prefer: "return=representation",
+          },
+        },
+      );
+
+      console.log("Review updated");
+      return response.data[0];
+    } catch (err) {
+      console.log("err :", err);
+    }
+  }
 }
