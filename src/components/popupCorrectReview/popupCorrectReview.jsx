@@ -8,6 +8,7 @@ export const PopupCorrectReview = ({
   reviewList,
   popupOldReviewOpen,
   setPopupOldReviewOpen,
+  updateOldReview,
 }) => {
   const { activeUser } = useContext(UserContext);
   const [reviewText, setReviewText] = useState("");
@@ -28,10 +29,6 @@ export const PopupCorrectReview = ({
   useEffect(() => {
     setReviewText(currentUserReview?.review_text);
   }, [currentUserReview]);
-
-  async function updateReview(newReview) {
-    await Requests.updateReview(newReview);
-  }
 
   function checkLeReviewLength(str) {
     if (str.length <= 100) {
@@ -63,7 +60,7 @@ export const PopupCorrectReview = ({
           style={{ resize: "none" }}
         />
 
-        <Button func={() => updateReview(reviewData)}>Save</Button>
+        <Button func={() => updateOldReview(reviewData)}>Save</Button>
         <Button func={() => closePopup()}>Cancel</Button>
       </div>
     </div>

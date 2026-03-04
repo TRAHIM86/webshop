@@ -3,7 +3,7 @@ import { CartContext, UserContext } from "../App";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Requests from "../requests";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ProductImg } from "../components/productImg/productImg";
 import { Arrow } from "../components/arrow/arrow";
 import { Carousel } from "../components/carousel/carousel";
@@ -19,6 +19,7 @@ export const ProductPage = () => {
   const { cart, setCart } = useContext(CartContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // состояние попапаLogin открыть/закрыть
   const [popupLoginOpen, setPopupLoginOpen] = useState(false);
@@ -49,6 +50,13 @@ export const ProductPage = () => {
     queryKey: ["reviewList", Number(productId)],
     queryFn: () => fetchAllReviews(productId),
   });
+
+  async function updateOldReview(newReview) {
+    await Requests.updateReview(newReview);
+    queryClient.invalidateQueries({
+      queryKey: ["reviewList", Number(productId)],
+    });
+  }
 
   // есть ли отзыв юзера. Попап ревью откроется только если
   // нету отзыва + состояние открыть!
@@ -219,6 +227,7 @@ export const ProductPage = () => {
           addNewReview={addNewReview}
           reviewList={reviewList}
           hasUserReview={hasUserReview}
+          updateOldReview={updateOldReview}
         />
       )}
 

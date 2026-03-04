@@ -11,6 +11,7 @@ export const ProductFeedback = ({
   addNewReview,
   reviewList,
   hasUserReview,
+  updateOldReview,
 }) => {
   const [showReviews, setShowReviews] = useState(false);
 
@@ -52,10 +53,10 @@ export const ProductFeedback = ({
       </div>
 
       <PopupCorrectReview
-        product={product}
         reviewList={reviewList}
         popupOldReviewOpen={popupOldReviewOpen}
         setPopupOldReviewOpen={setPopupOldReviewOpen}
+        updateOldReview={updateOldReview}
       />
     </div>
   );
