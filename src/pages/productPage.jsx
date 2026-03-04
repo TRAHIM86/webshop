@@ -216,7 +216,7 @@ export const ProductPage = () => {
         <div className={styles.containerImg}>
           <ProductImg productName={productById.name} num={currentNumPhoto} />
         </div>
-        <div>{`${productById.price} $`}</div>
+        <div>{`${productById.price.toFixed(2)} $`}</div>
         <div>{productById.category}</div>
       </div>
       <Carousel
