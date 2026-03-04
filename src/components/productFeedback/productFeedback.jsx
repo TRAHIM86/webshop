@@ -26,12 +26,16 @@ export const ProductFeedback = ({
     return await Requests.getAverageRatingProductById(productId);
   }
 
-  const { data: averageRating, isLoading } = useQuery({
+  const {
+    data: averageRating,
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: ["averageRating", product.id],
     queryFn: () => fetchAverageRatingProductById(product.id),
   });
 
-  if (isLoading) return <LoadingDots>...</LoadingDots>;
+  if (isLoading || isFetching) return <LoadingDots>...</LoadingDots>;
 
   return (
     <div className={styles.productFeedback}>
