@@ -7,8 +7,7 @@ import Requests from "../requests";
 import { ProductMenu } from "../components/productMenu/productMenu";
 import { Pagination } from "../components/pagination/pagination";
 import { SideBar } from "../components/sidebar/sidebar";
-import { Spinner } from "../components/spinner/spinner";
-import { PopupReadReview } from "../components/popupReadReview/popupReadReview";
+import { LoadingDots } from "../components/loadingDots/loadingDots";
 
 // получить "конкретные продукты"
 async function fetchSelectedProducts(
@@ -168,8 +167,7 @@ export const Shop = () => {
         />
         {isLoadingPageProducts ? (
           <div>
-            <Spinner />
-            <p>Loading...</p>
+            <LoadingDots />
           </div>
         ) : isErrorPageProducts ? (
           <div className={styles.error}>Error...</div>
