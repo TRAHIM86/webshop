@@ -1,9 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Button } from "../button/button";
 import { Rating } from "../rating/rating";
 import styles from "./productFeedback.module.css";
 import { Review } from "../review/review";
-import { UserContext } from "../../App";
 import { PopupCorrectReview } from "../popupCorrectReview/popupCorrectReview";
 
 export const ProductFeedback = ({
@@ -39,7 +38,7 @@ export const ProductFeedback = ({
           <Button func={() => addNewReview()}>"Add review"</Button>
         )}
 
-        <Button func={() => setShowReviews(true)}>Reviews</Button>
+        <Button func={() => setShowReviews(!showReviews)}>Reviews</Button>
       </div>
 
       <div>
