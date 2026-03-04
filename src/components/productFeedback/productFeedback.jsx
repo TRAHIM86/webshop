@@ -4,6 +4,9 @@ import { Rating } from "../rating/rating";
 import styles from "./productFeedback.module.css";
 import { Review } from "../review/review";
 import { PopupCorrectReview } from "../popupCorrectReview/popupCorrectReview";
+import Requests from "../../requests";
+import { useQuery } from "@tanstack/react-query";
+import { LoadingDots } from "../loadingDots/loadingDots";
 
 export const ProductFeedback = ({
   product,
@@ -17,11 +20,24 @@ export const ProductFeedback = ({
   // состояние попапаoldReview открыть/закрыть
   const [popupOldReviewOpen, setPopupOldReviewOpen] = useState(false);
 
+  async function fetchAverageRatingProductById(productId) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    return await Requests.getAverageRatingProductById(productId);
+  }
+
+  const { data: averageRating, isLoading } = useQuery({
+    queryKey: ["averageRating", product.id],
+    queryFn: () => fetchAverageRatingProductById(product.id),
+  });
+
+  if (isLoading) return <LoadingDots>...</LoadingDots>;
+
   return (
     <div className={styles.productFeedback}>
       <div>
         <div className={styles.ratingBlock}>
-          <Rating product={product} />
+          <Rating averageRating={averageRating} />
         </div>
 
         {hasUserReview ? (

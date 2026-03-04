@@ -51,10 +51,19 @@ export const ProductPage = () => {
     queryFn: () => fetchAllReviews(productId),
   });
 
+  // функция "корректировать" свое ревью. Находтся тут
+  // в родителе, т.к. здесь все данные для нее. Передана
+  // на несколько компонентов ниже (в попап корректировки).
+  // Юзает запрос на изменение отзыва, затем инвалидацию.
+  // при
   async function updateOldReview(newReview) {
     await Requests.updateReview(newReview);
     queryClient.invalidateQueries({
       queryKey: ["reviewList", Number(productId)],
+    });
+
+    queryClient.invalidateQueries({
+      queryKey: ["averageRating", Number(productId)],
     });
   }
 
