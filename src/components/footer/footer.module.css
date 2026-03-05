@@ -1,11 +1,21 @@
 .footer {
-  width: clamp(480px, 100%, 1020px);
+  width: 100%;
   background-color: rgb(102, 99, 99);
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footerWrapper {
+  width: clamp(480px, 100%, 1020px);
+  display: flex;
   flex-direction: row;
-  padding: 0.5em 3em;
   align-items: stretch;
   justify-content: space-between;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
   z-index: 3;
 }
 

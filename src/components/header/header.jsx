@@ -5,13 +5,15 @@ import { Link } from "react-router-dom";
 export const Header = () => {
   return (
     <header className={styles.header}>
-      <Link to="/main">
-        <div className={styles.logoWrapper}>
-          <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="logo"></img>
-          <h1>Sport shop</h1>
-        </div>
-      </Link>
-      <Navbar />
+      <div className={styles.headerWrapper}>
+        <Link to="/main">
+          <div className={styles.logoWrapper}>
+            <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="logo"></img>
+            <h1>Sport shop</h1>
+          </div>
+        </Link>
+        <Navbar />
+      </div>
     </header>
   );
 };

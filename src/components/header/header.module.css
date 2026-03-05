@@ -1,6 +1,13 @@
 .header {
-  width: clamp(480px, 100%, 1020px);
+  width: 100%;
   background-color: rgb(102, 99, 99);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerWrapper {
+  width: clamp(480px, 100%, 1020px);
   display: flex;
   justify-content: space-between;
   padding-left: 1em;
