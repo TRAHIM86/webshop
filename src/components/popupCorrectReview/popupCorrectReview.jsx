@@ -18,19 +18,19 @@ export const PopupCorrectReview = ({
     (review) => review.user_name === activeUser.login,
   );
 
+  useEffect(() => {
+    setReviewText(currentUserReview?.review_text);
+    setRating(currentUserReview?.rating);
+  }, [currentUserReview]);
+
   const reviewData = {
-    id: currentUserReview.id,
-    product_id: currentUserReview.product_id,
+    id: currentUserReview?.id,
+    product_id: currentUserReview?.product_id,
     user_name: activeUser?.login,
     rating: rating,
     review_text: reviewText,
     created_at: new Date().toISOString(),
   };
-
-  useEffect(() => {
-    setReviewText(currentUserReview?.review_text);
-    setRating(currentUserReview?.rating);
-  }, [currentUserReview]);
 
   function checkLeReviewLength(str) {
     if (str.length <= 100) {
