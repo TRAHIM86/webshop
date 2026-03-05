@@ -1,7 +1,22 @@
+.actionProduct {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  height: 18em;
+}
+
+.actionText {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
 .containerImg {
-  width: 20em;
-  height: 15em;
-  border: 4px solid brown;
+  width: 22em;
+  height: 18em;
   overflow: hidden;
 }
 
@@ -10,6 +25,7 @@
   height: 100%;
   transition: opacity 0.5s ease-in-out;
   opacity: 1;
+  clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
 .imageWrapper.fadeOut {
@@ -20,8 +36,14 @@
   opacity: 1;
 }
 
-.redText {
-  color: red;
+.textBlock {
+  font-size: 150%;
+  color: white;
+  font-weight: bold;
+}
+
+.orangeText {
+  color: orange;
 }
 
 .priceBox {
@@ -29,6 +51,11 @@
   flex-direction: row;
 }
 
-.crosstextDecoration {
+.crossText {
   text-decoration: line-through;
+}
+
+.btnToShop {
+  font-weight: bold;
+  padding: 1em;
 }

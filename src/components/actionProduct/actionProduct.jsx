@@ -5,9 +5,10 @@ import styles from "./actionProduct.module.css";
 import { DISCOUNTPERSENT } from "../../constants/discountPercent";
 import { Button } from "../button/button";
 import { CartContext, UserContext } from "../../App";
+import { Link } from "react-router-dom";
 
 export const ActionProduct = ({ idActionProduct }) => {
-  const { activeUser, setActiveUser } = useContext(UserContext);
+  const { activeUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
   const [actionProduct, setActionProduct] = useState(null);
   const discountPercent = DISCOUNTPERSENT;
@@ -83,7 +84,7 @@ export const ActionProduct = ({ idActionProduct }) => {
 
         setFadeClass(styles.fadeIn);
       }, 500);
-    }, 5000);
+    }, 15000);
 
     return () => clearInterval(intervalId);
   }, [photos]);
@@ -121,18 +122,28 @@ export const ActionProduct = ({ idActionProduct }) => {
   }
 
   return (
-    <div>
-      <div className={styles.redText}>ACTION! -{discountPercent}%!</div>
-      <div>{actionProduct?.name}</div>
-      <div className={styles.priceBox}>
-        <div>Old price&nbsp;</div>
-        <div className={styles.crossText}>
-          {actionProduct?.price.toFixed(2)} $
+    <div className={styles.actionProduct}>
+      <div className={styles.actionText}>
+        <div className={styles.textBlock}>
+          <div className={styles.orangeText}>ACTION! -{discountPercent}%!</div>
+          <div>{actionProduct?.name}</div>
+          <div className={styles.priceBox}>
+            <div>Old price&nbsp;</div>
+            <div className={styles.crossText}>
+              {actionProduct?.price.toFixed(2)} $
+            </div>
+          </div>
+          <div className={styles.priceBox}>
+            New price&nbsp;{" "}
+            <div className={styles.orangeText}>{discountPrice} $</div>{" "}
+          </div>
         </div>
-      </div>
-      <div className={styles.priceBox}>
-        New price&nbsp;{" "}
-        <div className={styles.redText}>{discountPrice} $</div>{" "}
+
+        <div>
+          <Link to="/">
+            <Button className={styles.btnToShop}>Go to the shop</Button>
+          </Link>
+        </div>
       </div>
 
       <div className={styles.containerImg}>

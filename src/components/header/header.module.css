@@ -1,5 +1,5 @@
 .header {
-  width: 100%;
+  width: clamp(480px, 100%, 1020px);
   background-color: rgb(102, 99, 99);
   display: flex;
   justify-content: space-between;

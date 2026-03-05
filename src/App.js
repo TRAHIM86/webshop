@@ -111,24 +111,31 @@ function App() {
             <HashRouter>
               <div className={styles.appContainer}>
                 <Header />
-                <Routes>
-                  <Route path="/" element={<Shop />} />
-                  <Route
-                    path="/products/:productId"
-                    element={<ProductPage />}
-                  />
-                  <Route
-                    path="/main"
-                    element={<Main idActionProduct={idActionProduct} />}
-                  />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/userData" element={<UserData />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
 
-                  <Route path="*" element={<Navigate to="/" replace />}></Route>
-                </Routes>
+                <div className={styles.routes}>
+                  <Routes>
+                    <Route path="/" element={<Shop />} />
+                    <Route
+                      path="/products/:productId"
+                      element={<ProductPage />}
+                    />
+                    <Route
+                      path="/main"
+                      element={<Main idActionProduct={idActionProduct} />}
+                    />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/userData" element={<UserData />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+
+                    <Route
+                      path="*"
+                      element={<Navigate to="/" replace />}
+                    ></Route>
+                  </Routes>
+                </div>
+
                 <Footer />
               </div>
             </HashRouter>
