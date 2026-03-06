@@ -1,7 +1,15 @@
+import { LoadingDots } from "../loadingDots/loadingDots";
 import styles from "./rating.module.css";
 import { Star } from "lucide-react";
 
-export const Rating = ({ averageRating }) => {
+export const Rating = ({
+  averageRating,
+  isLoadingAverageRating,
+  isFetchingAverageRating,
+}) => {
+  if (isLoadingAverageRating || isFetchingAverageRating)
+    return <LoadingDots>...</LoadingDots>;
+
   return (
     <div className={styles.ratingBlock}>
       <div className={styles.starBlock}>

@@ -11,6 +11,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Requests from "../../requests";
 import { DISCOUNTPERSENT } from "../../constants/discountPercent";
 import { Rating } from "../rating/rating";
+import { useQuery } from "@tanstack/react-query";
+import { LoadingDots } from "../loadingDots/loadingDots";
 
 export const ProductItem = ({ product, setSelectedProduct }) => {
   // актиный юзер (глобальный контекст)
@@ -18,6 +20,21 @@ export const ProductItem = ({ product, setSelectedProduct }) => {
   const { cart, setCart } = useContext(CartContext);
   const { idActionProduct } = useContext(IdDiscountContext);
   const discountPercent = DISCOUNTPERSENT;
+
+  async function fetchAverageRatingProductById(productId) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    return await Requests.getAverageRatingProductById(productId);
+  }
+
+  const {
+    data: averageRating,
+    isLoading: isLoadingAverageRating,
+    isFetching: isFetchingAverageRating,
+  } = useQuery({
+    queryKey: ["averageRating", product.id],
+    queryFn: () => fetchAverageRatingProductById(product.id),
+  });
 
   const maxNum = 5;
   const [currentNum, setCurrentNum] = useState(1);
@@ -123,7 +140,10 @@ export const ProductItem = ({ product, setSelectedProduct }) => {
           </div>
         )}
 
-        <Rating product={product} />
+        <Rating
+          averageRating={averageRating}
+          isLoadingAverageRating={isLoadingAverageRating}
+        />
         <Button func={() => setSelectedProduct(product)}>Reviews</Button>
 
         <Button func={() => toggleProductInCart(product.id)}>
