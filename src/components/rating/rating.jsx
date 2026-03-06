@@ -16,7 +16,7 @@ export const Rating = ({
           <div className={styles.starBlock}>
             <Star size={16} fill="orange" />
           </div>{" "}
-          {averageRating ? averageRating.toFixed(2) : "No rating"}
+          {averageRating ? averageRating.toFixed(2) : "-"}
         </>
       )}
     </div>

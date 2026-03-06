@@ -4,19 +4,56 @@
   align-items: center;
   background-color: rgb(102, 99, 99);
   border-radius: 0.25em;
-  padding: 0.25em;
+  padding: 0.25em 0;
   max-width: 206px;
 }
 
 .productName {
   display: flex;
   justify-content: center;
+  padding: 0.25em;
 }
 
 .priceBlock {
   display: flex;
   padding-left: 1.5em;
-  padding-top: 0.5em;
+  padding-top: 0.25em;
+  gap: 0.5em;
+}
+
+.productData {
+  padding: 0 1.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.productRatingReview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btnReview {
+  background-color: gainsboro;
+  height: 1.5em;
+}
+
+.btnReview:hover,
+.btnCart:hover {
+  background-color: black;
+}
+
+.btnCart svg {
+  transition: 0.3s;
+}
+
+.btnCart:hover svg {
+  stroke: orange;
+}
+
+.btnCart {
+  height: 2.25em;
 }
 
 a {
@@ -31,7 +68,7 @@ a {
 
 .containerImg {
   width: 150px;
-  height: 100px;
+  height: 120px;
   display: flex;
   justify-content: center;
 }
@@ -47,5 +84,5 @@ a {
 }
 
 .redText {
-  color: red;
+  color: orange;
 }

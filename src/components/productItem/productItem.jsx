@@ -7,7 +7,7 @@ import { ProductImg } from "../productImg/productImg";
 import { Arrow } from "../arrow/arrow";
 import { Button } from "../button/button";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import Requests from "../../requests";
 import { DISCOUNTPERSENT } from "../../constants/discountPercent";
 import { Rating } from "../rating/rating";
@@ -139,15 +139,27 @@ export const ProductItem = ({ product, setSelectedProduct }) => {
           </div>
         )}
 
-        <Rating
-          averageRating={averageRating}
-          isLoadingAverageRating={isLoadingAverageRating}
-        />
-        <Button func={() => setSelectedProduct(product)}>Reviews</Button>
+        <div className={styles.productData}>
+          <div className={styles.productRatingReview}>
+            <Rating
+              averageRating={averageRating}
+              isLoadingAverageRating={isLoadingAverageRating}
+            />
+            <Button
+              func={() => setSelectedProduct(product)}
+              className={styles.btnReview}
+            >
+              Reviews
+            </Button>
+          </div>
 
-        <Button func={() => toggleProductInCart(product.id)}>
-          {cart.has(product.id) ? "Remove" : "Add"}
-        </Button>
+          <Button
+            func={() => toggleProductInCart(product.id)}
+            className={styles.btnCart}
+          >
+            {cart.has(product.id) ? "Remove" : <ShoppingCart />}
+          </Button>
+        </div>
       </div>
     </div>
   );
