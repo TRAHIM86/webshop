@@ -38,17 +38,16 @@ export const SideBar = ({
 
   return (
     <div className={styles.sidebar}>
-      <h3>Filtres</h3>
       <div className={styles.filterCategory}>
-        <h4>Categories</h4>
+        <h3>Categories</h3>
 
         {ALL_CATEGORIES.map((cat) => (
-          <label key={cat}>
+          <label key={cat} style={{ border: "1px sold green" }}>
             <input
               type="checkbox"
               checked={categories.includes(cat)}
               onChange={(e) => fillCategories(cat, e.target.checked)}
-            />
+            />{" "}
             {cat}
           </label>
         ))}

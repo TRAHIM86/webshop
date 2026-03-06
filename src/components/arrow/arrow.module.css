@@ -1,12 +1,12 @@
 .arrow {
   cursor: pointer;
-  width: 1.5em;
-  height: 1.5em;
-  background-color: rgb(255, 153, 0);
-  color: rgb(102, 99, 99);
+  color: orange;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
   font-weight: bold;
+}
+
+.arrow svg {
+  stroke: rgb(255, 153, 0);
 }

@@ -1,8 +1,8 @@
 .productList {
   display: flex;
-  justify-content: space-between;
-  border: 3px salmon dotted;
-  max-width: 80%;
+  justify-content: space-around;
   margin: 0 auto;
   flex-wrap: wrap;
+  gap: 0.5em;
+  width: clamp(400px, 70%, 720px);
 }

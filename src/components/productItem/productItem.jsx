@@ -12,7 +12,6 @@ import Requests from "../../requests";
 import { DISCOUNTPERSENT } from "../../constants/discountPercent";
 import { Rating } from "../rating/rating";
 import { useQuery } from "@tanstack/react-query";
-import { LoadingDots } from "../loadingDots/loadingDots";
 
 export const ProductItem = ({ product, setSelectedProduct }) => {
   // актиный юзер (глобальный контекст)
@@ -107,12 +106,12 @@ export const ProductItem = ({ product, setSelectedProduct }) => {
     <div key={product.id} className={styles.productItem}>
       <div>
         <Link to={`/products/${product.id}`}>
-          <div>{product.name}</div>
+          <div className={styles.productName}>{product.name}</div>
         </Link>
 
         <div className={styles.arrows}>
           <Arrow funcOnClick={prevPhoto}>
-            <ChevronLeft size={16} />
+            <ChevronLeft size={24} />
           </Arrow>
           <Link className={styles.linkPhoto} to={`/products/${product.id}`}>
             <div className={styles.containerImg}>
@@ -120,21 +119,21 @@ export const ProductItem = ({ product, setSelectedProduct }) => {
             </div>
           </Link>
           <Arrow funcOnClick={nextPhoto}>
-            <ChevronRight size={16} />
+            <ChevronRight size={24} />
           </Arrow>
         </div>
         {product.id === idActionProduct ? (
-          <div>
+          <div className={styles.priceBlock}>
             {" "}
-            <div
-              className={styles.crossText}
-            >{`${product.price.toFixed(2)} $`}</div>
             <div className={styles.redText}>
               {`${(product.price * (1 - discountPercent / 100)).toFixed(2)} $`}
             </div>
+            <div
+              className={styles.crossText}
+            >{`${product.price.toFixed(2)} $`}</div>
           </div>
         ) : (
-          <div>
+          <div className={styles.priceBlock}>
             {" "}
             <div>{`${product.price.toFixed(2)} $`}</div>
           </div>

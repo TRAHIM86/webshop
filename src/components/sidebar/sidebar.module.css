@@ -1,6 +1,9 @@
 .sidebar {
-  border: 1px solid salmon;
-  width: clamp(100px, 30%, 300px);
+  background-color: rgb(102, 99, 99);
+  width: clamp(100px, 20%, 250px);
+  border-radius: 0.25em;
+  padding: 0.5em;
+  align-self: flex-start;
 }
 
 .filterCategory {
@@ -15,4 +18,5 @@
 
 .priceInput {
   width: 4em;
+  color: rgb(102, 99, 99);
 }

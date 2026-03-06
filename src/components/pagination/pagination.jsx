@@ -1,4 +1,3 @@
-import react from "react";
 import styles from "./pagination.module.css";
 
 export const Pagination = ({ allProducts, currentPage, setCurrentPage }) => {

@@ -16,6 +16,14 @@
   color: rgb(255, 153, 0);
 }
 
+.Link svg {
+  transition: all 0.3s ease;
+}
+
+.Link:hover svg {
+  stroke: rgb(255, 153, 0);
+}
+
 .cartContainer {
   position: relative;
 }

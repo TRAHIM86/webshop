@@ -26,20 +26,17 @@ export const ProductList = ({ products }) => {
   }
 
   return (
-    <div>
-      <div className={styles.productList}>
-        {products &&
-          products.map((product) => {
-            return (
-              <ProductItem
-                product={product}
-                setSelectedProduct={setSelectedProduct}
-                key={product.id}
-              ></ProductItem>
-            );
-          })}
-      </div>
-
+    <div className={styles.productList}>
+      {products &&
+        products.map((product) => {
+          return (
+            <ProductItem
+              product={product}
+              setSelectedProduct={setSelectedProduct}
+              key={product.id}
+            ></ProductItem>
+          );
+        })}
       {selectedProduct && (
         <PopupReadReview
           reviewList={reviewList}

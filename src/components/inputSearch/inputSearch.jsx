@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styles from "./inputSearch.module.css";
 
 export const InputSearch = ({ searchStr, setSearchStr, setCurrentPage }) => {

@@ -1,5 +1,6 @@
 .loadingDots {
   animation: pulse 0.5s infinite;
+  height: 1rem;
 }
 
 @keyframes pulse {

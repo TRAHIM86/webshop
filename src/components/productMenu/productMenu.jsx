@@ -23,7 +23,7 @@ export const ProductMenu = ({
       />
       <div className={styles.selectsBlock}>
         <div>All: {allProducts?.total || 0}</div>
-        <div style={{ border: "2px solid red" }}>
+        <div>
           Sort by{" "}
           <Select
             value={sortMethod}
@@ -32,7 +32,7 @@ export const ProductMenu = ({
           />
         </div>
 
-        <div style={{ border: "2px solid red", display: "flex" }}>
+        <div className={styles.buttonsBlock}>
           <Button
             className={styles.buttonSort}
             func={() => setSortOrder("asc")}
@@ -47,7 +47,7 @@ export const ProductMenu = ({
           </Button>
         </div>
 
-        <div style={{ border: "2px solid red" }}>
+        <div>
           Show by{" "}
           <Select
             value={quantityProducts}

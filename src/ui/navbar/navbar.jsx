@@ -34,8 +34,8 @@ export const Navbar = () => {
         About
       </Link>
       <Link className={styles.Link} to="/cart">
-        <div className={styles.cartContainer}>
-          <ShoppingCart className={styles.shoppingCart} />
+        <div className={`${styles.cartContainer} ${styles.Link}`}>
+          <ShoppingCart />
           {total > 0 ? <div className={styles.cartCount}>{total}</div> : ""}
         </div>
       </Link>

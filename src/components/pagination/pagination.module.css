@@ -1,15 +1,13 @@
 .pagination {
-  background-color: gainsboro;
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 0.5em;
   color: white;
-  padding-left: 1em;
-  padding-bottom: 0.5em;
+  padding: 0.5em;
   width: 100%;
   height: 3em;
-  border: 2px solid blue;
+  background-color: rgb(102, 99, 99);
 }
 
 .numPage {
@@ -25,9 +23,10 @@
 
 .numPage:hover {
   background-color: orange;
+  color: gray;
 }
 
 .active {
-  background-color: orange;
-  color: gray;
+  background-color: gray;
+  color: orange;
 }

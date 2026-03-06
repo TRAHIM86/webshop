@@ -7,15 +7,18 @@ export const Rating = ({
   isLoadingAverageRating,
   isFetchingAverageRating,
 }) => {
-  if (isLoadingAverageRating || isFetchingAverageRating)
-    return <LoadingDots>...</LoadingDots>;
-
   return (
     <div className={styles.ratingBlock}>
-      <div className={styles.starBlock}>
-        <Star size={16} fill="orange" />
-      </div>
-      {averageRating ? averageRating.toFixed(2) : "No rating"}
+      {isLoadingAverageRating || isFetchingAverageRating ? (
+        <LoadingDots />
+      ) : (
+        <>
+          <div className={styles.starBlock}>
+            <Star size={16} fill="orange" />
+          </div>{" "}
+          {averageRating ? averageRating.toFixed(2) : "No rating"}
+        </>
+      )}
     </div>
   );
 };

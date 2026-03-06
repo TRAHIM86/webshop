@@ -1,7 +1,9 @@
 .ratingBlock {
   display: flex;
   flex-direction: row;
+  align-items: center;
   color: rgb(58, 123, 184);
+  height: 1.75em;
 }
 
 .starBlock {

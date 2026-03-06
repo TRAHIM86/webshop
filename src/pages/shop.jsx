@@ -76,7 +76,7 @@ export const Shop = () => {
 
   // показать N товаров на странице
   function showQuantityProducts(value) {
-    setQuantityProducts(value);
+    setQuantityProducts(Number(value));
     setCurrentPage(1);
   }
 
@@ -166,7 +166,7 @@ export const Shop = () => {
           setMaxPrice={setMaxPrice}
         />
         {isLoadingPageProducts ? (
-          <div>
+          <div className={styles.isLoadingProducts}>
             <LoadingDots />
           </div>
         ) : isErrorPageProducts ? (
