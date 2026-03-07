@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { Button } from "../components/button/button";
-import styles from "./login.module.css";
 import { UserContext } from "../App";
 import Requests from "../requests";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
+import styles from "./login.module.css";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -54,16 +54,20 @@ export const Login = () => {
   }
 
   return (
-    <div>
+    <div className={styles.loginPage}>
       <form onSubmit={(e) => e.preventDefault()}>
         <div className={styles.dataLogin}>
+          <p>Login</p>{" "}
           <input
+            className={styles.loginInput}
             type="text"
             value={loginedUser.login}
             autoComplete="username"
             onChange={(e) => uptateUser("login", e.target.value)}
           />
+          <p>Password</p>{" "}
           <input
+            className={styles.loginInput}
             type="password"
             value={loginedUser.password}
             autoComplete="password"
@@ -76,14 +80,13 @@ export const Login = () => {
               <div className={styles.error}>Incorrect data</div>
             )}
         </div>
-
-        <div className={styles.loginBlockLink}>
-          Don't have an account?
-          <Link className={styles.registerLink} to="/register">
-            Register&#8594;
-          </Link>
-        </div>
       </form>
+      <div className={styles.loginBlockLink}>
+        Don't have an account?
+        <Link className={styles.registerLink} to="/register">
+          Register&#8594;
+        </Link>
+      </div>
     </div>
   );
 };

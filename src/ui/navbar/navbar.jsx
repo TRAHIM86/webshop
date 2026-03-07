@@ -24,10 +24,10 @@ export const Navbar = () => {
 
   return (
     <div className={styles.navbar}>
-      <Link className={styles.Link} to="/main">
+      <Link className={styles.Link} to="/">
         Main
       </Link>
-      <Link className={styles.Link} to="/">
+      <Link className={styles.Link} to="/shop">
         Shop
       </Link>
       <Link className={styles.Link} to="/about">

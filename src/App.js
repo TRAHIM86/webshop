@@ -114,15 +114,19 @@ function App() {
 
                 <div className={styles.routes}>
                   <Routes>
-                    <Route path="/" element={<Shop />} />
                     <Route
-                      path="/products/:productId"
-                      element={<ProductPage />}
+                      path="/"
+                      element={<Main idActionProduct={idActionProduct} />}
                     />
                     <Route
                       path="/main"
                       element={<Main idActionProduct={idActionProduct} />}
                     />
+                    <Route
+                      path="/products/:productId"
+                      element={<ProductPage />}
+                    />
+                    <Route path="/shop" element={<Shop />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/userData" element={<UserData />} />

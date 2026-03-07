@@ -1,3 +1,29 @@
+.registerPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 1em;
+}
+
+.dataRegister {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  width: 20em;
+}
+
+.registerInput {
+  width: 100%;
+  color: black;
+  border-radius: 0.5em;
+  border: 0.25em solid rgb(247, 196, 101);
+  background-color: rgb(247, 196, 101);
+}
+
 .Loginlink {
   transition: all 0.3s ease;
   color: rgb(255, 153, 0);

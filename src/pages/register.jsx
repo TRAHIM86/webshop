@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../components/button/button";
-import styles from "./register.module.css";
 import { useContext, useEffect, useState } from "react";
 import Requests from "../requests";
 import { UserContext } from "../App";
 import { useMutation } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
+import styles from "./register.module.css";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -153,54 +153,46 @@ export const Register = () => {
   /*************************/
 
   return (
-    <div>
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        style={{ width: "100%", display: "flex", justifyContent: "center" }}
-      >
-        <div>
-          <div>
-            <p>Login</p>
-            <input
-              type="text"
-              value={newUser.login}
-              placeholder="3-10 letters and/or numbers"
-              onChange={(e) => updateUser("login", e.target.value)}
-              autoComplete="userLogin"
-            ></input>
-          </div>
-          <div>
-            <p>Email</p>
-            <input
-              type="email"
-              value={newUser.email}
-              onChange={(e) => updateUser("email", e.target.value)}
-              placeholder="Your email"
-              autoComplete="email"
-            ></input>
-          </div>
-          <div>
-            <p>Password</p>{" "}
-            <input
-              type="password"
-              value={newUser.password}
-              placeholder="3-10 letters and/or numbers"
-              onChange={(e) => updateUser("password", e.target.value)}
-              style={{ width: "100%" }}
-              autoComplete="new-password"
-            ></input>
-          </div>
-          <div>
-            <p>Confirm password</p>
-            <input
-              type="password"
-              value={newUser.confirmPassword}
-              placeholder="Confirm password"
-              onChange={(e) => updateUser("confirmPassword", e.target.value)}
-              autoComplete="new-password"
-            ></input>
-          </div>
-
+    <div className={styles.registerPage}>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <div className={styles.dataRegister}>
+          <p>Login</p>
+          <input
+            className={styles.registerInput}
+            type="text"
+            value={newUser.login}
+            placeholder="3-10 letters and/or numbers"
+            onChange={(e) => updateUser("login", e.target.value)}
+            autoComplete="userLogin"
+          ></input>
+          <p>Email</p>
+          <input
+            className={styles.registerInput}
+            type="email"
+            value={newUser.email}
+            onChange={(e) => updateUser("email", e.target.value)}
+            placeholder="Your email"
+            autoComplete="email"
+          ></input>
+          <p>Password</p>{" "}
+          <input
+            className={styles.registerInput}
+            type="password"
+            value={newUser.password}
+            placeholder="3-10 letters and/or numbers"
+            onChange={(e) => updateUser("password", e.target.value)}
+            style={{ width: "100%" }}
+            autoComplete="new-password"
+          ></input>
+          <p>Confirm password</p>
+          <input
+            className={styles.registerInput}
+            type="password"
+            value={newUser.confirmPassword}
+            placeholder="Confirm password"
+            onChange={(e) => updateUser("confirmPassword", e.target.value)}
+            autoComplete="new-password"
+          ></input>
           <Button
             type="submit"
             className={styles.btnRegister}
@@ -214,14 +206,15 @@ export const Register = () => {
           >
             REGISTER
           </Button>
-          <div>
-            Already registered?
-            <Link to="/login" className={styles.Loginlink}>
-              Login&#8594;
-            </Link>
-          </div>
         </div>
       </form>
+
+      <div>
+        Already registered?
+        <Link to="/login" className={styles.Loginlink}>
+          Login&#8594;
+        </Link>
+      </div>
     </div>
   );
 };

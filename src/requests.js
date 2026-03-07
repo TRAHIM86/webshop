@@ -107,16 +107,7 @@ export default class Requests {
       }
 
       const start = (currentPage - 1) * quantityProducts;
-      console.log("start тип:", typeof start);
-      console.log("quantityProducts тип:", typeof quantityProducts);
-      console.log(
-        "start-end: ",
-        start,
-        quantityProducts,
-        start + quantityProducts,
-      );
 
-      console.log("sum: ", start + quantityProducts);
       return filteredProducts.slice(start, start + quantityProducts);
     } catch (err) {
       console.log(err);

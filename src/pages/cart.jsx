@@ -161,7 +161,9 @@ export const Cart = () => {
     return total + disSum;
   }, 0);
 
-  if (!cartProducts) {
+  console.log("cartProducts: ", cartProducts);
+
+  if (!cartProducts && activeUser) {
     return (
       <div className={styles.loading}>
         <LoadingDots />
