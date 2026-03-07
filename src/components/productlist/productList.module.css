@@ -1,8 +1,9 @@
 .productList {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 0 auto;
   flex-wrap: wrap;
+  flex: 1;
   gap: 0.5em;
   width: clamp(400px, 70%, 720px);
 }

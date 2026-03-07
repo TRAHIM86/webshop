@@ -1,0 +1,83 @@
+.aboutContainer {
+  padding: 1em;
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3em;
+}
+
+.aboutInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  width: clamp(500px, 70%, 800px);
+  text-align: justify;
+  background-color: rgb(102, 99, 99);
+  color: white;
+  padding: 1em;
+}
+
+.aboutBottom {
+  background-color: rgb(247, 247, 247);
+  flex-direction: row;
+  align-items: stretch;
+  color: black;
+  padding: 0;
+  gap: 0;
+}
+
+.aboutBottomBlock {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.aboutBottomChapter {
+  padding: 1em;
+  width: 100%;
+  flex: 1;
+  color: black;
+}
+
+.questionnaire {
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.partners {
+  background: gainsboro;
+}
+
+.btnClickHere {
+  width: 100%;
+  background-color: orange;
+  border: none;
+  color: rgb(102, 99, 99);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  padding: 1em;
+}
+
+.btnClickHere:hover {
+  cursor: pointer;
+  background-color: rgb(102, 99, 99);
+  color: orange;
+}
+
+.aboutLink:hover {
+  color: orange;
+}

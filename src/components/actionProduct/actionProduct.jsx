@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import Requests from "../../requests";
 import { ProductImg } from "../productImg/productImg";
-import styles from "./actionProduct.module.css";
 import { DISCOUNTPERSENT } from "../../constants/discountPercent";
 import { Button } from "../button/button";
 import { CartContext, UserContext } from "../../App";
 import { Link } from "react-router-dom";
+import { ShoppingCart } from "lucide-react";
+import styles from "./actionProduct.module.css";
 
 export const ActionProduct = ({ idActionProduct }) => {
   const { activeUser } = useContext(UserContext);
@@ -137,11 +138,19 @@ export const ActionProduct = ({ idActionProduct }) => {
             NEW PRICE&nbsp;{" "}
             <div className={styles.orangeText}>{discountPrice} $</div>{" "}
           </div>
+          {!cart.has(idActionProduct) && (
+            <Button
+              className={`${styles.btnMain} ${styles.btnCart}`}
+              func={() => addActionProductInCart(idActionProduct)}
+            >
+              <ShoppingCart />
+            </Button>
+          )}
         </div>
 
-        <div>
+        <div className={styles.btnsBlock}>
           <Link to="/">
-            <Button className={styles.btnToShop}>Go to the shop</Button>
+            <Button className={styles.btnMain}>GO TO THE SHOP</Button>
           </Link>
         </div>
       </div>
@@ -154,11 +163,6 @@ export const ActionProduct = ({ idActionProduct }) => {
           />
         </div>
       </div>
-      {!cart.has(idActionProduct) && (
-        <Button func={() => addActionProductInCart(idActionProduct)}>
-          Add
-        </Button>
-      )}
     </div>
   );
 };

@@ -57,14 +57,35 @@
   text-decoration: line-through;
 }
 
-.btnToShop {
+.btnsBlock {
+  display: flex;
+  gap: 1em;
+  width: 100%;
+}
+
+.btnMain {
   font-weight: bold;
   padding: 1em;
   background-color: orange;
   color: black;
+  height: 3em;
 }
 
-.btnToShop:hover {
+.btnCart {
+  height: 2.25em;
+  background-color: gainsboro;
+}
+
+.btnCart svg {
+  stroke: rgb(102, 99, 99);
+  transition: 0.3s;
+}
+
+.btnCart:hover svg {
+  stroke: orange;
+}
+
+.btnMain:hover {
   background-color: rgb(102, 99, 99);
   color: orange;
 }
