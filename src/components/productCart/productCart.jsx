@@ -60,7 +60,7 @@ export const ProductCart = ({ product }) => {
 
       <div className={styles.arrows}>
         <Arrow funcOnClick={prevPhoto}>
-          <ChevronLeft size={16} />
+          <ChevronLeft size={24} />
         </Arrow>
         <Link className={styles.linkPhoto} to={`/products/${product.id}`}>
           <div className={styles.containerImg}>
@@ -68,23 +68,22 @@ export const ProductCart = ({ product }) => {
           </div>
         </Link>
         <Arrow funcOnClick={nextPhoto}>
-          <ChevronRight size={16} />
+          <ChevronRight size={24} />
         </Arrow>
       </div>
-      <div>
-        {product.id === idActionProduct ? (
-          <div>
-            <div
-              className={styles.crossText}
-            >{`${product.price.toFixed(2)} $`}</div>
-            <div
-              className={styles.redText}
-            >{`${(product.price * (1 - discountPercent / 100)).toFixed(2)} $`}</div>
-          </div>
-        ) : (
-          <div>{`${product.price.toFixed(2)} $`}</div>
-        )}
-      </div>
+
+      {product.id === idActionProduct ? (
+        <div className={styles.priceBlock}>
+          <div
+            className={styles.orangeText}
+          >{`${(product.price * (1 - discountPercent / 100)).toFixed(2)} $`}</div>
+          <div
+            className={styles.crossText}
+          >{`${product.price.toFixed(2)} $`}</div>
+        </div>
+      ) : (
+        <div>{`${product.price.toFixed(2)} $`}</div>
+      )}
     </div>
   );
 };

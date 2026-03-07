@@ -84,7 +84,7 @@ export const ActionProduct = ({ idActionProduct }) => {
 
         setFadeClass(styles.fadeIn);
       }, 500);
-    }, 15000);
+    }, 5000);
 
     return () => clearInterval(intervalId);
   }, [photos]);
@@ -126,15 +126,15 @@ export const ActionProduct = ({ idActionProduct }) => {
       <div className={styles.actionText}>
         <div className={styles.textBlock}>
           <div className={styles.orangeText}>ACTION! -{discountPercent}%!</div>
-          <div>{actionProduct?.name}</div>
+          <div>{actionProduct?.name.toUpperCase()}</div>
           <div className={styles.priceBox}>
-            <div>Old price&nbsp;</div>
+            <div>OLD PRICE&nbsp;</div>
             <div className={styles.crossText}>
               {actionProduct?.price.toFixed(2)} $
             </div>
           </div>
           <div className={styles.priceBox}>
-            New price&nbsp;{" "}
+            NEW PRICE&nbsp;{" "}
             <div className={styles.orangeText}>{discountPrice} $</div>{" "}
           </div>
         </div>

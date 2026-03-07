@@ -3,13 +3,14 @@ import { CartContext, IdDiscountContext, UserContext } from "../App";
 import Requests from "../requests";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "../components/button/button";
-import styles from "./cart.module.css";
 import { ProductCart } from "../components/productCart/productCart";
 import { SumProduct } from "../components/sumProduct/sumProduct";
 import { Plus, Minus } from "lucide-react";
 import { PROMOCODES } from "../constants/promoCode";
 import toast, { Toaster } from "react-hot-toast";
 import { DISCOUNTPERSENT } from "../constants/discountPercent";
+import { LoadingDots } from "../components/loadingDots/loadingDots";
+import styles from "./cart.module.css";
 
 export const Cart = () => {
   // актиный юзер (глобальный контекст)
@@ -160,6 +161,18 @@ export const Cart = () => {
     return total + disSum;
   }, 0);
 
+  if (!cartProducts) {
+    return (
+      <div className={styles.loading}>
+        <LoadingDots />
+      </div>
+    );
+  }
+
+  if (cart.size === 0) {
+    return <div className={styles.emptyCart}>Your shopping cart is empty</div>;
+  }
+
   return (
     <div className={styles.cart}>
       <div className={styles.cartItems}>
@@ -172,19 +185,21 @@ export const Cart = () => {
               <div key={product.id} className={styles.cartItem}>
                 <ProductCart product={product} />
                 <div className={styles.quantityBlock}>
-                  <Button
-                    className={styles.buttonQuantity}
-                    func={() => removeQuantity(product.id)}
-                  >
-                    <Minus />
-                  </Button>
-                  <div className={styles.quantity}>{quantity}</div>
-                  <Button
-                    className={styles.buttonQuantity}
-                    func={() => addQuantity(product.id)}
-                  >
-                    <Plus />
-                  </Button>
+                  <div className={styles.quantityBtns}>
+                    <Button
+                      className={styles.buttonQuantity}
+                      func={() => removeQuantity(product.id)}
+                    >
+                      <Minus />
+                    </Button>
+                    <div className={styles.quantity}>{quantity}</div>
+                    <Button
+                      className={styles.buttonQuantity}
+                      func={() => addQuantity(product.id)}
+                    >
+                      <Plus />
+                    </Button>
+                  </div>
 
                   <SumProduct
                     product={product}
@@ -198,10 +213,6 @@ export const Cart = () => {
               </div>
             );
           })}
-
-        {cart.size === 0 && (
-          <div className={styles.emptyCart}>Your shopping cart is empty</div>
-        )}
       </div>
       <div className={styles.orderBlock}>
         <Button className={styles.buttonClean} func={removeAllCart}>
@@ -219,12 +230,12 @@ export const Cart = () => {
           />
           <div className={styles.buttonsPromoCode}>
             <Button
-              className={styles.buttonClean}
+              className={styles.buttonPromoCode}
               func={() => applyPromoCode(promoCode)}
             >
               Apply
             </Button>
-            <Button className={styles.buttonClean} func={removePromoCode}>
+            <Button className={styles.buttonPromoCode} func={removePromoCode}>
               Remove
             </Button>
           </div>

@@ -37,28 +37,28 @@
 .btnReview {
   background-color: gainsboro;
   height: 1.5em;
+  color: rgb(102, 99, 99);
+}
+
+.btnCart {
+  height: 2.25em;
+  background-color: orange;
+  color: rgb(102, 99, 99);
 }
 
 .btnReview:hover,
 .btnCart:hover {
   background-color: black;
+  color: orange;
 }
 
 .btnCart svg {
   transition: 0.3s;
+  stroke: rgb(102, 99, 99);
 }
 
 .btnCart:hover svg {
   stroke: orange;
-}
-
-.btnCart {
-  height: 2.25em;
-}
-
-a {
-  text-decoration: none;
-  color: black;
 }
 
 .linkPhoto {

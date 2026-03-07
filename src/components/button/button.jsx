@@ -1,4 +1,3 @@
-import react from "react";
 import styles from "./button.module.css";
 
 export const Button = ({ children, func, disabled, className }) => {

@@ -31,7 +31,7 @@ export const SumProduct = ({ product, quantity, appliedPromoCode }) => {
       {disSum ? (
         <div>
           <div className={styles.oldpPrice}>{oldSum + " $"}</div>
-          <div>{disSum + " $"}</div>
+          <div className={styles.orangeText}>{disSum + " $"}</div>
         </div>
       ) : (
         oldSum + " $"

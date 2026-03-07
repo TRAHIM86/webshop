@@ -1,32 +1,38 @@
 .cart {
   display: flex;
   align-items: start;
-  width: 80%;
-  border: 1px solid rgb(24, 206, 24);
+  justify-content: space-around;
+  width: 100%;
   padding: 0.5em;
   gap: 0.5em;
   position: relative;
+  border: 2px solid skyblue;
 }
 
 .cartItems {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  border: 3px solid orange;
+  gap: 0.5em;
 }
 
 .cartItem {
-  border: 3px solid rgb(245, 1, 123);
-  display: flex;
-  width: 80%;
   display: flex;
   justify-content: space-around;
+  background-color: rgb(102, 99, 99);
+  border-radius: 0.25em;
+  padding: 0.5em;
 }
 .quantityBlock {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   gap: 0.5rem;
-  border: 3px solid blue;
+}
+
+.quantityBtns {
+  display: flex;
+  flex-direction: row;
 }
 
 .buttonQuantity {
@@ -42,9 +48,31 @@
   width: 1.5rem;
 }
 
+.orderBlock {
+  background-color: rgb(102, 99, 99);
+  width: clamp(100px, 25%, 250px);
+  position: sticky;
+  top: 0.5em;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.25em;
+  padding: 0.5em;
+  gap: 0.5em;
+}
+
 .promoCodeBlock {
   width: 100%;
-  border: 1px solid salmon;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
+.promoCodeInput {
+  width: 100%;
+  color: black;
+  border-radius: 0.5em;
+  border: 0.25em solid rgb(247, 196, 101);
+  background-color: rgb(247, 196, 101);
 }
 
 .buttonsPromoCode {
@@ -53,26 +81,26 @@
   gap: 0.2rem;
 }
 
-.promoCodeInput {
-  width: 100%;
-}
-
-.orderBlock {
-  width: 19%;
-  position: sticky;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
 .buttonClean,
 .buttonOrder {
   width: 100%;
 }
 
+.buttonPromoCode {
+  background-color: gainsboro;
+  width: 50%;
+}
+
+.buttonClean:hover,
+.buttonOrder:hover,
+.buttonPromoCode:hover {
+  background-color: black;
+  color: orange;
+}
+
 .buttonOrder {
   font-weight: bold;
+  height: 2.25em;
 }
 
 .sumTotalBlock {
@@ -97,4 +125,11 @@
   background: #47d64c !important;
   color: white !important;
   border-radius: 8px !important;
+}
+
+.loading {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

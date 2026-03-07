@@ -14,5 +14,7 @@
 
 .isLoadingProducts {
   width: clamp(400px, 70%, 720px);
-  border: 2px solid rgb(159, 159, 247);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

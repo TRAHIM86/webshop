@@ -1,12 +1,10 @@
 import { useContext, useState } from "react";
-import styles from "./productItem.module.css";
 import { CartContext, IdDiscountContext, UserContext } from "../../App";
-
 import { Link } from "react-router-dom";
 import { ProductImg } from "../productImg/productImg";
 import { Arrow } from "../arrow/arrow";
 import { Button } from "../button/button";
-
+import styles from "./productItem.module.css";
 import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import Requests from "../../requests";
 import { DISCOUNTPERSENT } from "../../constants/discountPercent";
@@ -146,16 +144,16 @@ export const ProductItem = ({ product, setSelectedProduct }) => {
               isLoadingAverageRating={isLoadingAverageRating}
             />
             <Button
-              func={() => setSelectedProduct(product)}
               className={styles.btnReview}
+              func={() => setSelectedProduct(product)}
             >
               Reviews
             </Button>
           </div>
 
           <Button
-            func={() => toggleProductInCart(product.id)}
             className={styles.btnCart}
+            func={() => toggleProductInCart(product.id)}
           >
             {cart.has(product.id) ? "Remove" : <ShoppingCart />}
           </Button>

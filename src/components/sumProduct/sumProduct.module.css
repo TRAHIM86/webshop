@@ -1,5 +1,4 @@
 .sum {
-  border: 1px saddlebrown solid;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,4 +7,8 @@
 
 .oldpPrice {
   text-decoration: line-through;
+}
+
+.orangeText {
+  color: orange;
 }

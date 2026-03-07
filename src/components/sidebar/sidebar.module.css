@@ -4,11 +4,26 @@
   border-radius: 0.25em;
   padding: 0.5em;
   align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
 .filterCategory {
   display: flex;
   flex-direction: column;
+}
+
+.categoryLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+}
+
+.filterPrice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
 }
 
 .priceInputs {
@@ -19,4 +34,8 @@
 .priceInput {
   width: 4em;
   color: rgb(102, 99, 99);
+}
+
+.btnFilter:hover {
+  background-color: black;
 }

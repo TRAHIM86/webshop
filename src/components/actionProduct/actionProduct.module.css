@@ -60,4 +60,11 @@
 .btnToShop {
   font-weight: bold;
   padding: 1em;
+  background-color: orange;
+  color: black;
+}
+
+.btnToShop:hover {
+  background-color: rgb(102, 99, 99);
+  color: orange;
 }

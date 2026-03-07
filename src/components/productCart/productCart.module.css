@@ -1,9 +1,7 @@
 .productCart {
-  border: 3px solid rgb(84, 206, 14);
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40%;
 }
 
 a {
@@ -17,25 +15,27 @@ a {
 }
 
 .containerImg {
-  width: 5em;
-  height: 4em;
+  width: 125px;
+  height: 100px;
   display: flex;
   justify-content: center;
-  border: 1px solid red;
 }
 
 .arrows {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.25em;
-  border: 3px solid salmon;
+}
+
+.priceBlock {
+  display: flex;
+  gap: 0.5em;
 }
 
 .crossText {
   text-decoration: line-through;
 }
 
-.redText {
-  color: red;
+.orangeText {
+  color: orange;
 }

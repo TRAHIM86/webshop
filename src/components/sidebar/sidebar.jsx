@@ -1,6 +1,6 @@
 import { useState } from "react";
-import styles from "./sidebar.module.css";
 import { Button } from "../button/button";
+import styles from "./sidebar.module.css";
 
 export const SideBar = ({
   categories,
@@ -42,7 +42,7 @@ export const SideBar = ({
         <h3>Categories</h3>
 
         {ALL_CATEGORIES.map((cat) => (
-          <label key={cat} style={{ border: "1px sold green" }}>
+          <label key={cat} className={styles.categoryLabel}>
             <input
               type="checkbox"
               checked={categories.includes(cat)}
@@ -69,6 +69,7 @@ export const SideBar = ({
           />
         </div>
         <Button
+          className={styles.btnFilter}
           func={() => {
             setMinPrice(tempMin);
             setMaxPrice(tempMax);
