@@ -51,6 +51,11 @@ export const Cart = () => {
 
       if (activeUser) {
         Requests.putCartByUserId(activeUser.id, newCart);
+      } else {
+        localStorage.setItem(
+          "cartWebshop",
+          JSON.stringify(Object.fromEntries(newCart)),
+        );
       }
 
       return newCart;
@@ -70,6 +75,11 @@ export const Cart = () => {
 
       if (activeUser) {
         Requests.putCartByUserId(activeUser.id, newCart);
+      } else {
+        localStorage.setItem(
+          "cartWebshop",
+          JSON.stringify(Object.fromEntries(newCart)),
+        );
       }
 
       return newCart;
@@ -86,7 +96,13 @@ export const Cart = () => {
 
       if (activeUser) {
         Requests.putCartByUserId(activeUser.id, newCart);
+      } else {
+        localStorage.setItem(
+          "cartWebshop",
+          JSON.stringify(Object.fromEntries(newCart)),
+        );
       }
+
       return newCart;
     });
   }
@@ -161,6 +177,8 @@ export const Cart = () => {
 
     return total + disSum;
   }, 0);
+
+  console.log("cart :", cart, "cartProducts :", cartProducts);
 
   if (!cartProducts && activeUser) {
     return (
