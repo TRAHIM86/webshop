@@ -11,6 +11,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { DISCOUNTPERSENT } from "../constants/discountPercent";
 import { LoadingDots } from "../components/loadingDots/loadingDots";
 import styles from "./cart.module.css";
+import { Link } from "react-router-dom";
 
 export const Cart = () => {
   // актиный юзер (глобальный контекст)
@@ -246,7 +247,32 @@ export const Cart = () => {
             Total: <strong>{sumTotal.toFixed(2)} $</strong>
           </div>
         </div>
-        <Button className={styles.buttonOrder}>ORDER</Button>
+        {activeUser ? (
+          <Button className={styles.buttonOrder}>ORDER</Button>
+        ) : (
+          <div>
+            <Link
+              className={styles.registerLink}
+              to="/login"
+              state={{
+                from: `/cart`,
+              }}
+            >
+              Login
+            </Link>{" "}
+            or{" "}
+            <Link
+              className={styles.registerLink}
+              to="/register"
+              state={{
+                openReview: true,
+              }}
+            >
+              register
+            </Link>{" "}
+            to buy goods.
+          </div>
+        )}
       </div>
       <Toaster position="bottom-right" />
     </div>
