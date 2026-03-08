@@ -113,6 +113,11 @@ export const Cart = () => {
 
       if (activeUser) {
         Requests.putCartByUserId(activeUser.id, newCart);
+      } else {
+        localStorage.setItem(
+          "cartWebshop",
+          JSON.stringify(Object.fromEntries(newCart)),
+        );
       }
       return newCart;
     });

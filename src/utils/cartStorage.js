@@ -20,6 +20,3 @@ export function getLocalCart() {
 export function removeLocalCart() {
   localStorage.removeItem("cartWebshop");
 }
-
-//измениьб количество товара в ЛС ("+" "-")
-export function changeLocalCart() {}
