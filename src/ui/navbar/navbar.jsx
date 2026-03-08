@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import styles from "./navbar.module.css";
 import { CartContext, UserContext } from "../../App";
 
@@ -24,36 +24,64 @@ export const Navbar = () => {
 
   return (
     <div className={styles.navbar}>
-      <Link className={styles.Link} to="/">
+      <NavLink
+        className={({ isActive }) =>
+          isActive ? `${styles.Link} ${styles.activeLink}` : styles.Link
+        }
+        to="/"
+      >
         Main
-      </Link>
-      <Link className={styles.Link} to="/shop">
+      </NavLink>
+
+      <NavLink
+        className={({ isActive }) =>
+          isActive ? `${styles.Link} ${styles.activeLink}` : styles.Link
+        }
+        to="/shop"
+      >
         Shop
-      </Link>
-      <Link className={styles.Link} to="/about">
+      </NavLink>
+
+      <NavLink
+        className={({ isActive }) =>
+          isActive ? `${styles.Link} ${styles.activeLink}` : styles.Link
+        }
+        to="/about"
+      >
         About
-      </Link>
-      <Link className={styles.Link} to="/cart">
+      </NavLink>
+
+      <NavLink
+        className={({ isActive }) =>
+          isActive ? `${styles.Link} ${styles.activeLink}` : styles.Link
+        }
+        to="/cart"
+      >
         <div className={`${styles.cartContainer} ${styles.Link}`}>
           <ShoppingCart />
           {total > 0 ? <div className={styles.cartCount}>{total}</div> : ""}
         </div>
-      </Link>
-      {activeUser ? (
-        <Link className={styles.Link} to="/userData">
-          <CircleUser></CircleUser>
-        </Link>
-      ) : (
-        ""
+      </NavLink>
+
+      {activeUser && (
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? `${styles.Link} ${styles.activeLink}` : styles.Link
+          }
+          to="/userData"
+        >
+          <CircleUser />
+        </NavLink>
       )}
+
       {activeUser ? (
-        <Link className={styles.Link} to="/login" onClick={logout}>
+        <NavLink className={styles.Link} to="/login" onClick={logout}>
           Logout
-        </Link>
+        </NavLink>
       ) : (
-        <Link className={styles.Link} to="/login">
+        <NavLink className={styles.Link} to="/login">
           Login
-        </Link>
+        </NavLink>
       )}
     </div>
   );
