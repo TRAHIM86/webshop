@@ -149,7 +149,7 @@ export const ActionProduct = ({ idActionProduct }) => {
         </div>
 
         <div className={styles.btnsBlock}>
-          <Link to="/">
+          <Link to="/shop">
             <Button className={styles.btnMain}>GO TO THE SHOP</Button>
           </Link>
         </div>

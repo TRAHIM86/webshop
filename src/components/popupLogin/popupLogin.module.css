@@ -19,7 +19,7 @@
 
 .popupWrapper {
   width: 20em;
-  background-color: white;
+  background-color: rgb(102, 99, 99);
   border-radius: 4px;
   padding: 2em;
 }
@@ -31,4 +31,8 @@
 
 .registerLink:hover {
   color: rgb(255, 100, 0);
+}
+
+.btnCancel:hover {
+  background-color: black;
 }

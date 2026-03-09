@@ -32,7 +32,9 @@ export const PopupLogin = ({ popupOpen, setPopupOpen, product }) => {
           register
         </Link>{" "}
         to leave a review.
-        <Button func={() => closePopup()}>Cancel</Button>
+        <Button className={styles.btnCancel} func={() => closePopup()}>
+          Cancel
+        </Button>
       </div>
     </div>
   );
