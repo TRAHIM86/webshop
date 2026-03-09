@@ -19,13 +19,14 @@
 
 .popupWrapper {
   width: 20em;
-  background-color: rgb(102, 99, 99);
+  background-color: rgb(68, 66, 66);
   border-radius: 4px;
   padding: 2em;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
 }
+
 .buttonBlock {
   display: flex;
   flex-direction: row;
