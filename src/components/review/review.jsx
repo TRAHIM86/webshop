@@ -10,16 +10,23 @@ export const Review = ({ review }) => {
 
   const countStars = Number(review.rating);
 
+  const firstLetter = review.user_name.slice(0, 1).toUpperCase();
+  console.log("fl: ", firstLetter);
+
   return (
     <div className={styles.review}>
       <div className={styles.nameDateReview}>
-        <div>{review.user_name}</div>
+        <div className={styles.nameBlock}>
+          <div className={styles.firstLetter}>{firstLetter}</div>
+          <div>{review.user_name}</div>
+        </div>
+
         <div>{formatDate(review.created_at)}</div>
       </div>
       <div>{review.review_text}</div>
       <div>
         {[...Array(countStars)].map((_, index) => (
-          <Star size={16} fill="orange" key={index} />
+          <Star size={16} stroke="orange" fill="orange" key={index} />
         ))}
       </div>
     </div>

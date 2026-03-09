@@ -24,6 +24,7 @@ export const ProductPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const discountPercent = DISCOUNTPERSENT;
+  const [showReviews, setShowReviews] = useState(false);
 
   // состояние попапаLogin открыть/закрыть
   const [popupLoginOpen, setPopupLoginOpen] = useState(false);
@@ -205,6 +206,8 @@ export const ProductPage = () => {
     });
   }
 
+  console.log("render product");
+
   return isLoadingProduct ? (
     <LoadingDots />
   ) : isError ? (
@@ -266,6 +269,8 @@ export const ProductPage = () => {
           reviewList={reviewList}
           hasUserReview={hasUserReview}
           updateOldReview={updateOldReview}
+          showReviews={showReviews}
+          setShowReviews={setShowReviews}
         />
       )}
 
