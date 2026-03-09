@@ -62,6 +62,7 @@ export const Login = () => {
             className={styles.loginInput}
             type="text"
             value={loginedUser.login}
+            placeholder="3-10 letters and/or numbers"
             autoComplete="username"
             onChange={(e) => uptateUser("login", e.target.value)}
           />
@@ -70,6 +71,7 @@ export const Login = () => {
             className={styles.loginInput}
             type="password"
             value={loginedUser.password}
+            placeholder="3-10 letters and/or numbers"
             autoComplete="password"
             onChange={(e) => uptateUser("password", e.target.value)}
           />
