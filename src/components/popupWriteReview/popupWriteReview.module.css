@@ -19,7 +19,7 @@
 
 .popupWrapper {
   width: 20em;
-  background-color: white;
+  background-color: rgb(102, 99, 99);
   border-radius: 4px;
   padding: 2em;
 }
@@ -29,12 +29,13 @@
   justify-content: space-around;
 }
 
-.starRating {
-  cursor: pointer;
-}
-
 .btnAdd:disabled {
   cursor: default;
   opacity: 0.5;
   pointer-events: none;
+}
+
+.btnAdd:hover {
+  background-color: black;
+  color: orange;
 }

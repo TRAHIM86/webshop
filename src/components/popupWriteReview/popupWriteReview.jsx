@@ -6,6 +6,8 @@ import styles from "./popupWriteReview.module.css";
 import { UserContext } from "../../App";
 import { Star } from "lucide-react";
 import Requests from "../../requests";
+import { StarsRating } from "../stars/starsRating";
+import { TextAreaRating } from "../textAreaRating/textAreaRating";
 
 export const PopupWriteReview = ({ setPopupOpen, product }) => {
   const { activeUser } = useContext(UserContext);
@@ -68,28 +70,17 @@ export const PopupWriteReview = ({ setPopupOpen, product }) => {
   return (
     <div className={styles.popup}>
       <div className={styles.popupWrapper}>
-        <textarea
-          type="text"
-          value={reviewText}
-          placeholder="From 3 to 100 characters..."
-          rows={4}
-          cols={30}
-          onChange={(e) => {
-            checkLeReviewLength(e.target.value);
-          }}
-          maxLength={100}
-          style={{ resize: "none" }}
+        <TextAreaRating
+          reviewText={reviewText}
+          funcOnChange={checkLeReviewLength}
         />
-        <div>
-          {[...Array(5)].map((_, index) => (
-            <Star
-              className={styles.starRating}
-              key={index}
-              fill={index < rating ? "orange" : "none"}
-              onClick={() => rateProduct(index)}
-            />
-          ))}
-        </div>
+
+        <StarsRating
+          num={5}
+          rating={rating}
+          funcOnClick={rateProduct}
+        ></StarsRating>
+
         <div className={styles.buttonBlock}>
           <Button
             className={styles.btnAdd}
@@ -98,7 +89,9 @@ export const PopupWriteReview = ({ setPopupOpen, product }) => {
           >
             Add
           </Button>
-          <Button func={() => closePopup()}>Cancel</Button>
+          <Button className={styles.btnAdd} func={() => closePopup()}>
+            Cancel
+          </Button>
         </div>
       </div>
     </div>

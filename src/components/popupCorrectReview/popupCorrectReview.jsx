@@ -3,6 +3,8 @@ import styles from "./popupCorrectReview.module.css";
 import { UserContext } from "../../App";
 import { Button } from "../button/button";
 import { Star } from "lucide-react";
+import { TextAreaRating } from "../textAreaRating/textAreaRating";
+import { StarsRating } from "../stars/starsRating";
 
 export const PopupCorrectReview = ({
   reviewList,
@@ -32,6 +34,9 @@ export const PopupCorrectReview = ({
     created_at: new Date().toISOString(),
   };
 
+  const minDataReiew = reviewText.length >= 3 && rating > 0;
+  console.log(minDataReiew);
+
   function checkLeReviewLength(str) {
     if (str.length <= 100) {
       setReviewText(str);
@@ -54,32 +59,27 @@ export const PopupCorrectReview = ({
       <div className={styles.popupWrapper}>
         <div>{currentUserReview?.user_name}</div>
 
-        <textarea
-          type="text"
-          value={reviewText}
-          placeholder="From 3 to 100 characters..."
-          rows={4}
-          cols={30}
-          onChange={(e) => {
-            checkLeReviewLength(e.target.value);
-          }}
-          maxLength={100}
-          style={{ resize: "none" }}
+        <TextAreaRating
+          reviewText={reviewText}
+          funcOnChange={checkLeReviewLength}
         />
 
-        <div>
-          {[...Array(5)].map((_, index) => (
-            <Star
-              className={styles.starRating}
-              key={index}
-              fill={index < rating ? "orange" : "none"}
-              onClick={() => rateProduct(index)}
-            />
-          ))}
-        </div>
+        <StarsRating
+          num={5}
+          rating={rating}
+          funcOnClick={rateProduct}
+        ></StarsRating>
 
-        <Button func={() => updateOldReview(reviewData)}>Save</Button>
-        <Button func={() => closePopup()}>Cancel</Button>
+        <div className={styles.buttonBlock}>
+          <Button
+            className={styles.btnSave}
+            func={() => updateOldReview(reviewData)}
+            disabled={!minDataReiew}
+          >
+            Save
+          </Button>
+          <Button func={() => closePopup()}>Cancel</Button>
+        </div>
       </div>
     </div>
   );
