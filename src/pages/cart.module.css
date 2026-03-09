@@ -6,7 +6,6 @@
   padding: 0.5em;
   gap: 0.5em;
   position: relative;
-  border: 1px solid greenyellow;
 }
 
 .cartItems {
@@ -91,11 +90,16 @@
   width: 50%;
 }
 
+.buttonQuantity:hover,
 .buttonClean:hover,
 .buttonOrder:hover,
 .buttonPromoCode:hover {
   background-color: black;
   color: orange;
+}
+
+.buttonQuantity svg:hover {
+  stroke: orange;
 }
 
 .buttonOrder {

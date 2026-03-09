@@ -20,7 +20,10 @@ export const Navbar = () => {
 
   //console.log("NAVBAR :", cart);
   // сумма всех товаров
-  const total = [...cart.values()].reduce((sum, quantity) => sum + quantity, 0);
+  const total = [...cart?.values()].reduce(
+    (sum, quantity) => sum + quantity,
+    0,
+  );
 
   return (
     <div className={styles.navbar}>

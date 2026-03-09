@@ -33,13 +33,12 @@ export const Cart = () => {
     isLoading: isLoadingCartProducts,
     isError: isErrorCartProducts,
   } = useQuery({
-    queryKey: ["cartProducts"],
+    queryKey: ["cartProducts", [...cart.entries()]],
 
     queryFn: () => {
       const keys = [...cart.keys().map((id) => Number(id))];
       return fetchCartProduct(keys);
     },
-    enabled: cart.size > 0,
     keepPreviousData: true,
   });
 
@@ -183,9 +182,7 @@ export const Cart = () => {
     return total + disSum;
   }, 0);
 
-  console.log("cart :", cart, "cartProducts :", cartProducts);
-
-  if (!cartProducts && activeUser) {
+  if (isLoadingCartProducts) {
     return (
       <div className={styles.loading}>
         <LoadingDots />
@@ -193,7 +190,7 @@ export const Cart = () => {
     );
   }
 
-  if (cart.size === 0) {
+  if (cartProducts.length === 0) {
     return <div className={styles.emptyCart}>Your shopping cart is empty</div>;
   }
 
@@ -230,7 +227,10 @@ export const Cart = () => {
                     quantity={quantity}
                     appliedPromoCode={appliedPromoCode}
                   />
-                  <Button func={() => removeProductToCart(product.id)}>
+                  <Button
+                    className={styles.buttonClean}
+                    func={() => removeProductToCart(product.id)}
+                  >
                     Remove
                   </Button>
                 </div>

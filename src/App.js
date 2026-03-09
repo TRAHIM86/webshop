@@ -57,14 +57,12 @@ function App() {
   // если нету то добавит в Map
   async function loadCart(userId) {
     if (userId) {
+      console.log("loadCart");
       const localCart = getLocalCart();
 
       const userCart = await Requests.getCartByUserId(userId);
 
       const mergedCart = mergeCarts(userCart, localCart);
-
-      // обновисть состояние корзины
-      setCart(mergedCart);
 
       // обновить корзину на сервере
       Requests.putCartByUserId(activeUser.id, mergedCart);
@@ -72,10 +70,14 @@ function App() {
       // очистить локалСтори
       removeLocalCart();
 
+      // обновисть состояние корзины
+      setCart(mergedCart);
+
       // если нет активного юзера, просто сетим
       // в cart наш localCart
     } else {
       const localCart = getLocalCart();
+
       setCart(localCart);
     }
   }
@@ -102,6 +104,8 @@ function App() {
 
     getPromoProduct();
   }, []);
+
+  console.log("cart :", cart.size, activeUser?.login);
 
   return (
     <QueryClientProvider client={queryClient}>
