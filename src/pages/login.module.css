@@ -17,11 +17,17 @@
 }
 
 .loginInput {
+  padding: 0.25em;
   width: 100%;
   color: black;
   border-radius: 0.5em;
   border: 0.25em solid rgb(247, 196, 101);
   background-color: rgb(247, 196, 101);
+}
+
+.loginInputNotValid {
+  border: 0.25em solid red;
+  background-color: salmon;
 }
 
 .registerLink {
@@ -31,4 +37,17 @@
 
 .registerLink:hover {
   color: rgb(255, 100, 0);
+}
+
+.btnLogin:disabled {
+  cursor: default;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.errorValidation {
+  width: 50vw;
+  height: 2em;
+  text-align: center;
+  color: salmon;
 }

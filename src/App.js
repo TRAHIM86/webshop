@@ -105,7 +105,7 @@ function App() {
     getPromoProduct();
   }, []);
 
-  console.log("cart :", cart.size, activeUser?.login);
+  //console.log("cart :", cart.size, activeUser?.login);
 
   return (
     <QueryClientProvider client={queryClient}>

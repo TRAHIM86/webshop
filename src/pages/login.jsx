@@ -25,6 +25,23 @@ export const Login = () => {
     password: "",
   });
 
+  const [isLoginClicked, setIsLoginClicked] = useState(false);
+
+  const isValidLoginLetters = /^[a-zA-Z0-9]+$/.test(loginedUser.login);
+  const isValidLoginLength = /^.{3,10}$/.test(loginedUser.login);
+  const isValidPassword = /^[a-zA-Z0-9]{3,10}$/.test(loginedUser.password);
+
+  //состония фокуов на инпутах
+  const [isFocusLogin, setFocusLogin] = useState(false);
+
+  function focusLoginTrue() {
+    setFocusLogin(true);
+  }
+
+  function focusLoginFalse() {
+    setFocusLogin(false);
+  }
+
   // мутация для логина
   const loginMutation = useMutation({
     mutationFn: () =>
@@ -53,19 +70,44 @@ export const Login = () => {
     }));
   }
 
+  console.log("isLoginClicked: ", isLoginClicked);
+
   return (
     <div className={styles.loginPage}>
       <form onSubmit={(e) => e.preventDefault()}>
         <div className={styles.dataLogin}>
           <p>Login</p>{" "}
           <input
-            className={styles.loginInput}
+            // СОКРАТИТЬ!! ЧЕРЕЗ FUNC!!
+            className={`${styles.loginInput} ${
+              !isFocusLogin &&
+              !isValidLoginLetters &&
+              !isValidLoginLength &&
+              isLoginClicked
+                ? styles.loginInputNotValid
+                : ""
+            }`}
             type="text"
             value={loginedUser.login}
             placeholder="3-10 letters and/or numbers"
             autoComplete="username"
             onChange={(e) => uptateUser("login", e.target.value)}
+            onFocus={() => {
+              focusLoginTrue();
+              setIsLoginClicked(true);
+            }}
+            onBlur={focusLoginFalse}
           />
+          <div className={styles.errorValidation}>
+            {" "}
+            {!isFocusLogin && !isValidLoginLetters && !isValidLoginLength
+              ? "Only Latin letters and from 3 to 10 characters"
+              : !isFocusLogin && !isValidLoginLetters
+                ? "Only Latin letters and/or numbers"
+                : !isFocusLogin && !isValidLoginLength
+                  ? "From 3 to 10 characters"
+                  : ""}
+          </div>
           <p>Password</p>{" "}
           <input
             className={styles.loginInput}
@@ -75,7 +117,13 @@ export const Login = () => {
             autoComplete="password"
             onChange={(e) => uptateUser("password", e.target.value)}
           />
-          <Button func={enterUser}>ENTER</Button>
+          <Button
+            func={enterUser}
+            disabled={!isValidLoginLetters || !isValidPassword}
+            className={styles.btnLogin}
+          >
+            ENTER
+          </Button>
           {loginMutation.isSuccess &&
             (loginMutation.data === null ||
               loginMutation.data === undefined) && (
