@@ -19,9 +19,12 @@
 
 .popupWrapper {
   width: 20em;
-  background-color: white;
+  background-color: rgb(102, 99, 99);
   border-radius: 4px;
   padding: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 .buttonBlock {
   display: flex;
@@ -32,8 +35,18 @@
 .registerLink {
   transition: all 0.3s ease;
   color: rgb(255, 153, 0);
+  width: 100%;
+}
+
+.btnReview {
+  width: 100%;
 }
 
 .registerLink:hover {
   color: rgb(255, 100, 0);
+}
+
+.btnReview:hover,
+.btnClose:hover {
+  background-color: black;
 }

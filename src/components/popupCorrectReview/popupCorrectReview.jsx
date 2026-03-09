@@ -34,7 +34,7 @@ export const PopupCorrectReview = ({
     created_at: new Date().toISOString(),
   };
 
-  const minDataReiew = reviewText.length >= 3 && rating > 0;
+  const minDataReiew = reviewText?.length >= 3 && rating > 0;
   console.log(minDataReiew);
 
   function checkLeReviewLength(str) {
