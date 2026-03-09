@@ -35,7 +35,12 @@ export const ProductFeedback = ({
     queryFn: () => fetchAverageRatingProductById(product.id),
   });
 
-  if (isLoading || isFetching) return <LoadingDots>...</LoadingDots>;
+  if (isLoading || isFetching)
+    return (
+      <div className={styles.loadingBlock}>
+        <LoadingDots>...</LoadingDots>
+      </div>
+    );
 
   return (
     <div className={styles.productFeedback}>

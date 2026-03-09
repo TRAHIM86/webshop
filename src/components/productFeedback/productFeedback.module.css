@@ -1,9 +1,10 @@
 .productFeedback {
-  border: 1px saddlebrown solid;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 0.5em;
   width: 20em;
+  height: 10em;
 }
 
 .ratingBlock {
@@ -11,10 +12,13 @@
   flex-direction: row;
   align-items: center;
   gap: 0.25em;
-  border: 1px solid red;
 }
 
 .linkCurrentReview {
   cursor: pointer;
   color: orange;
+}
+
+.loadingBlock {
+  height: 10em;
 }

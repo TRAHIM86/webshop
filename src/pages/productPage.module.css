@@ -1,13 +1,13 @@
 .productPage {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.5em;
 }
 
 .productItem {
-  flex-grow: 1;
-  border: 3px solid salmon;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,7 +17,6 @@
 .arrows {
   display: flex;
   justify-content: space-around;
-  border: 3px solid red;
   width: 10em;
 }
 
@@ -26,12 +25,47 @@
 }
 
 .containerImg {
-  width: 20em;
-  height: 15em;
-  border: 4px solid brown;
   overflow: hidden;
+  display: flex;
+  flex-direction: row;
 }
 
-.button {
-  cursor: pointer;
+.img {
+  width: 25em;
+  height: 20em;
+}
+
+.priceBlock {
+  display: flex;
+  padding-left: 1.5em;
+  padding-top: 0.25em;
+  gap: 0.5em;
+}
+
+.crossText {
+  text-decoration: line-through;
+}
+
+.orangeText {
+  color: orange;
+}
+
+.btnCart {
+  height: 2.25em;
+  background-color: orange;
+  color: rgb(102, 99, 99);
+}
+
+.btnCart:hover {
+  color: rgb(102, 99, 99);
+  color: orange;
+}
+
+.btnCart svg {
+  transition: 0.3s;
+  stroke: rgb(102, 99, 99);
+}
+
+.btnCart:hover svg {
+  stroke: orange;
 }

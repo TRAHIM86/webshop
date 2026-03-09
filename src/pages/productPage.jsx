@@ -1,5 +1,5 @@
 import styles from "./productPage.module.css";
-import { CartContext, UserContext } from "../App";
+import { CartContext, IdDiscountContext, UserContext } from "../App";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Requests from "../requests";
@@ -12,14 +12,18 @@ import { ProductFeedback } from "../components/productFeedback/productFeedback";
 import { PopupLogin } from "../components/popupLogin/popupLogin";
 import { PopupWriteReview } from "../components/popupWriteReview/popupWriteReview";
 import { LoadingDots } from "../components/loadingDots/loadingDots";
+import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
+import { DISCOUNTPERSENT } from "../constants/discountPercent";
 
 export const ProductPage = () => {
   // актиный юзер (глобальный контекст)
   const { activeUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
+  const { idActionProduct } = useContext(IdDiscountContext);
   const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const discountPercent = DISCOUNTPERSENT;
 
   // состояние попапаLogin открыть/закрыть
   const [popupLoginOpen, setPopupLoginOpen] = useState(false);
@@ -208,16 +212,38 @@ export const ProductPage = () => {
   ) : (
     <div className={styles.productPage}>
       <div className={styles.productItem}>
-        <div className={styles.arrows}>
-          <Arrow funcOnClick={prevPhoto}>←</Arrow>
-          <Arrow funcOnClick={nextPhoto}>→</Arrow>
-        </div>
         <div>{productById.name}</div>
         <div className={styles.containerImg}>
-          <ProductImg productName={productById.name} num={currentNumPhoto} />
+          <Arrow funcOnClick={prevPhoto}>
+            <ChevronLeft size={36} />
+          </Arrow>
+          <ProductImg
+            productName={productById.name}
+            num={currentNumPhoto}
+            className={styles.img}
+          />
+          <Arrow funcOnClick={nextPhoto}>
+            <ChevronRight size={36} />
+          </Arrow>
         </div>
-        <div>{`${productById.price.toFixed(2)} $`}</div>
-        <div>{productById.category}</div>
+        <div>
+          {productById.id === idActionProduct ? (
+            <div className={styles.priceBlock}>
+              {" "}
+              <div className={styles.orangeText}>
+                {`${(productById.price * (1 - discountPercent / 100)).toFixed(2)} $`}
+              </div>
+              <div
+                className={styles.crossText}
+              >{`${productById.price.toFixed(2)} $`}</div>
+            </div>
+          ) : (
+            <div className={styles.priceBlock}>
+              {" "}
+              <div>{`${productById.price.toFixed(2)} $`}</div>
+            </div>
+          )}
+        </div>
       </div>
       <Carousel
         product={productById}
@@ -225,8 +251,11 @@ export const ProductPage = () => {
         currentNum={currentNumPhoto}
         setCurrentNum={setCurrentNumPhoto}
       />
-      <Button func={() => toggleProductInCart(productById.id)}>
-        {cart.has(productById.id) ? "Remove" : "Add"}
+      <Button
+        className={styles.btnCart}
+        func={() => toggleProductInCart(productById.id)}
+      >
+        {cart.has(productById.id) ? "Remove" : <ShoppingCart />}
       </Button>
       {isLoadingReviewList || isFetchingReviewList ? (
         <LoadingDots />

@@ -123,7 +123,7 @@ export const ProductItem = ({ product, setSelectedProduct }) => {
         {product.id === idActionProduct ? (
           <div className={styles.priceBlock}>
             {" "}
-            <div className={styles.redText}>
+            <div className={styles.orangeText}>
               {`${(product.price * (1 - discountPercent / 100)).toFixed(2)} $`}
             </div>
             <div

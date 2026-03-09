@@ -15,7 +15,7 @@ export const PopupCorrectReview = ({
   const [rating, setRating] = useState(0);
 
   const currentUserReview = reviewList?.find(
-    (review) => review.user_name === activeUser.login,
+    (review) => review.user_name === activeUser?.login,
   );
 
   useEffect(() => {
