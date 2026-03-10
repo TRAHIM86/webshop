@@ -45,14 +45,14 @@ export const Login = () => {
     isValidPassword.isValidLetters &&
     isValidPassword.isValidLength;
 
-  const validLogin = showHints(
+  const notValidLogin = showHints(
     isLoginClicked,
     isFocusLogin,
     isValidLogin.isValidLetters,
     isValidLogin.isValidLength,
   );
 
-  const validPassword = showHints(
+  const notValidPassword = showHints(
     isPasswordClicked,
     isFocusPassword,
     isValidPassword.isValidLetters,
@@ -94,7 +94,7 @@ export const Login = () => {
           <p>Login</p>{" "}
           <input
             className={`${styles.input} ${
-              validLogin.isNotValidInput ? styles.inputNotValid : ""
+              notValidLogin.isNotValidInput ? styles.inputNotValid : ""
             }`}
             type="text"
             value={loginedUser.login}
@@ -109,11 +109,11 @@ export const Login = () => {
               setFocusState(setFocusLogin, false);
             }}
           />
-          <div className={styles.errorValidation}>{validLogin.hint}</div>
+          <div className={styles.errorValidation}>{notValidLogin.hint}</div>
           <p>Password</p>{" "}
           <input
             className={`${styles.input} ${
-              validPassword.isNotValidInput ? styles.inputNotValid : ""
+              notValidPassword.isNotValidInput ? styles.inputNotValid : ""
             }`}
             type="password"
             value={loginedUser.password}
@@ -128,7 +128,7 @@ export const Login = () => {
               setFocusState(setFocusPassword, false);
             }}
           />
-          <div className={styles.errorValidation}>{validPassword.hint}</div>
+          <div className={styles.errorValidation}>{notValidPassword.hint}</div>
           <Button
             func={enterUser}
             disabled={!isValidAllFields}

@@ -107,23 +107,25 @@ export const Register = () => {
     isValidLogin.isValidLetters &&
     isValidLogin.isValidLength &&
     isValidPassword.isValidLetters &&
-    isValidPassword.isValidLength;
+    isValidPassword.isValidLength &&
+    isValidEmail &&
+    isValidConfirmPassword;
 
-  const validLogin = showHints(
+  const notValidLogin = showHints(
     isLoginClicked,
     isFocusLogin,
     isValidLogin.isValidLetters,
     isValidLogin.isValidLength,
   );
 
-  const validEmail = {
+  const notValidEmail = {
     isNotValidInput: isEmailClicked && !isFocusEmail && !isValidEmail,
     hint: "Please write correct email",
   };
 
-  console.log(validEmail.isNotValidInput);
+  console.log(notValidEmail.isNotValidInput);
 
-  const validPassword = showHints(
+  const notValidPassword = showHints(
     isPasswordClicked,
     isFocusPassword,
     isValidPassword.isValidLetters,
@@ -149,7 +151,7 @@ export const Register = () => {
           <p>Login</p>
           <input
             className={`${styles.input} ${
-              validLogin.isNotValidInput ? styles.inputNotValid : ""
+              notValidLogin.isNotValidInput ? styles.inputNotValid : ""
             }`}
             type="text"
             value={newUser.login}
@@ -167,7 +169,7 @@ export const Register = () => {
           <p>Email</p>
           <input
             className={`${styles.input} ${
-              validEmail.isNotValidInput ? styles.inputNotValid : ""
+              notValidEmail.isNotValidInput ? styles.inputNotValid : ""
             }`}
             type="email"
             value={newUser.email}
@@ -185,7 +187,7 @@ export const Register = () => {
           <p>Password</p>{" "}
           <input
             className={`${styles.input} ${
-              validPassword.isNotValidInput ? styles.inputNotValid : ""
+              notValidPassword.isNotValidInput ? styles.inputNotValid : ""
             }`}
             type="password"
             value={newUser.password}
@@ -216,7 +218,7 @@ export const Register = () => {
             type="submit"
             className={styles.btnRegister}
             func={() => addNewUserToServer()}
-            disabled
+            disabled={!isValidAllFields}
           >
             REGISTER
           </Button>
