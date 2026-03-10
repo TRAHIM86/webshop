@@ -26,21 +26,68 @@ export const Login = () => {
   });
 
   const [isLoginClicked, setIsLoginClicked] = useState(false);
+  const [isPasswordClicked, setIsPasswordClicked] = useState(false);
 
-  const isValidLoginLetters = /^[a-zA-Z0-9]+$/.test(loginedUser.login);
-  const isValidLoginLength = /^.{3,10}$/.test(loginedUser.login);
-  const isValidPassword = /^[a-zA-Z0-9]{3,10}$/.test(loginedUser.password);
+  function isValidLetters(field) {
+    return /^[a-zA-Z0-9]+$/.test(field);
+  }
 
-  //состония фокуов на инпутах
+  function isValidLength(field) {
+    return /^.{3,10}$/.test(field);
+  }
+
+  const isValidLoginLetters = isValidLetters(loginedUser.login);
+  const isValidLoginLength = isValidLength(loginedUser.login);
+
+  const isValidPasswordLetters = isValidLetters(loginedUser.password);
+  const isValidPasswordLength = isValidLength(loginedUser.password);
+
+  //состояния фокуcов на инпутах
   const [isFocusLogin, setFocusLogin] = useState(false);
+  const [isFocusPassword, setFocusPassword] = useState(false);
 
-  function focusLoginTrue() {
-    setFocusLogin(true);
+  function setFocusState(funcState, state) {
+    funcState(state);
   }
 
-  function focusLoginFalse() {
-    setFocusLogin(false);
+  function checkAllValid() {
+    return (
+      isValidLoginLetters &&
+      isValidLoginLength &&
+      isValidPasswordLetters &&
+      isValidPasswordLength
+    );
   }
+
+  function checkValidData(clicked, focus, validLetters, validLength) {
+    const validInput = clicked && !focus && (!validLetters || !validLength);
+    const validHint =
+      clicked && !focus && !validLetters && !validLength
+        ? "Only Latin letters and/or numbers from 3 to 10 characters"
+        : clicked && !focus && !validLetters
+          ? "Only Latin letters and/or numbers"
+          : clicked && !focus && !validLength
+            ? "From 3 to 10 characters"
+            : "";
+
+    return { validInput: validInput, validHint: validHint };
+  }
+
+  const validLogin = checkValidData(
+    isLoginClicked,
+    isFocusLogin,
+    isValidLoginLetters,
+    isValidLoginLength,
+  );
+
+  const validPassword = checkValidData(
+    isPasswordClicked,
+    isFocusPassword,
+    isValidPasswordLetters,
+    isValidPasswordLength,
+  );
+
+  console.log(validLogin);
 
   // мутация для логина
   const loginMutation = useMutation({
@@ -70,56 +117,53 @@ export const Login = () => {
     }));
   }
 
-  console.log("isLoginClicked: ", isLoginClicked);
-
   return (
     <div className={styles.loginPage}>
       <form onSubmit={(e) => e.preventDefault()}>
         <div className={styles.dataLogin}>
           <p>Login</p>{" "}
           <input
-            // СОКРАТИТЬ!! ЧЕРЕЗ FUNC!!
-            className={`${styles.loginInput} ${
-              !isFocusLogin &&
-              !isValidLoginLetters &&
-              !isValidLoginLength &&
-              isLoginClicked
-                ? styles.loginInputNotValid
-                : ""
+            className={`${styles.input} ${
+              validLogin.validInput ? styles.inputNotValid : ""
             }`}
             type="text"
             value={loginedUser.login}
-            placeholder="3-10 letters and/or numbers"
+            placeholder="3-10 Latin letters and/or numbers"
             autoComplete="username"
             onChange={(e) => uptateUser("login", e.target.value)}
             onFocus={() => {
-              focusLoginTrue();
+              setFocusState(setFocusLogin, true);
               setIsLoginClicked(true);
             }}
-            onBlur={focusLoginFalse}
+            onBlur={() => {
+              setFocusState(setFocusLogin, false);
+            }}
           />
-          <div className={styles.errorValidation}>
-            {" "}
-            {!isFocusLogin && !isValidLoginLetters && !isValidLoginLength
-              ? "Only Latin letters and from 3 to 10 characters"
-              : !isFocusLogin && !isValidLoginLetters
-                ? "Only Latin letters and/or numbers"
-                : !isFocusLogin && !isValidLoginLength
-                  ? "From 3 to 10 characters"
-                  : ""}
-          </div>
+          <div className={styles.errorValidation}>{validLogin.validHint}</div>
           <p>Password</p>{" "}
           <input
-            className={styles.loginInput}
+            className={`${styles.input} ${
+              validPassword.validInput ? styles.inputNotValid : ""
+            }`}
             type="password"
             value={loginedUser.password}
-            placeholder="3-10 letters and/or numbers"
+            placeholder="3-10 Latin letters and/or numbers"
             autoComplete="password"
             onChange={(e) => uptateUser("password", e.target.value)}
+            onFocus={() => {
+              setFocusState(setFocusPassword, true);
+              setIsPasswordClicked(true);
+            }}
+            onBlur={() => {
+              setFocusState(setFocusPassword, false);
+            }}
           />
+          <div className={styles.errorValidation}>
+            {validPassword.validHint}
+          </div>
           <Button
             func={enterUser}
-            disabled={!isValidLoginLetters || !isValidPassword}
+            disabled={!checkAllValid()}
             className={styles.btnLogin}
           >
             ENTER

@@ -16,7 +16,7 @@
   width: 20em;
 }
 
-.loginInput {
+.input {
   padding: 0.25em;
   width: 100%;
   color: black;
@@ -25,7 +25,7 @@
   background-color: rgb(247, 196, 101);
 }
 
-.loginInputNotValid {
+.inputNotValid {
   border: 0.25em solid red;
   background-color: salmon;
 }
@@ -46,7 +46,7 @@
 }
 
 .errorValidation {
-  width: 50vw;
+  width: 60vw;
   height: 2em;
   text-align: center;
   color: salmon;
