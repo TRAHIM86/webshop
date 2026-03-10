@@ -28,19 +28,19 @@ export const Login = () => {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [isPasswordClicked, setIsPasswordClicked] = useState(false);
 
-  function isValidLetters(field) {
-    return /^[a-zA-Z0-9]+$/.test(field);
+  function isValidField(field) {
+    const isValidLetters = /^[a-zA-Z0-9]+$/.test(field);
+    const isValidLength = /^.{3,10}$/.test(field);
+    return { isValidLetters: isValidLetters, isValidLength: isValidLength };
   }
 
-  function isValidLength(field) {
-    return /^.{3,10}$/.test(field);
-  }
-
-  const isValidLoginLetters = isValidLetters(loginedUser.login);
-  const isValidLoginLength = isValidLength(loginedUser.login);
-
-  const isValidPasswordLetters = isValidLetters(loginedUser.password);
-  const isValidPasswordLength = isValidLength(loginedUser.password);
+  const isValidLogin = isValidField(loginedUser.login);
+  const isValidPassword = isValidField(loginedUser.password);
+  const validAllFields =
+    isValidLogin.isValidLetters &&
+    isValidLogin.isValidLength &&
+    isValidPassword.isValidLetters &&
+    isValidPassword.isValidLength;
 
   //состояния фокуcов на инпутах
   const [isFocusLogin, setFocusLogin] = useState(false);
@@ -48,15 +48,6 @@ export const Login = () => {
 
   function setFocusState(funcState, state) {
     funcState(state);
-  }
-
-  function checkAllValid() {
-    return (
-      isValidLoginLetters &&
-      isValidLoginLength &&
-      isValidPasswordLetters &&
-      isValidPasswordLength
-    );
   }
 
   function checkValidData(clicked, focus, validLetters, validLength) {
@@ -76,18 +67,16 @@ export const Login = () => {
   const validLogin = checkValidData(
     isLoginClicked,
     isFocusLogin,
-    isValidLoginLetters,
-    isValidLoginLength,
+    isValidLogin.isValidLetters,
+    isValidLogin.isValidLength,
   );
 
   const validPassword = checkValidData(
     isPasswordClicked,
     isFocusPassword,
-    isValidPasswordLetters,
-    isValidPasswordLength,
+    isValidPassword.isValidLetters,
+    isValidPassword.isValidLength,
   );
-
-  console.log(validLogin);
 
   // мутация для логина
   const loginMutation = useMutation({
@@ -163,7 +152,7 @@ export const Login = () => {
           </div>
           <Button
             func={enterUser}
-            disabled={!checkAllValid()}
+            disabled={!validAllFields}
             className={styles.btnLogin}
           >
             ENTER
