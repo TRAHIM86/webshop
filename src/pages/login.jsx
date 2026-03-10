@@ -6,6 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 import styles from "./login.module.css";
+import {
+  checkValidLoginPassword,
+  showHints,
+  setFocusState,
+} from "../utils/loginRegUtils";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -28,50 +33,26 @@ export const Login = () => {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [isPasswordClicked, setIsPasswordClicked] = useState(false);
 
-  function isValidField(field) {
-    const isValidLetters = /^[a-zA-Z0-9]+$/.test(field);
-    const isValidLength = /^.{3,10}$/.test(field);
-    return { isValidLetters: isValidLetters, isValidLength: isValidLength };
-  }
+  //состояния фокуcов на инпутах
+  const [isFocusLogin, setFocusLogin] = useState(false);
+  const [isFocusPassword, setFocusPassword] = useState(false);
 
-  const isValidLogin = isValidField(loginedUser.login);
-  const isValidPassword = isValidField(loginedUser.password);
-  const validAllFields =
+  const isValidLogin = checkValidLoginPassword(loginedUser.login);
+  const isValidPassword = checkValidLoginPassword(loginedUser.password);
+  const isValidAllFields =
     isValidLogin.isValidLetters &&
     isValidLogin.isValidLength &&
     isValidPassword.isValidLetters &&
     isValidPassword.isValidLength;
 
-  //состояния фокуcов на инпутах
-  const [isFocusLogin, setFocusLogin] = useState(false);
-  const [isFocusPassword, setFocusPassword] = useState(false);
-
-  function setFocusState(funcState, state) {
-    funcState(state);
-  }
-
-  function checkValidData(clicked, focus, validLetters, validLength) {
-    const validInput = clicked && !focus && (!validLetters || !validLength);
-    const validHint =
-      clicked && !focus && !validLetters && !validLength
-        ? "Only Latin letters and/or numbers from 3 to 10 characters"
-        : clicked && !focus && !validLetters
-          ? "Only Latin letters and/or numbers"
-          : clicked && !focus && !validLength
-            ? "From 3 to 10 characters"
-            : "";
-
-    return { validInput: validInput, validHint: validHint };
-  }
-
-  const validLogin = checkValidData(
+  const validLogin = showHints(
     isLoginClicked,
     isFocusLogin,
     isValidLogin.isValidLetters,
     isValidLogin.isValidLength,
   );
 
-  const validPassword = checkValidData(
+  const validPassword = showHints(
     isPasswordClicked,
     isFocusPassword,
     isValidPassword.isValidLetters,
@@ -113,7 +94,7 @@ export const Login = () => {
           <p>Login</p>{" "}
           <input
             className={`${styles.input} ${
-              validLogin.validInput ? styles.inputNotValid : ""
+              validLogin.isNotValidInput ? styles.inputNotValid : ""
             }`}
             type="text"
             value={loginedUser.login}
@@ -128,11 +109,11 @@ export const Login = () => {
               setFocusState(setFocusLogin, false);
             }}
           />
-          <div className={styles.errorValidation}>{validLogin.validHint}</div>
+          <div className={styles.errorValidation}>{validLogin.hint}</div>
           <p>Password</p>{" "}
           <input
             className={`${styles.input} ${
-              validPassword.validInput ? styles.inputNotValid : ""
+              validPassword.isNotValidInput ? styles.inputNotValid : ""
             }`}
             type="password"
             value={loginedUser.password}
@@ -147,12 +128,10 @@ export const Login = () => {
               setFocusState(setFocusPassword, false);
             }}
           />
-          <div className={styles.errorValidation}>
-            {validPassword.validHint}
-          </div>
+          <div className={styles.errorValidation}>{validPassword.hint}</div>
           <Button
             func={enterUser}
-            disabled={!validAllFields}
+            disabled={!isValidAllFields}
             className={styles.btnLogin}
           >
             ENTER
@@ -167,6 +146,7 @@ export const Login = () => {
       <div className={styles.loginBlockLink}>
         Don't have an account?
         <Link className={styles.registerLink} to="/register">
+          {" "}
           Register&#8594;
         </Link>
       </div>

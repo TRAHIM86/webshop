@@ -6,6 +6,11 @@ import { UserContext } from "../App";
 import { useMutation } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 import styles from "./register.module.css";
+import {
+  checkValidLoginPassword,
+  setFocusState,
+  showHints,
+} from "../utils/loginRegUtils";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -36,6 +41,15 @@ export const Register = () => {
       confirmPassword: "",
     });
   }
+
+  const [isLoginClicked, setIsLoginClicked] = useState(false);
+  const [isPasswordClicked, setIsPasswordClicked] = useState(false);
+  const [isEmailClicked, setIsEmailClicked] = useState(false);
+
+  //состояния фокуcов на инпутах
+  const [isFocusLogin, setFocusLogin] = useState(false);
+  const [isFocusPassword, setFocusPassword] = useState(false);
+  const [isFocusEmail, setFocusEmail] = useState(false);
 
   // мутация для регистрации
   const registerMutation = useMutation({
@@ -77,72 +91,48 @@ export const Register = () => {
       ...prevUser,
       [field]: value,
     }));
-
-    // в зависисмости от field поменять поле
-    // и проверить его на валидацию
-    if (field === "login") {
-      setIsValid((prev) => ({ ...prev, login: validateLogin(value) }));
-    }
-    if (field === "email") {
-      setIsValid((prev) => ({ ...prev, email: validateEmail(value) }));
-    }
-    if (field === "password") {
-      setIsValid((prev) => ({
-        ...prev,
-        password: validatePassword(value),
-        confirmPassword: validateConfirmPassword(
-          newUser.confirmPassword,
-          value,
-        ),
-      }));
-    }
-    if (field === "confirmPassword") {
-      setIsValid((prev) => ({
-        ...prev,
-        confirmPassword: validateConfirmPassword(value, newUser.password),
-      }));
-    }
   }
 
   //********* ВАЛИДАЦИЯ *********/
 
-  // состояние "все поля валидны"
-  const [isValid, setIsValid] = useState({
-    login: validateLogin(newUser.login),
-    email: validateEmail(newUser.email),
-    password: validatePassword(newUser.password),
-    confirmPassword: validateConfirmPassword(
-      newUser.confirmPassword,
-      newUser.password,
-    ),
-  });
+  const isValidLogin = checkValidLoginPassword(newUser.login);
+  const isValidEmail = validateEmail(newUser.email);
+  const isValidPassword = checkValidLoginPassword(newUser.password);
+  const isValidConfirmPassword = validateConfirmPassword(
+    newUser.confirmPassword,
+    newUser.password,
+  );
 
-  useEffect(() => {
-    setIsValid({
-      login: validateLogin(newUser.login),
-      email: validateEmail(newUser.email),
-      password: validatePassword(newUser.password),
-      confirmPassword: validateConfirmPassword(
-        newUser.confirmPassword,
-        newUser.password,
-      ),
-    });
-  }, [newUser]);
+  const isValidAllFields =
+    isValidLogin.isValidLetters &&
+    isValidLogin.isValidLength &&
+    isValidPassword.isValidLetters &&
+    isValidPassword.isValidLength;
 
-  // валидация login
-  function validateLogin(login) {
-    return /^[a-zA-Z0-9]{3,10}$/.test(login);
-  }
+  const validLogin = showHints(
+    isLoginClicked,
+    isFocusLogin,
+    isValidLogin.isValidLetters,
+    isValidLogin.isValidLength,
+  );
+
+  const validEmail = {
+    isNotValidInput: isEmailClicked && !isFocusEmail && !isValidEmail,
+    hint: "Please write correct email",
+  };
+
+  console.log(validEmail.isNotValidInput);
+
+  const validPassword = showHints(
+    isPasswordClicked,
+    isFocusPassword,
+    isValidPassword.isValidLetters,
+    isValidPassword.isValidLength,
+  );
 
   // валидация на email
   function validateEmail(email) {
-    //console.log(/^\S+@\S+\.\S+$/.test(email));
     return /^\S+@\S+\.\S+$/.test(email);
-  }
-
-  // валидация на password
-  function validatePassword(password) {
-    return /^[a-zA-Z0-9]{3,10}$/.test(password);
   }
 
   // валидация на confirmPassword
@@ -158,35 +148,64 @@ export const Register = () => {
         <div className={styles.dataRegister}>
           <p>Login</p>
           <input
-            className={styles.registerInput}
+            className={`${styles.input} ${
+              validLogin.isNotValidInput ? styles.inputNotValid : ""
+            }`}
             type="text"
             value={newUser.login}
-            placeholder="3-10 letters and/or numbers"
+            placeholder="3-10 Latin letters and/or numbers"
             onChange={(e) => updateUser("login", e.target.value)}
             autoComplete="userLogin"
+            onFocus={() => {
+              setFocusState(setFocusLogin, true);
+              setIsLoginClicked(true);
+            }}
+            onBlur={() => {
+              setFocusState(setFocusLogin, false);
+            }}
           ></input>
           <p>Email</p>
           <input
-            className={styles.registerInput}
+            className={`${styles.input} ${
+              validEmail.isNotValidInput ? styles.inputNotValid : ""
+            }`}
             type="email"
             value={newUser.email}
             onChange={(e) => updateUser("email", e.target.value)}
             placeholder="Your email"
             autoComplete="email"
+            onFocus={() => {
+              setFocusState(setFocusEmail, true);
+              setIsEmailClicked(true);
+            }}
+            onBlur={() => {
+              setFocusState(setFocusEmail, false);
+            }}
           ></input>
           <p>Password</p>{" "}
           <input
-            className={styles.registerInput}
+            className={`${styles.input} ${
+              validPassword.isNotValidInput ? styles.inputNotValid : ""
+            }`}
             type="password"
             value={newUser.password}
-            placeholder="3-10 letters and/or numbers"
+            placeholder="3-10 Latin letters and/or numbers"
             onChange={(e) => updateUser("password", e.target.value)}
             style={{ width: "100%" }}
             autoComplete="new-password"
+            onFocus={() => {
+              setFocusState(setFocusPassword, true);
+              setIsPasswordClicked(true);
+            }}
+            onBlur={() => {
+              setFocusState(setFocusPassword, false);
+            }}
           ></input>
           <p>Confirm password</p>
           <input
-            className={styles.registerInput}
+            className={`${styles.input} ${
+              !isValidConfirmPassword ? styles.inputNotValid : ""
+            }`}
             type="password"
             value={newUser.confirmPassword}
             placeholder="Confirm password"
@@ -197,12 +216,7 @@ export const Register = () => {
             type="submit"
             className={styles.btnRegister}
             func={() => addNewUserToServer()}
-            disabled={
-              !isValid.login ||
-              !isValid.email ||
-              !isValid.password ||
-              !isValid.confirmPassword
-            }
+            disabled
           >
             REGISTER
           </Button>
@@ -212,6 +226,7 @@ export const Register = () => {
       <div>
         Already registered?
         <Link to="/login" className={styles.Loginlink}>
+          {" "}
           Login&#8594;
         </Link>
       </div>
