@@ -43,13 +43,16 @@ export const Register = () => {
   }
 
   const [isLoginClicked, setIsLoginClicked] = useState(false);
-  const [isPasswordClicked, setIsPasswordClicked] = useState(false);
   const [isEmailClicked, setIsEmailClicked] = useState(false);
+  const [isPasswordClicked, setIsPasswordClicked] = useState(false);
+  const [isConfirmPasswordClicked, setIsConfirmPasswordClicked] =
+    useState(false);
 
   //состояния фокуcов на инпутах
   const [isFocusLogin, setFocusLogin] = useState(false);
-  const [isFocusPassword, setFocusPassword] = useState(false);
   const [isFocusEmail, setFocusEmail] = useState(false);
+  const [isFocusPassword, setFocusPassword] = useState(false);
+  const [isFocusConfirmPassword, setFocusConfirmPassword] = useState(false);
 
   // мутация для регистрации
   const registerMutation = useMutation({
@@ -95,6 +98,16 @@ export const Register = () => {
 
   //********* ВАЛИДАЦИЯ *********/
 
+  // валидация на email
+  function validateEmail(email) {
+    return /^\S+@\S+\.\S+$/.test(email);
+  }
+
+  // валидация на confirmPassword
+  function validateConfirmPassword(confirmPassword, password) {
+    return confirmPassword === password;
+  }
+
   const isValidLogin = checkValidLoginPassword(newUser.login);
   const isValidEmail = validateEmail(newUser.email);
   const isValidPassword = checkValidLoginPassword(newUser.password);
@@ -120,10 +133,11 @@ export const Register = () => {
 
   const notValidEmail = {
     isNotValidInput: isEmailClicked && !isFocusEmail && !isValidEmail,
-    hint: "Please write correct email",
+    hint:
+      isEmailClicked && !isFocusEmail && !isValidEmail
+        ? "Please write correct email"
+        : "",
   };
-
-  console.log(notValidEmail.isNotValidInput);
 
   const notValidPassword = showHints(
     isPasswordClicked,
@@ -132,15 +146,18 @@ export const Register = () => {
     isValidPassword.isValidLength,
   );
 
-  // валидация на email
-  function validateEmail(email) {
-    return /^\S+@\S+\.\S+$/.test(email);
-  }
-
-  // валидация на confirmPassword
-  function validateConfirmPassword(confirmPassword, password) {
-    return confirmPassword === password;
-  }
+  const notValidConfirmPassword = {
+    isNotValidInput:
+      isConfirmPasswordClicked &&
+      !isFocusConfirmPassword &&
+      !isValidConfirmPassword,
+    hint:
+      isConfirmPasswordClicked &&
+      !isFocusConfirmPassword &&
+      !isValidConfirmPassword
+        ? "The passwords don't match"
+        : "",
+  };
 
   /*************************/
 
@@ -165,7 +182,8 @@ export const Register = () => {
             onBlur={() => {
               setFocusState(setFocusLogin, false);
             }}
-          ></input>
+          />
+          <div className={styles.errorValidation}>{notValidLogin.hint}</div>
           <p>Email</p>
           <input
             className={`${styles.input} ${
@@ -183,7 +201,8 @@ export const Register = () => {
             onBlur={() => {
               setFocusState(setFocusEmail, false);
             }}
-          ></input>
+          />
+          <div className={styles.errorValidation}>{notValidEmail.hint}</div>
           <p>Password</p>{" "}
           <input
             className={`${styles.input} ${
@@ -202,7 +221,8 @@ export const Register = () => {
             onBlur={() => {
               setFocusState(setFocusPassword, false);
             }}
-          ></input>
+          />
+          <div className={styles.errorValidation}>{notValidPassword.hint}</div>
           <p>Confirm password</p>
           <input
             className={`${styles.input} ${
@@ -213,7 +233,17 @@ export const Register = () => {
             placeholder="Confirm password"
             onChange={(e) => updateUser("confirmPassword", e.target.value)}
             autoComplete="new-password"
-          ></input>
+            onFocus={() => {
+              setFocusState(setFocusConfirmPassword, true);
+              setIsConfirmPasswordClicked(true);
+            }}
+            onBlur={() => {
+              setFocusState(setFocusConfirmPassword, false);
+            }}
+          />
+          <div className={styles.errorValidation}>
+            {notValidConfirmPassword.hint}
+          </div>
           <Button
             type="submit"
             className={styles.btnRegister}
