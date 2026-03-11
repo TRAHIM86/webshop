@@ -11,6 +11,7 @@ import {
   setFocusState,
   showHints,
 } from "../utils/loginRegUtils";
+import { InputLogReg } from "../components/imputLogReg/inputLogReg";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -166,80 +167,63 @@ export const Register = () => {
       <form onSubmit={(e) => e.preventDefault()}>
         <div className={styles.dataRegister}>
           <p>Login</p>
-          <input
-            className={`${styles.input} ${
-              notValidLogin.isNotValidInput ? styles.inputNotValid : ""
-            }`}
-            type="text"
+          <InputLogReg
             value={newUser.login}
+            notValidObj={notValidLogin}
+            type="text"
             placeholder="3-10 Latin letters and/or numbers"
-            onChange={(e) => updateUser("login", e.target.value)}
-            autoComplete="userLogin"
-            onFocus={() => {
-              setFocusState(setFocusLogin, true);
-              setIsLoginClicked(true);
-            }}
-            onBlur={() => {
-              setFocusState(setFocusLogin, false);
-            }}
+            field="login"
+            funcOnchange={updateUser}
+            funcsOnFocus={[
+              () => setFocusState(setFocusLogin, true),
+              () => setIsLoginClicked(true),
+            ]}
+            funcsOnBlur={[() => setFocusState(setFocusLogin, false)]}
           />
           <div className={styles.errorValidation}>{notValidLogin.hint}</div>
           <p>Email</p>
-          <input
-            className={`${styles.input} ${
-              notValidEmail.isNotValidInput ? styles.inputNotValid : ""
-            }`}
-            type="email"
+          <InputLogReg
             value={newUser.email}
-            onChange={(e) => updateUser("email", e.target.value)}
+            notValidObj={notValidEmail}
+            type="email"
             placeholder="Your email"
-            autoComplete="email"
-            onFocus={() => {
-              setFocusState(setFocusEmail, true);
-              setIsEmailClicked(true);
-            }}
-            onBlur={() => {
-              setFocusState(setFocusEmail, false);
-            }}
+            field="email"
+            funcOnchange={updateUser}
+            funcsOnFocus={[
+              () => setFocusState(setFocusEmail, true),
+              () => setIsEmailClicked(true),
+            ]}
+            funcsOnBlur={[() => setFocusState(setFocusEmail, false)]}
           />
           <div className={styles.errorValidation}>{notValidEmail.hint}</div>
           <p>Password</p>{" "}
-          <input
-            className={`${styles.input} ${
-              notValidPassword.isNotValidInput ? styles.inputNotValid : ""
-            }`}
-            type="password"
+          <InputLogReg
             value={newUser.password}
+            notValidObj={notValidPassword}
+            type="password"
             placeholder="3-10 Latin letters and/or numbers"
-            onChange={(e) => updateUser("password", e.target.value)}
-            style={{ width: "100%" }}
-            autoComplete="new-password"
-            onFocus={() => {
-              setFocusState(setFocusPassword, true);
-              setIsPasswordClicked(true);
-            }}
-            onBlur={() => {
-              setFocusState(setFocusPassword, false);
-            }}
+            field="password"
+            funcOnchange={updateUser}
+            funcsOnFocus={[
+              () => setFocusState(setFocusPassword, true),
+              () => setIsPasswordClicked(true),
+            ]}
+            funcsOnBlur={[() => setFocusState(setFocusPassword, false)]}
           />
           <div className={styles.errorValidation}>{notValidPassword.hint}</div>
           <p>Confirm password</p>
-          <input
-            className={`${styles.input} ${
-              !isValidConfirmPassword ? styles.inputNotValid : ""
-            }`}
-            type="password"
+          <InputLogReg
             value={newUser.confirmPassword}
+            notValidObj={notValidConfirmPassword}
+            type="password"
             placeholder="Confirm password"
-            onChange={(e) => updateUser("confirmPassword", e.target.value)}
-            autoComplete="new-password"
-            onFocus={() => {
-              setFocusState(setFocusConfirmPassword, true);
-              setIsConfirmPasswordClicked(true);
-            }}
-            onBlur={() => {
-              setFocusState(setFocusConfirmPassword, false);
-            }}
+            field="confirmPassword"
+            funcOnchange={updateUser}
+            funcsOnFocus={[
+              () => setFocusState(setFocusConfirmPassword, true),
+              () => setIsConfirmPasswordClicked(true),
+            ]}
+            funcsOnBlur={[() => setFocusState(setFocusConfirmPassword, false)]}
           />
           <div className={styles.errorValidation}>
             {notValidConfirmPassword.hint}
