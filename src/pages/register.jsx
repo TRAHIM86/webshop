@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../components/button/button";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Requests from "../requests";
 import { UserContext } from "../App";
 import { useMutation } from "@tanstack/react-query";
@@ -12,6 +12,8 @@ import {
   showHints,
 } from "../utils/loginRegUtils";
 import { InputLogReg } from "../components/imputLogReg/inputLogReg";
+import { Eye } from "lucide-react";
+import { EyeClosed } from "lucide-react";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -19,6 +21,14 @@ export const Register = () => {
 
   // актиный юзер (глобальный контекст)
   const { setActiveUser } = useContext(UserContext);
+
+  //состояния скрыть пароль
+  const [hidePassword, setHidePassword] = useState(true);
+  const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
+
+  function hideField(setField) {
+    setField((prev) => !prev);
+  }
 
   // данные из state, если нету то на main
   // для обратного редиректа и передачи true
@@ -179,7 +189,7 @@ export const Register = () => {
               () => setIsLoginClicked(true),
             ]}
             funcsOnBlur={[() => setFocusState(setFocusLogin, false)]}
-          />
+          ></InputLogReg>
           <div className={styles.errorValidation}>{notValidLogin.hint}</div>
           <p>Email</p>
           <InputLogReg
@@ -200,7 +210,7 @@ export const Register = () => {
           <InputLogReg
             value={newUser.password}
             notValidObj={notValidPassword}
-            type="password"
+            type={hidePassword ? "password" : "text"}
             placeholder="3-10 Latin letters and/or numbers"
             field="password"
             funcOnchange={updateUser}
@@ -209,13 +219,25 @@ export const Register = () => {
               () => setIsPasswordClicked(true),
             ]}
             funcsOnBlur={[() => setFocusState(setFocusPassword, false)]}
-          />
+          >
+            {hidePassword ? (
+              <Eye
+                className={styles.eye}
+                onClick={() => hideField(setHidePassword)}
+              />
+            ) : (
+              <EyeClosed
+                className={styles.eye}
+                onClick={() => hideField(setHidePassword)}
+              />
+            )}
+          </InputLogReg>
           <div className={styles.errorValidation}>{notValidPassword.hint}</div>
           <p>Confirm password</p>
           <InputLogReg
             value={newUser.confirmPassword}
             notValidObj={notValidConfirmPassword}
-            type="password"
+            type={hideConfirmPassword ? "password" : "text"}
             placeholder="Confirm password"
             field="confirmPassword"
             funcOnchange={updateUser}
@@ -224,7 +246,20 @@ export const Register = () => {
               () => setIsConfirmPasswordClicked(true),
             ]}
             funcsOnBlur={[() => setFocusState(setFocusConfirmPassword, false)]}
-          />
+          >
+            {" "}
+            {hideConfirmPassword ? (
+              <Eye
+                className={styles.eye}
+                onClick={() => hideField(setHideConfirmPassword)}
+              />
+            ) : (
+              <EyeClosed
+                className={styles.eye}
+                onClick={() => hideField(setHideConfirmPassword)}
+              />
+            )}
+          </InputLogReg>
           <div className={styles.errorValidation}>
             {notValidConfirmPassword.hint}
           </div>
