@@ -1,0 +1,13 @@
+.input {
+  padding: 0.25em;
+  width: 100%;
+  color: black;
+  border-radius: 0.5em;
+  border: 0.25em solid rgb(247, 196, 101);
+  background-color: rgb(247, 196, 101);
+}
+
+.inputNotValid {
+  border: 0.25em solid red;
+  background-color: salmon;
+}

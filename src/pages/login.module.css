@@ -51,3 +51,7 @@
   text-align: center;
   color: salmon;
 }
+
+.error {
+  color: red;
+}

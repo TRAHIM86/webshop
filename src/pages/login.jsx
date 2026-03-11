@@ -11,6 +11,7 @@ import {
   showHints,
   setFocusState,
 } from "../utils/loginRegUtils";
+import { InputLogReg } from "../components/imputLogReg/inputLogReg";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -92,41 +93,33 @@ export const Login = () => {
       <form onSubmit={(e) => e.preventDefault()}>
         <div className={styles.dataLogin}>
           <p>Login</p>{" "}
-          <input
-            className={`${styles.input} ${
-              notValidLogin.isNotValidInput ? styles.inputNotValid : ""
-            }`}
-            type="text"
+          <InputLogReg
             value={loginedUser.login}
+            notValidObj={notValidLogin}
+            type="text"
             placeholder="3-10 Latin letters and/or numbers"
-            autoComplete="username"
-            onChange={(e) => uptateUser("login", e.target.value)}
-            onFocus={() => {
-              setFocusState(setFocusLogin, true);
-              setIsLoginClicked(true);
-            }}
-            onBlur={() => {
-              setFocusState(setFocusLogin, false);
-            }}
+            field="login"
+            funcOnchange={uptateUser}
+            funcsOnFocus={[
+              () => setFocusState(setFocusLogin, true),
+              () => setIsLoginClicked(true),
+            ]}
+            funcsOnBlur={[() => setFocusState(setFocusLogin, false)]}
           />
           <div className={styles.errorValidation}>{notValidLogin.hint}</div>
           <p>Password</p>{" "}
-          <input
-            className={`${styles.input} ${
-              notValidPassword.isNotValidInput ? styles.inputNotValid : ""
-            }`}
-            type="password"
+          <InputLogReg
             value={loginedUser.password}
+            notValidObj={notValidPassword}
+            type="password"
             placeholder="3-10 Latin letters and/or numbers"
-            autoComplete="password"
-            onChange={(e) => uptateUser("password", e.target.value)}
-            onFocus={() => {
-              setFocusState(setFocusPassword, true);
-              setIsPasswordClicked(true);
-            }}
-            onBlur={() => {
-              setFocusState(setFocusPassword, false);
-            }}
+            field="password"
+            funcOnchange={uptateUser}
+            funcsOnFocus={[
+              () => setFocusState(setFocusPassword, true),
+              () => setIsPasswordClicked(true),
+            ]}
+            funcsOnBlur={[() => setFocusState(setFocusPassword, false)]}
           />
           <div className={styles.errorValidation}>{notValidPassword.hint}</div>
           <Button
