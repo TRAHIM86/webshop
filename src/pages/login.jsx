@@ -12,6 +12,8 @@ import {
   setFocusState,
 } from "../utils/loginRegUtils";
 import { InputLogReg } from "../components/imputLogReg/inputLogReg";
+import { Eye } from "lucide-react";
+import { EyeClosed } from "lucide-react";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -19,6 +21,14 @@ export const Login = () => {
 
   // актиный юзер (глобальный контекст)
   const { setActiveUser } = useContext(UserContext);
+
+  //состояния скрыть пароль
+  const [hidePassword, setHidePassword] = useState(true);
+
+  function hideField(setField) {
+    setField((prev) => !prev);
+    console.log();
+  }
 
   // данные из state, если нету то на main
   // для обратного редиректа и передачи true
@@ -111,7 +121,7 @@ export const Login = () => {
           <InputLogReg
             value={loginedUser.password}
             notValidObj={notValidPassword}
-            type="password"
+            type={hidePassword ? "password" : "text"}
             placeholder="3-10 Latin letters and/or numbers"
             field="password"
             funcOnchange={uptateUser}
@@ -120,7 +130,19 @@ export const Login = () => {
               () => setIsPasswordClicked(true),
             ]}
             funcsOnBlur={[() => setFocusState(setFocusPassword, false)]}
-          />
+          >
+            {hidePassword ? (
+              <Eye
+                className={styles.eye}
+                onClick={() => hideField(setHidePassword)}
+              />
+            ) : (
+              <EyeClosed
+                className={styles.eye}
+                onClick={() => hideField(setHidePassword)}
+              />
+            )}
+          </InputLogReg>
           <div className={styles.errorValidation}>{notValidPassword.hint}</div>
           <Button
             func={enterUser}

@@ -55,3 +55,10 @@
 .error {
   color: red;
 }
+
+.eye {
+  position: absolute;
+  right: 0.5em;
+  cursor: pointer;
+  stroke: rgb(102, 99, 99);
+}
